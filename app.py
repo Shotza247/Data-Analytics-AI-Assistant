@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import openai
 
 st.set_page_config(
     page_title="My CSV Assistant",
@@ -7,6 +8,9 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+#We will inistialize the OpenAI client using the API key
+client = openai.OpenAI(api_key=st.secrets["OpenAI_API_Key"])
 
 #Session State Initialization
 if 'messages' not in st.session_state:
