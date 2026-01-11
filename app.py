@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import openai
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 st.set_page_config(
     page_title="My CSV Assistant",
@@ -20,7 +22,7 @@ if "df" not in st.session_state:
     st.session_state["df"] = None
     
 if "data_summary" not in st.session_state:
-    st.session_state["data_summary"] = None
+    st.session_state["data_summary"] = {}
 
 st.title("📊Ask about your CSV 🚀")
 st.markdown('Upload your CSV file and ask questions about its content.')
@@ -85,12 +87,101 @@ if st.session_state["df"] is not None:
             st.markdown(msg['content'])
     #chat input box
     user_input = st.chat_input("Ask me anything about your CSV data...")
+    
+    
     if user_input:
         st.session_state.messages.append({"role": "user", "content": user_input})
         
         with st.chat_message("user"):
             st.markdown(user_input)
-    
+            
+        df = st.session_state.df
+        
+        if len(df) > 100:
+            data_context = f"""
+            Dataset shape: {st.session_state.data_summary['shape']}
+            Column names: {', '.join(st.session_state.data_summary['columns'])}
+            Data types: {st.session_state.data_summary['dtypes']} 
+            Sample data: {st.session_state.data_summary['sample_data']}
+            Summary statistics: {st.session_state.data_summary['summary_stats']}
+            """
+        else:
+            data_context = f"""
+            Full dataset: {df.to_string()}
+            """
+            
+        system_prompt = f"""You are a helpful expert data analyst AI assistant. Use the provided dataset information to answer user questions accurately and concisely.
+        The user will ask questions about their CSV data. Use this dataset context {data_context} to provide precise answers.
+        
+        The data is loaded in a pandas dataframe called df. You can refer to columns by their names.
+        
+        Guidelines:
+        1. Always refer to the dataset context when answering questions.
+        2. Answer the users questions accurately and concisely.
+        If the question requires analysis, describe the steps you would take to analyze the data.
+        3. Write python code using pandas, matplotlib, or seaborn libraries to perform the analysis.
+        4. For visualizations, describe the type of chart/graph to use and the columns involved.
+        Always use matplotlib "plt.figure()" or seaborn but before plotting and include plt.tight_layout() before plt.show() to ensure proper layout.
+        5. Always validate data before operations (e.g., check for nulls, data types etc.).
+        6. If you cannot answer due to data limitations, politely inform the user why.
+        7. Keep the response primarily focused on the data and questions asked, do not deviate from this.
+        
+        When generating code, follow this format:
+        - import statements are already done (pandas as pd, matplotlib.pyplot as plt, seaborn as sns)
+        - The dataframe is already loaded as df
+        - Always use plt.show() to display plots
+        - Ensure code is syntactically correct and can run without errors
+        - For plots, use plt.figure(figsize=(10,6)) before plotting and plt.tight_layout() before plt.show() for a better display layout.
+        - Always add titles and labels to plots for clarity.
+        """
+        
+        #Generate response from OpenAI
+        with st.chat_message("assistant"):
+            with st.spinner("Analyzing data and generating response..."):
+                try:
+                    response = client.chat.completions.create(
+                        model="gpt-4.1",
+                        messages=[
+                            {"role": "system", "content": system_prompt},
+                            {"role": "user", "content": user_input}
+                        ],
+                        temperature=0.1, #0 more focused answers, 1->2 more creative/random
+                        max_tokens=500
+                    )
+                    reply = response.choices[0].message.content
+                    st.markdown(reply)
+                    
+                    #We need to execute any code blocks in the reply for visualizations
+                    if "```python" in reply:
+                        code_blocks = reply.split("```python")
+                        for reply_block in code_blocks[1:]:
+                            code = reply_block.split("```")[0]
+                        exec_globals = {"df": df, "pd": pd, "plt": plt, "sns": sns, "st": st}
+                        try:
+                            exec(code.strip(), {}, exec_globals)
+                            
+                            #display any generated plots
+                            fig = plt.gcf()
+                            if fig.get_axes():
+                                st.pyplot(fig) 
+                                #plt.clf()  # Clear the current figure after displaying
+                                plt.close(fig)  # Close the figure to free up memory
+                            
+                        except Exception as e:
+                            error_type = type(e).__name__
+                            st.error(f"Error executing generated code ({error_type}): {e}")
+                            st.code(code, language='python')
+                            st.info("There was an error executing the above code block.")
+                    
+                    st.session_state.messages.append({"role": "assistant", "content": reply})
+                except openai.error.OpenAIError as e:
+                    st.error(f"OpenAI API Error: {e}")
+                    st.info("Please check your OpenAI API key and usage limits, and try again.")
+                except Exception as e:
+                    st.error(f"Error generating response: {e}")
+                    #st.info("Please check your OpenAI API key and usage limits.")
+                    st.info("I'm sorry, I couldn't generate a response at this time.")
+                    #response_content = "I'm sorry, I couldn't generate a response at this time."
 else:
     col1,col2,col3=st.columns([1,2,1])
     with col2:
