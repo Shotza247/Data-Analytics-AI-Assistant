@@ -42,6 +42,13 @@ if uploaded_file is not None: # move entire code inside the with block up
     try:
         df = pd.read_csv(uploaded_file)
         st.session_state["df"] = df
+        st.session_state.data_summary = {
+        "shape": df.shape,
+        "columns": df.columns.tolist(),
+        "dtypes": df.dtypes.astype(str).to_dict(),
+        "sample_data": df.head().to_dict(),
+        "summary_stats": df.describe().to_dict()
+        }
         st.success(f"{uploaded_file.name} uploaded and data loaded successfully! {df.shape[0]} Rows x {df.shape[1]} Columns")
         
         with st.expander("Preview Data"):
