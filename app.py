@@ -22,7 +22,14 @@ if "df" not in st.session_state:
     st.session_state["df"] = None
     
 if "data_summary" not in st.session_state:
-    st.session_state["data_summary"] = {}
+    st.session_state.data_summary = {
+        "shape": None,
+        "columns": None,
+        "dtypes": None,
+        "sample_data": None,
+        "summary_stats": None
+    }
+
 
 st.title("📊Ask about your CSV 🚀")
 st.markdown('Upload your CSV file and ask questions about its content.')
