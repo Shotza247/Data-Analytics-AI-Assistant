@@ -135,6 +135,7 @@ if st.session_state["df"] is not None:
         If the question requires analysis, describe the steps you would take to analyze the data.
         3. Write python code using pandas, matplotlib, or seaborn libraries to perform the analysis.
         4. For visualizations, describe the type of chart/graph to use and the columns involved.
+        When generating more than one chart, always use subplots within a single figure rather than separate figures, ensuring clarity, alignment, and consistent styling with clear titles, labels, and consistent formatting.
         Always use matplotlib "plt.figure()" or seaborn but before plotting and include plt.tight_layout() before plt.show() to ensure proper layout.
         5. Always validate data before operations (e.g., check for nulls, data types etc.).
         6. If you cannot answer due to data limitations, politely inform the user why.
@@ -149,7 +150,7 @@ if st.session_state["df"] is not None:
         - The dataframe is already loaded as df
         - Always use plt.show() to display plots
         - Ensure code is syntactically correct and can run without errors
-        - For plots, use plt.figure(figsize=(8,6)) before plotting and plt.tight_layout() before plt.show() for a better display layout.
+        - For plots, use plt.figure(figsize=(6,4)) before plotting and plt.tight_layout() before plt.show() for a better display layout.
         - Always add titles and labels to plots for clarity.
         """
         
