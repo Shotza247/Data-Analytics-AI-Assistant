@@ -1,0 +1,56 @@
+[
+    {
+        "label": "streamlit",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "streamlit",
+        "description": "streamlit",
+        "detail": "streamlit",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "openai",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "openai",
+        "description": "openai",
+        "detail": "openai",
+        "documentation": {}
+    },
+    {
+        "label": "matplotlib.pyplot",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "matplotlib.pyplot",
+        "description": "matplotlib.pyplot",
+        "detail": "matplotlib.pyplot",
+        "documentation": {}
+    },
+    {
+        "label": "seaborn",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "seaborn",
+        "description": "seaborn",
+        "detail": "seaborn",
+        "documentation": {}
+    },
+    {
+        "label": "client",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "client = openai.OpenAI(api_key=st.secrets[\"OpenAI_API_Key\"])\n#Session State Initialization\nif 'messages' not in st.session_state:\n    st.session_state['messages'] = []\nif \"df\" not in st.session_state:\n    st.session_state[\"df\"] = None\nif \"data_summary\" not in st.session_state:\n    st.session_state.data_summary = {\n        \"shape\": None,\n        \"columns\": None,",
+        "detail": "app",
+        "documentation": {}
+    }
+]

@@ -99,6 +99,7 @@ if st.session_state["df"] is not None:
     for msg in st.session_state['messages']:
         with st.chat_message(msg['role']):
             st.markdown(msg['content'])
+            
     #chat input box
     user_input = st.chat_input("Ask me anything about your CSV data...")
     
@@ -156,29 +157,42 @@ if st.session_state["df"] is not None:
         
         #Generate response from OpenAI
         with st.chat_message("assistant"):
+            message_placeholder = st.empty()
             with st.spinner("Analyzing data and generating response..."):
                 try:
                     response = client.chat.completions.create(
-                        model="gpt-4.1",
+                        model="gpt-5.4",
                         messages=[
                             {"role": "system", "content": system_prompt},
                             {"role": "user", "content": user_input}
                         ],
                         temperature=0.1, #0 more focused answers, 1->2 more creative/random
-                        max_tokens=500
+                        max_completion_tokens=500
                     )
                     reply = response.choices[0].message.content
-                    st.markdown(reply)
+                    message_placeholder.markdown(reply)
                     
                     #We need to execute any code blocks in the reply for visualizations
                     if "```python" in reply:
                         code_blocks = reply.split("```python")
                         for reply_block in code_blocks[1:]:
                             code = reply_block.split("```")[0]
-                        exec_globals = {"df": df, "pd": pd, "plt": plt, "sns": sns, "st": st}
+                        exec_globals = {
+                            "df": df,
+                            "pd": pd, 
+                            "plt": plt,
+                            "sns": sns,
+                            "st": st
+                            }
+                        
                         try:
                             exec(code.strip(), {}, exec_globals)
                             
+                            if w:
+                                for warning in w:
+                                    st.info(f"Note:{warning.message}")
+                                
+                                
                             #display any generated plots
                             fig = plt.gcf()
                             if fig.get_axes():
@@ -189,11 +203,21 @@ if st.session_state["df"] is not None:
                         except Exception as e:
                             error_type = type(e).__name__
                             st.error(f"Error executing generated code ({error_type}): {e}")
+                            
+                            if "NameError" in str(e):
+                                st.info("This might mean a column name is misspelled or doesn't exist.")
+                            elif "TypeError" in str(e):
+                                st.info("This often happens when trying to plot non-numeric data.")
+                            elif "KeyError" in str(e):
+                                st.info("The specified column might not exist in the dataset.")
+                            else:
+                                st.info("Try rephrasing your question or check your data format.")
+                                
                             st.code(code, language='python')
                             st.info("There was an error executing the above code block.")
                     
                     st.session_state.messages.append({"role": "assistant", "content": reply})
-                except openai.error.OpenAIError as e:
+                except openai.OpenAIError as e:
                     st.error(f"OpenAI API Error: {e}")
                     st.info("Please check your OpenAI API key and usage limits, and try again.")
                 except Exception as e:
@@ -202,6 +226,7 @@ if st.session_state["df"] is not None:
                     st.info("I'm sorry, I couldn't generate a response at this time.")
                     #response_content = "I'm sorry, I couldn't generate a response at this time."
 else:
+    
     col1,col2,col3=st.columns([1,2,1])
     with col2:
         st.info("Please upload a CSV file to start asking questions...")
