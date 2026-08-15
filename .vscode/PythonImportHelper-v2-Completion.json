@@ -158,6 +158,15 @@
         "documentation": {}
     },
     {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
         "label": "matplotlib.pyplot",
         "kind": 6,
         "isExtraImport": true,
@@ -2232,7 +2241,25 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def render_saved_message(msg):\n    with st.chat_message(msg[\"role\"]):\n        if msg.get(\"content\"):\n            st.markdown(msg[\"content\"])\n        for note in msg.get(\"notes\", []):\n            st.info(note)\n        for image in msg.get(\"images\", []):\n            st.image(image, use_column_width=True)\nst.title(\"📊Ask about your CSV 🚀\")\nst.markdown('Upload your CSV file and ask questions about its content.')",
+        "peekOfCode": "def render_saved_message(msg):\n    with st.chat_message(msg[\"role\"]):\n        if msg.get(\"content\"):\n            st.markdown(msg[\"content\"])\n        for note in msg.get(\"notes\", []):\n            st.info(note)\n        for image in msg.get(\"images\", []):\n            st.image(image, use_column_width=True)\ndef extract_python_code_blocks(text):\n    return [block.strip() for block in PYTHON_CODE_BLOCK_RE.findall(text)]",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "extract_python_code_blocks",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def extract_python_code_blocks(text):\n    return [block.strip() for block in PYTHON_CODE_BLOCK_RE.findall(text)]\ndef hide_python_code_blocks(text):\n    cleaned = PYTHON_CODE_BLOCK_RE.sub(\"\\n\\n\", text)\n    cleaned = re.sub(r\"\\n{3,}\", \"\\n\\n\", cleaned).strip()\n    return cleaned or \"Here are the results from the analysis.\"\nst.title(\"📊Ask about your CSV 🚀\")\nst.markdown('Upload your CSV file and ask questions about its content.')\nwith st.sidebar: #the 'with' creates a context where everything inside appears inside the side bar\n    st.header(\"Upload your CSV file\")",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "hide_python_code_blocks",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def hide_python_code_blocks(text):\n    cleaned = PYTHON_CODE_BLOCK_RE.sub(\"\\n\\n\", text)\n    cleaned = re.sub(r\"\\n{3,}\", \"\\n\\n\", cleaned).strip()\n    return cleaned or \"Here are the results from the analysis.\"\nst.title(\"📊Ask about your CSV 🚀\")\nst.markdown('Upload your CSV file and ask questions about its content.')\nwith st.sidebar: #the 'with' creates a context where everything inside appears inside the side bar\n    st.header(\"Upload your CSV file\")\n    uploaded_file = st.sidebar.file_uploader(\"Choose a CSV file\", type=\"csv\")\n    st.divider()",
         "detail": "app",
         "documentation": {}
     },
@@ -2241,7 +2268,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "client = openai.OpenAI(api_key=st.secrets[\"OpenAI_API_Key\"])\nOPENAI_MODEL = st.secrets.get(\"OpenAI_Model\", \"gpt-4o\")\n#Session State Initialization\nif 'messages' not in st.session_state:\n    st.session_state['messages'] = []\nif \"df\" not in st.session_state:\n    st.session_state[\"df\"] = None\nif \"data_summary\" not in st.session_state:\n    st.session_state.data_summary = {\n        \"shape\": None,",
+        "peekOfCode": "client = openai.OpenAI(api_key=st.secrets[\"OpenAI_API_Key\"])\nOPENAI_MODEL = st.secrets.get(\"OpenAI_Model\", \"gpt-4o\")\nPYTHON_CODE_BLOCK_RE = re.compile(r\"```(?:python|py)\\s*\\n?(.*?)```\", re.DOTALL | re.IGNORECASE)\n#Session State Initialization\nif 'messages' not in st.session_state:\n    st.session_state['messages'] = []\nif \"df\" not in st.session_state:\n    st.session_state[\"df\"] = None\nif \"data_summary\" not in st.session_state:\n    st.session_state.data_summary = {",
         "detail": "app",
         "documentation": {}
     },
@@ -2250,7 +2277,16 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "OPENAI_MODEL = st.secrets.get(\"OpenAI_Model\", \"gpt-4o\")\n#Session State Initialization\nif 'messages' not in st.session_state:\n    st.session_state['messages'] = []\nif \"df\" not in st.session_state:\n    st.session_state[\"df\"] = None\nif \"data_summary\" not in st.session_state:\n    st.session_state.data_summary = {\n        \"shape\": None,\n        \"columns\": None,",
+        "peekOfCode": "OPENAI_MODEL = st.secrets.get(\"OpenAI_Model\", \"gpt-4o\")\nPYTHON_CODE_BLOCK_RE = re.compile(r\"```(?:python|py)\\s*\\n?(.*?)```\", re.DOTALL | re.IGNORECASE)\n#Session State Initialization\nif 'messages' not in st.session_state:\n    st.session_state['messages'] = []\nif \"df\" not in st.session_state:\n    st.session_state[\"df\"] = None\nif \"data_summary\" not in st.session_state:\n    st.session_state.data_summary = {\n        \"shape\": None,",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "PYTHON_CODE_BLOCK_RE",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "PYTHON_CODE_BLOCK_RE = re.compile(r\"```(?:python|py)\\s*\\n?(.*?)```\", re.DOTALL | re.IGNORECASE)\n#Session State Initialization\nif 'messages' not in st.session_state:\n    st.session_state['messages'] = []\nif \"df\" not in st.session_state:\n    st.session_state[\"df\"] = None\nif \"data_summary\" not in st.session_state:\n    st.session_state.data_summary = {\n        \"shape\": None,\n        \"columns\": None,",
         "detail": "app",
         "documentation": {}
     }

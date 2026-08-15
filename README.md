@@ -1,15 +1,20 @@
 # CSV Data Analytics AI Assistant
 
-A Streamlit app for exploring CSV files with natural-language questions, automatic data summaries, and AI-generated analysis or visualizations.
+A Streamlit app for exploring CSV files with natural-language questions, automatic data summaries, AI-generated analysis, and retained visual outputs.
+
+## MVP1 Status
+
+This repository currently represents **MVP1** of the CSV Data Analytics AI Assistant. MVP1 focuses on a single-user Streamlit workflow for uploading one CSV, asking natural-language questions, receiving stakeholder-friendly business insights/results, and viewing generated charts without exposing the Python code used behind the scenes.
 
 ## What It Does
 
 - Upload a CSV file from the sidebar.
 - Preview the first rows of the dataset.
-- Review dataset dimensions, memory usage, null counts, and numeric summary statistics.
+- Review dataset dimensions, memory usage, data quality, and numeric summary statistics in a stacked sidebar layout.
+- Add business context, such as industry and audience, to make insights more relevant.
 - Ask questions about the data in a chat interface.
-- Generate pandas, Matplotlib, and Seaborn analysis code from the AI response.
-- Display generated charts directly in the Streamlit app.
+- Receive data analysis, result summaries, chart interpretation, business meaning, and recommended next steps in plain language.
+- Generate charts directly in the Streamlit app without showing the underlying Python code.
 - Retain assistant replies, notes, and generated chart images in the session chat history.
 
 ## Tech Stack
@@ -67,7 +72,7 @@ A Streamlit app for exploring CSV files with natural-language questions, automat
 3. Install dependencies:
 
    ```bash
-   pip install streamlit pandas openai matplotlib seaborn
+   pip install -r requirements.txt
    ```
 
 4. Add your OpenAI API key to `.streamlit/secrets.toml`:
@@ -93,8 +98,9 @@ A Streamlit app for exploring CSV files with natural-language questions, automat
 
 1. Upload a CSV file in the sidebar.
 2. Expand **Preview Data** to inspect the first 10 rows.
-3. Expand **Data Summary** in the sidebar to review dataset metadata and numeric statistics.
-4. Ask questions in the chat box.
+3. Add optional **Business Context** in the sidebar.
+4. Expand **Data Summary** in the sidebar to review dataset overview, data quality, and numeric statistics.
+5. Ask questions in the chat box.
 
 Example questions:
 
@@ -109,7 +115,9 @@ Example questions:
 
 When a CSV is uploaded, `app.py` stores the dataframe and a compact data summary in Streamlit session state. For smaller datasets, the full dataframe is included in the prompt context. For datasets with more than 100 rows, the app sends a summarized context instead to reduce token usage.
 
-The assistant response can include Python code blocks. When code is returned, the app extracts the generated code, executes it with access to `df`, `pd`, `plt`, `sns`, and `st`, then renders and saves any generated Matplotlib figures as chat images.
+The assistant can return hidden Python code blocks for chart generation. The app extracts and executes those hidden blocks with access to `df`, `pd`, `plt`, `sns`, and `st`, then renders and saves generated Matplotlib figures as chat images. The user-facing chat shows business-oriented analysis, results, notes, and charts, not the Python code.
+
+The prompt includes optional business context from the sidebar so chart explanations can be framed for the relevant industry, audience, and business goal instead of only describing visual patterns.
 
 Assistant text, warning notes, and generated chart images are saved in Streamlit session state so they remain visible when the app reruns during the same session.
 
@@ -125,7 +133,7 @@ response = client.chat.completions.create(
         {"role": "user", "content": user_input}
     ],
     temperature=0.1,
-    max_completion_tokens=500
+    max_tokens=500
 )
 ```
 
@@ -136,7 +144,7 @@ If your OpenAI project does not have access to the configured model, update `Ope
 - Do not commit `.streamlit/secrets.toml`.
 - Keep your OpenAI API key private.
 - Review API usage to avoid unexpected costs.
-- Be careful with untrusted prompts or files. The app executes Python code returned by the model, so only run it in an environment where you are comfortable testing generated code.
+- Be careful with untrusted prompts or files. The app executes hidden Python code returned by the model for analysis and visualizations, so only run it in an environment where you are comfortable testing generated code.
 
 ## Troubleshooting
 
