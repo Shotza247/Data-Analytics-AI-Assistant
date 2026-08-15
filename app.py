@@ -1,8 +1,13 @@
 import streamlit as st
 import pandas as pd
 import openai
+import io
+import matplotlib
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import seaborn as sns
+import warnings
 
 st.set_page_config(
     page_title="My CSV Assistant",
@@ -13,6 +18,7 @@ st.set_page_config(
 
 #We will inistialize the OpenAI client using the API key
 client = openai.OpenAI(api_key=st.secrets["OpenAI_API_Key"])
+OPENAI_MODEL = st.secrets.get("OpenAI_Model", "gpt-4o")
 
 #Session State Initialization
 if 'messages' not in st.session_state:
@@ -29,6 +35,16 @@ if "data_summary" not in st.session_state:
         "sample_data": None,
         "summary_stats": None
     }
+
+
+def render_saved_message(msg):
+    with st.chat_message(msg["role"]):
+        if msg.get("content"):
+            st.markdown(msg["content"])
+        for note in msg.get("notes", []):
+            st.info(note)
+        for image in msg.get("images", []):
+            st.image(image, use_column_width=True)
 
 
 st.title("📊Ask about your CSV 🚀")
@@ -97,8 +113,7 @@ else:
 #Main chat state
 if st.session_state["df"] is not None:
     for msg in st.session_state['messages']:
-        with st.chat_message(msg['role']):
-            st.markdown(msg['content'])
+        render_saved_message(msg)
             
     #chat input box
     user_input = st.chat_input("Ask me anything about your CSV data...")
@@ -160,23 +175,30 @@ if st.session_state["df"] is not None:
             message_placeholder = st.empty()
             with st.spinner("Analyzing data and generating response..."):
                 try:
+                    chat_history = [
+                        {"role": msg["role"], "content": msg["content"]}
+                        for msg in st.session_state.messages
+                        if msg.get("content")
+                    ]
                     response = client.chat.completions.create(
-                        model="gpt-5.4",
+                        model=OPENAI_MODEL,
                         messages=[
                             {"role": "system", "content": system_prompt},
-                            {"role": "user", "content": user_input}
+                            *chat_history
                         ],
                         temperature=0.1, #0 more focused answers, 1->2 more creative/random
-                        max_completion_tokens=500
+                        max_tokens=500
                     )
                     reply = response.choices[0].message.content
                     message_placeholder.markdown(reply)
+                    assistant_message = {"role": "assistant", "content": reply, "images": [], "notes": []}
                     
                     #We need to execute any code blocks in the reply for visualizations
                     if "```python" in reply:
-                        code_blocks = reply.split("```python")
-                        for reply_block in code_blocks[1:]:
-                            code = reply_block.split("```")[0]
+                        code_blocks = [
+                            reply_block.split("```")[0]
+                            for reply_block in reply.split("```python")[1:]
+                        ]
                         exec_globals = {
                             "df": df,
                             "pd": pd, 
@@ -185,38 +207,54 @@ if st.session_state["df"] is not None:
                             "st": st
                             }
                         
-                        try:
-                            exec(code.strip(), {}, exec_globals)
-                            
-                            if w:
-                                for warning in w:
-                                    st.info(f"Note:{warning.message}")
+                        for code in code_blocks:
+                            try:
+                                with warnings.catch_warnings(record=True) as w:
+                                    warnings.simplefilter("always")
+                                    exec(code.strip(), {}, exec_globals)
                                 
+                                if w:
+                                    for warning in w:
+                                        note = f"Note:{warning.message}"
+                                        st.info(note)
+                                        assistant_message["notes"].append(note)
+                                    
+                                    
+                                #display any generated plots
+                                for fig_num in plt.get_fignums():
+                                    fig = plt.figure(fig_num)
+                                    if fig.get_axes():
+                                        image_buffer = io.BytesIO()
+                                        fig.savefig(image_buffer, format="png", bbox_inches="tight")
+                                        image_buffer.seek(0)
+                                        image_bytes = image_buffer.getvalue()
+                                        st.image(image_bytes, use_column_width=True)
+                                        assistant_message["images"].append(image_bytes)
+                                    plt.close(fig)  # Close the figure to free up memory
                                 
-                            #display any generated plots
-                            fig = plt.gcf()
-                            if fig.get_axes():
-                                st.pyplot(fig) 
-                                #plt.clf()  # Clear the current figure after displaying
-                                plt.close(fig)  # Close the figure to free up memory
-                            
-                        except Exception as e:
-                            error_type = type(e).__name__
-                            st.error(f"Error executing generated code ({error_type}): {e}")
-                            
-                            if "NameError" in str(e):
-                                st.info("This might mean a column name is misspelled or doesn't exist.")
-                            elif "TypeError" in str(e):
-                                st.info("This often happens when trying to plot non-numeric data.")
-                            elif "KeyError" in str(e):
-                                st.info("The specified column might not exist in the dataset.")
-                            else:
-                                st.info("Try rephrasing your question or check your data format.")
+                            except Exception as e:
+                                error_type = type(e).__name__
+                                error_note = f"Error executing generated code ({error_type}): {e}"
+                                st.error(error_note)
+                                assistant_message["notes"].append(error_note)
                                 
-                            st.code(code, language='python')
-                            st.info("There was an error executing the above code block.")
+                                if "NameError" in str(e):
+                                    hint = "This might mean a column name is misspelled or doesn't exist."
+                                elif "TypeError" in str(e):
+                                    hint = "This often happens when trying to plot non-numeric data."
+                                elif "KeyError" in str(e):
+                                    hint = "The specified column might not exist in the dataset."
+                                else:
+                                    hint = "Try rephrasing your question or check your data format."
+                                st.info(hint)
+                                assistant_message["notes"].append(hint)
+                                    
+                                st.code(code, language='python')
+                                st.info("There was an error executing the above code block.")
+                            finally:
+                                plt.close("all")
                     
-                    st.session_state.messages.append({"role": "assistant", "content": reply})
+                    st.session_state.messages.append(assistant_message)
                 except openai.OpenAIError as e:
                     st.error(f"OpenAI API Error: {e}")
                     st.info("Please check your OpenAI API key and usage limits, and try again.")

@@ -10,6 +10,7 @@ A Streamlit app for exploring CSV files with natural-language questions, automat
 - Ask questions about the data in a chat interface.
 - Generate pandas, Matplotlib, and Seaborn analysis code from the AI response.
 - Display generated charts directly in the Streamlit app.
+- Retain assistant replies, notes, and generated chart images in the session chat history.
 
 ## Tech Stack
 
@@ -73,6 +74,7 @@ A Streamlit app for exploring CSV files with natural-language questions, automat
 
    ```toml
    OpenAI_API_Key = "your-api-key-here"
+   OpenAI_Model = "gpt-4o"
    ```
 
 5. Run the app:
@@ -107,7 +109,9 @@ Example questions:
 
 When a CSV is uploaded, `app.py` stores the dataframe and a compact data summary in Streamlit session state. For smaller datasets, the full dataframe is included in the prompt context. For datasets with more than 100 rows, the app sends a summarized context instead to reduce token usage.
 
-The assistant response can include Python code blocks. When code is returned, the app extracts the generated code, executes it with access to `df`, `pd`, `plt`, `sns`, and `st`, then renders any generated Matplotlib figure with `st.pyplot`.
+The assistant response can include Python code blocks. When code is returned, the app extracts the generated code, executes it with access to `df`, `pd`, `plt`, `sns`, and `st`, then renders and saves any generated Matplotlib figures as chat images.
+
+Assistant text, warning notes, and generated chart images are saved in Streamlit session state so they remain visible when the app reruns during the same session.
 
 ## Configuration
 
@@ -115,7 +119,7 @@ The OpenAI call is configured in `app.py`:
 
 ```python
 response = client.chat.completions.create(
-    model="gpt-5.4",
+    model=OPENAI_MODEL,
     messages=[
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": user_input}
@@ -125,7 +129,7 @@ response = client.chat.completions.create(
 )
 ```
 
-If your OpenAI account does not have access to the configured model, update the `model` value in `app.py` to a model available for your account.
+If your OpenAI project does not have access to the configured model, update `OpenAI_Model` in `.streamlit/secrets.toml` to a model available for your project.
 
 ## Security Notes
 

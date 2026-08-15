@@ -105,6 +105,15 @@
         "documentation": {}
     },
     {
+        "label": "io",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "io",
+        "description": "io",
+        "detail": "io",
+        "documentation": {}
+    },
+    {
         "label": "StringIO",
         "importPath": "io",
         "description": "io",
@@ -140,6 +149,15 @@
         "documentation": {}
     },
     {
+        "label": "matplotlib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "matplotlib",
+        "description": "matplotlib",
+        "detail": "matplotlib",
+        "documentation": {}
+    },
+    {
         "label": "matplotlib.pyplot",
         "kind": 6,
         "isExtraImport": true,
@@ -155,6 +173,15 @@
         "importPath": "seaborn",
         "description": "seaborn",
         "detail": "seaborn",
+        "documentation": {}
+    },
+    {
+        "label": "warnings",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "warnings",
+        "description": "warnings",
+        "detail": "warnings",
         "documentation": {}
     },
     {
@@ -2201,11 +2228,29 @@
         "documentation": {}
     },
     {
+        "label": "render_saved_message",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def render_saved_message(msg):\n    with st.chat_message(msg[\"role\"]):\n        if msg.get(\"content\"):\n            st.markdown(msg[\"content\"])\n        for note in msg.get(\"notes\", []):\n            st.info(note)\n        for image in msg.get(\"images\", []):\n            st.image(image, use_column_width=True)\nst.title(\"📊Ask about your CSV 🚀\")\nst.markdown('Upload your CSV file and ask questions about its content.')",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
         "label": "client",
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "client = openai.OpenAI(api_key=st.secrets[\"OpenAI_API_Key\"])\n#Session State Initialization\nif 'messages' not in st.session_state:\n    st.session_state['messages'] = []\nif \"df\" not in st.session_state:\n    st.session_state[\"df\"] = None\nif \"data_summary\" not in st.session_state:\n    st.session_state.data_summary = {\n        \"shape\": None,\n        \"columns\": None,",
+        "peekOfCode": "client = openai.OpenAI(api_key=st.secrets[\"OpenAI_API_Key\"])\nOPENAI_MODEL = st.secrets.get(\"OpenAI_Model\", \"gpt-4o\")\n#Session State Initialization\nif 'messages' not in st.session_state:\n    st.session_state['messages'] = []\nif \"df\" not in st.session_state:\n    st.session_state[\"df\"] = None\nif \"data_summary\" not in st.session_state:\n    st.session_state.data_summary = {\n        \"shape\": None,",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "OPENAI_MODEL",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "OPENAI_MODEL = st.secrets.get(\"OpenAI_Model\", \"gpt-4o\")\n#Session State Initialization\nif 'messages' not in st.session_state:\n    st.session_state['messages'] = []\nif \"df\" not in st.session_state:\n    st.session_state[\"df\"] = None\nif \"data_summary\" not in st.session_state:\n    st.session_state.data_summary = {\n        \"shape\": None,\n        \"columns\": None,",
         "detail": "app",
         "documentation": {}
     }
