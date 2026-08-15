@@ -1,5 +1,118 @@
 [
     {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "math",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "math",
+        "description": "math",
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "os",
+        "description": "os",
+        "isExtraImport": true,
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "inspect",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "inspect",
+        "description": "inspect",
+        "detail": "inspect",
+        "documentation": {}
+    },
+    {
+        "label": "builtins",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "builtins",
+        "description": "builtins",
+        "detail": "builtins",
+        "documentation": {}
+    },
+    {
+        "label": "functools",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "functools",
+        "description": "functools",
+        "detail": "functools",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "subprocess",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "subprocess",
+        "description": "subprocess",
+        "detail": "subprocess",
+        "documentation": {}
+    },
+    {
+        "label": "traceback",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "traceback",
+        "description": "traceback",
+        "detail": "traceback",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "StringIO",
+        "importPath": "io",
+        "description": "io",
+        "isExtraImport": true,
+        "detail": "io",
+        "documentation": {}
+    },
+    {
         "label": "streamlit",
         "kind": 6,
         "isExtraImport": true,
@@ -42,6 +155,2049 @@
         "importPath": "seaborn",
         "description": "seaborn",
         "detail": "seaborn",
+        "documentation": {}
+    },
+    {
+        "label": "_hx_AnonObject",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class _hx_AnonObject:\n    _hx_disable_getattr = False\n    def __init__(self, fields):\n        self.__dict__ = fields\n    def __repr__(self):\n        return repr(self.__dict__)\n    def __contains__(self, item):\n        return item in self.__dict__\n    def __getitem__(self, item):\n        return self.__dict__[item]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Enum",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Enum:\n    _hx_class_name = \"Enum\"\n    __slots__ = (\"tag\", \"index\", \"params\")\n    _hx_fields = [\"tag\", \"index\", \"params\"]\n    _hx_methods = [\"__str__\"]\n    def __init__(self,tag,index,params):\n        self.tag = tag\n        self.index = index\n        self.params = params\n    def __str__(self):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Alignment",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Alignment:\n    _hx_class_name = \"Alignment\"\n    __slots__ = (\"map_a2b\", \"map_b2a\", \"ha\", \"hb\", \"ta\", \"tb\", \"ia\", \"ib\", \"map_count\", \"order_cache\", \"order_cache_has_reference\", \"index_columns\", \"marked_as_identical\", \"reference\", \"meta\", \"comp\", \"has_addition\", \"has_removal\")\n    _hx_fields = [\"map_a2b\", \"map_b2a\", \"ha\", \"hb\", \"ta\", \"tb\", \"ia\", \"ib\", \"map_count\", \"order_cache\", \"order_cache_has_reference\", \"index_columns\", \"marked_as_identical\", \"reference\", \"meta\", \"comp\", \"has_addition\", \"has_removal\"]\n    _hx_methods = [\"range\", \"tables\", \"headers\", \"setRowlike\", \"link\", \"addIndexColumns\", \"getIndexColumns\", \"a2b\", \"b2a\", \"count\", \"toString\", \"toOrder\", \"addToOrder\", \"getSource\", \"getTarget\", \"getSourceHeader\", \"getTargetHeader\", \"toOrder3\", \"markIdentical\", \"isMarkedAsIdentical\"]\n    def __init__(self):\n        self.has_removal = None\n        self.has_addition = None\n        self.index_columns = None\n        self.order_cache = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "CellBuilder",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class CellBuilder:\n    _hx_class_name = \"CellBuilder\"\n    __slots__ = ()\n    _hx_methods = [\"needSeparator\", \"setSeparator\", \"setConflictSeparator\", \"setView\", \"update\", \"conflict\", \"marker\", \"links\"]\nCellBuilder._hx_class = CellBuilder\nclass CellInfo:\n    _hx_class_name = \"CellInfo\"\n    __slots__ = (\"raw\", \"value\", \"pretty_value\", \"category\", \"category_given_tr\", \"separator\", \"pretty_separator\", \"updated\", \"conflicted\", \"pvalue\", \"lvalue\", \"rvalue\", \"meta\")\n    _hx_fields = [\"raw\", \"value\", \"pretty_value\", \"category\", \"category_given_tr\", \"separator\", \"pretty_separator\", \"updated\", \"conflicted\", \"pvalue\", \"lvalue\", \"rvalue\", \"meta\"]\n    _hx_methods = [\"toString\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "CellInfo",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class CellInfo:\n    _hx_class_name = \"CellInfo\"\n    __slots__ = (\"raw\", \"value\", \"pretty_value\", \"category\", \"category_given_tr\", \"separator\", \"pretty_separator\", \"updated\", \"conflicted\", \"pvalue\", \"lvalue\", \"rvalue\", \"meta\")\n    _hx_fields = [\"raw\", \"value\", \"pretty_value\", \"category\", \"category_given_tr\", \"separator\", \"pretty_separator\", \"updated\", \"conflicted\", \"pvalue\", \"lvalue\", \"rvalue\", \"meta\"]\n    _hx_methods = [\"toString\"]\n    def __init__(self):\n        self.meta = None\n        self.rvalue = None\n        self.lvalue = None\n        self.pvalue = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Class",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Class: pass\nclass ColumnChange:\n    _hx_class_name = \"ColumnChange\"\n    __slots__ = (\"prevName\", \"name\", \"props\")\n    _hx_fields = [\"prevName\", \"name\", \"props\"]\n    def __init__(self):\n        self.props = None\n        self.name = None\n        self.prevName = None\nColumnChange._hx_class = ColumnChange",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "ColumnChange",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class ColumnChange:\n    _hx_class_name = \"ColumnChange\"\n    __slots__ = (\"prevName\", \"name\", \"props\")\n    _hx_fields = [\"prevName\", \"name\", \"props\"]\n    def __init__(self):\n        self.props = None\n        self.name = None\n        self.prevName = None\nColumnChange._hx_class = ColumnChange\nclass Table:",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Table",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Table:\n    _hx_class_name = \"Table\"\n    __slots__ = ()\n    _hx_methods = [\"getCell\", \"setCell\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"get_width\", \"get_height\", \"getData\", \"clone\", \"create\", \"getMeta\"]\nTable._hx_class = Table\nclass CombinedTable:\n    _hx_class_name = \"CombinedTable\"\n    __slots__ = (\"t\", \"body\", \"head\", \"dx\", \"dy\", \"core\", \"meta\")\n    _hx_fields = [\"t\", \"body\", \"head\", \"dx\", \"dy\", \"core\", \"meta\"]\n    _hx_methods = [\"all\", \"getTable\", \"get_width\", \"get_height\", \"getCell\", \"setCell\", \"toString\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"getData\", \"clone\", \"create\", \"getMeta\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "CombinedTable",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class CombinedTable:\n    _hx_class_name = \"CombinedTable\"\n    __slots__ = (\"t\", \"body\", \"head\", \"dx\", \"dy\", \"core\", \"meta\")\n    _hx_fields = [\"t\", \"body\", \"head\", \"dx\", \"dy\", \"core\", \"meta\"]\n    _hx_methods = [\"all\", \"getTable\", \"get_width\", \"get_height\", \"getCell\", \"setCell\", \"toString\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"getData\", \"clone\", \"create\", \"getMeta\"]\n    _hx_interfaces = [Table]\n    def __init__(self,t):\n        self.meta = None\n        self.body = None\n        self.t = t",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "CombinedTableBody",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class CombinedTableBody:\n    _hx_class_name = \"CombinedTableBody\"\n    __slots__ = (\"parent\", \"dx\", \"dy\", \"all\", \"meta\")\n    _hx_fields = [\"parent\", \"dx\", \"dy\", \"all\", \"meta\"]\n    _hx_methods = [\"getTable\", \"get_width\", \"get_height\", \"getCell\", \"setCell\", \"toString\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"getData\", \"clone\", \"create\", \"getMeta\"]\n    _hx_interfaces = [Table]\n    def __init__(self,parent,dx,dy):\n        self.meta = None\n        self.parent = parent\n        self.dx = dx",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "CombinedTableHead",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class CombinedTableHead:\n    _hx_class_name = \"CombinedTableHead\"\n    __slots__ = (\"parent\", \"dx\", \"dy\", \"all\")\n    _hx_fields = [\"parent\", \"dx\", \"dy\", \"all\"]\n    _hx_methods = [\"getTable\", \"get_width\", \"get_height\", \"getCell\", \"setCell\", \"toString\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"getData\", \"clone\", \"create\", \"getMeta\"]\n    _hx_interfaces = [Table]\n    def __init__(self,parent,dx,dy):\n        self.parent = parent\n        self.dx = dx\n        self.dy = dy",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "CompareFlags",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class CompareFlags:\n    _hx_class_name = \"CompareFlags\"\n    __slots__ = (\"ordered\", \"show_unchanged\", \"unchanged_context\", \"always_show_order\", \"never_show_order\", \"show_unchanged_columns\", \"unchanged_column_context\", \"always_show_header\", \"acts\", \"ids\", \"columns_to_ignore\", \"tables\", \"allow_nested_cells\", \"warnings\", \"diff_strategy\", \"padding_strategy\", \"show_meta\", \"show_unchanged_meta\", \"parent\", \"count_like_a_spreadsheet\", \"ignore_whitespace\", \"ignore_case\", \"ignore_epsilon\", \"terminal_format\", \"use_glyphs\", \"quote_html\")\n    _hx_fields = [\"ordered\", \"show_unchanged\", \"unchanged_context\", \"always_show_order\", \"never_show_order\", \"show_unchanged_columns\", \"unchanged_column_context\", \"always_show_header\", \"acts\", \"ids\", \"columns_to_ignore\", \"tables\", \"allow_nested_cells\", \"warnings\", \"diff_strategy\", \"padding_strategy\", \"show_meta\", \"show_unchanged_meta\", \"parent\", \"count_like_a_spreadsheet\", \"ignore_whitespace\", \"ignore_case\", \"ignore_epsilon\", \"terminal_format\", \"use_glyphs\", \"quote_html\"]\n    _hx_methods = [\"filter\", \"allowUpdate\", \"allowInsert\", \"allowDelete\", \"allowColumn\", \"getIgnoredColumns\", \"addPrimaryKey\", \"ignoreColumn\", \"addTable\", \"addWarning\", \"getWarning\", \"getNameByRole\", \"getCanonicalName\", \"getIdsByRole\"]\n    def __init__(self):\n        self.padding_strategy = None\n        self.ordered = True\n        self.show_unchanged = False\n        self.unchanged_context = 1",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "CompareTable",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class CompareTable:\n    _hx_class_name = \"CompareTable\"\n    __slots__ = (\"comp\", \"indexes\")\n    _hx_fields = [\"comp\", \"indexes\"]\n    _hx_methods = [\"run\", \"align\", \"getComparisonState\", \"alignCore\", \"alignCore2\", \"alignColumns\", \"testHasSameColumns\", \"hasSameColumns2\", \"testIsEqual\", \"isEqual2\", \"compareCore\", \"storeIndexes\", \"getIndexes\", \"useSql\"]\n    def __init__(self,comp):\n        self.indexes = None\n        self.comp = comp\n        if (comp.compare_flags is not None):\n            if (comp.compare_flags.parent is not None):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "ConflictInfo",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class ConflictInfo:\n    _hx_class_name = \"ConflictInfo\"\n    __slots__ = (\"row\", \"col\", \"pvalue\", \"lvalue\", \"rvalue\")\n    _hx_fields = [\"row\", \"col\", \"pvalue\", \"lvalue\", \"rvalue\"]\n    def __init__(self,row,col,pvalue,lvalue,rvalue):\n        self.row = row\n        self.col = col\n        self.pvalue = pvalue\n        self.lvalue = lvalue\n        self.rvalue = rvalue",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Coopy",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Coopy:\n    _hx_class_name = \"Coopy\"\n    __slots__ = (\"format_preference\", \"delim_preference\", \"csv_eol_preference\", \"extern_preference\", \"output_format\", \"output_format_set\", \"nested_output\", \"order_set\", \"order_preference\", \"io\", \"strategy\", \"css_output\", \"fragment\", \"flags\", \"cache_txt\", \"fail_if_diff\", \"diffs_found\", \"mv\", \"status\", \"daff_cmd\")\n    _hx_fields = [\"format_preference\", \"delim_preference\", \"csv_eol_preference\", \"extern_preference\", \"output_format\", \"output_format_set\", \"nested_output\", \"order_set\", \"order_preference\", \"io\", \"strategy\", \"css_output\", \"fragment\", \"flags\", \"cache_txt\", \"fail_if_diff\", \"diffs_found\", \"mv\", \"status\", \"daff_cmd\"]\n    _hx_methods = [\"init\", \"checkFormat\", \"setFormat\", \"getRenderer\", \"applyRenderer\", \"renderTable\", \"renderTables\", \"saveTable\", \"encodeTable\", \"saveTables\", \"saveText\", \"jsonToTables\", \"jsonToTable\", \"useColor\", \"runDiff\", \"loadTable\", \"command\", \"installGitDriver\", \"run\", \"coopyhx\"]\n    _hx_statics = [\"VERSION\", \"diffAsHtml\", \"diffAsAnsi\", \"diff\", \"getBlankTable\", \"align\", \"patch\", \"compareTables\", \"compareTables3\", \"keepAround\", \"cellFor\", \"main\", \"show\", \"jsonify\", \"tablify\"]\n    def __init__(self,io = None):\n        self.daff_cmd = None\n        self.status = None\n        self.mv = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "CrossMatch",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class CrossMatch:\n    _hx_class_name = \"CrossMatch\"\n    __slots__ = (\"spot_a\", \"spot_b\", \"item_a\", \"item_b\")\n    _hx_fields = [\"spot_a\", \"spot_b\", \"item_a\", \"item_b\"]\n    def __init__(self):\n        self.item_b = None\n        self.item_a = None\n        self.spot_b = None\n        self.spot_a = None\nCrossMatch._hx_class = CrossMatch",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Csv",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Csv:\n    _hx_class_name = \"Csv\"\n    __slots__ = (\"cursor\", \"row_ended\", \"has_structure\", \"delim\", \"discovered_eol\", \"preferred_eol\")\n    _hx_fields = [\"cursor\", \"row_ended\", \"has_structure\", \"delim\", \"discovered_eol\", \"preferred_eol\"]\n    _hx_methods = [\"renderTable\", \"renderCell\", \"parseTable\", \"makeTable\", \"parseCellPart\", \"parseCell\", \"getDiscoveredEol\", \"setPreferredEol\"]\n    def __init__(self,delim = None,eol = None):\n        if (delim is None):\n            delim = \",\"\n        self.has_structure = None\n        self.cursor = 0",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Date",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Date:\n    _hx_class_name = \"Date\"\n    __slots__ = (\"date\", \"dateUTC\")\n    _hx_fields = [\"date\", \"dateUTC\"]\n    _hx_methods = [\"toString\"]\n    _hx_statics = [\"makeLocal\"]\n    def __init__(self,year,month,day,hour,_hx_min,sec):\n        self.dateUTC = None\n        if (year < python_lib_datetime_Datetime.min.year):\n            year = python_lib_datetime_Datetime.min.year",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "DiffRender",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class DiffRender:\n    _hx_class_name = \"DiffRender\"\n    __slots__ = (\"text_to_insert\", \"td_open\", \"td_close\", \"open\", \"pretty_arrows\", \"quote_html\", \"section\")\n    _hx_fields = [\"text_to_insert\", \"td_open\", \"td_close\", \"open\", \"pretty_arrows\", \"quote_html\", \"section\"]\n    _hx_methods = [\"usePrettyArrows\", \"quoteHtml\", \"insert\", \"beginTable\", \"setSection\", \"beginRow\", \"insertCell\", \"endRow\", \"endTable\", \"html\", \"toString\", \"render\", \"renderTables\", \"sampleCss\", \"completeHtml\"]\n    _hx_statics = [\"examineCell\", \"markSpaces\", \"renderCell\"]\n    def __init__(self):\n        self.section = None\n        self.td_close = None\n        self.td_open = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "DiffSummary",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class DiffSummary:\n    _hx_class_name = \"DiffSummary\"\n    __slots__ = (\"row_deletes\", \"row_inserts\", \"row_updates\", \"row_reorders\", \"col_deletes\", \"col_inserts\", \"col_updates\", \"col_renames\", \"col_reorders\", \"row_count_initial_with_header\", \"row_count_final_with_header\", \"row_count_initial\", \"row_count_final\", \"col_count_initial\", \"col_count_final\", \"different\")\n    _hx_fields = [\"row_deletes\", \"row_inserts\", \"row_updates\", \"row_reorders\", \"col_deletes\", \"col_inserts\", \"col_updates\", \"col_renames\", \"col_reorders\", \"row_count_initial_with_header\", \"row_count_final_with_header\", \"row_count_initial\", \"row_count_final\", \"col_count_initial\", \"col_count_final\", \"different\"]\n    def __init__(self):\n        self.different = None\n        self.col_count_final = None\n        self.col_count_initial = None\n        self.row_count_final = None\n        self.row_count_initial = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "FlatCellBuilder",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class FlatCellBuilder:\n    _hx_class_name = \"FlatCellBuilder\"\n    __slots__ = (\"view\", \"separator\", \"conflict_separator\", \"flags\")\n    _hx_fields = [\"view\", \"separator\", \"conflict_separator\", \"flags\"]\n    _hx_methods = [\"needSeparator\", \"setSeparator\", \"setConflictSeparator\", \"setView\", \"update\", \"conflict\", \"marker\", \"links\"]\n    _hx_statics = [\"quoteForDiff\"]\n    _hx_interfaces = [CellBuilder]\n    def __init__(self,flags):\n        self.conflict_separator = None\n        self.separator = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Row",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Row:\n    _hx_class_name = \"Row\"\n    __slots__ = ()\n    _hx_methods = [\"getRowString\", \"isPreamble\"]\nRow._hx_class = Row\nclass HighlightPatch:\n    _hx_class_name = \"HighlightPatch\"\n    __slots__ = (\"source\", \"patch\", \"view\", \"sourceView\", \"csv\", \"header\", \"headerPre\", \"headerPost\", \"headerRename\", \"headerMove\", \"modifier\", \"currentRow\", \"payloadCol\", \"payloadTop\", \"mods\", \"cmods\", \"rowInfo\", \"cellInfo\", \"rcOffset\", \"indexes\", \"sourceInPatchCol\", \"patchInSourceCol\", \"destInPatchCol\", \"patchInDestCol\", \"patchInSourceRow\", \"lastSourceRow\", \"actions\", \"rowPermutation\", \"rowPermutationRev\", \"colPermutation\", \"colPermutationRev\", \"haveDroppedColumns\", \"headerRow\", \"preambleRow\", \"flags\", \"meta_change\", \"process_meta\", \"prev_meta\", \"next_meta\", \"finished_columns\", \"meta\")\n    _hx_fields = [\"source\", \"patch\", \"view\", \"sourceView\", \"csv\", \"header\", \"headerPre\", \"headerPost\", \"headerRename\", \"headerMove\", \"modifier\", \"currentRow\", \"payloadCol\", \"payloadTop\", \"mods\", \"cmods\", \"rowInfo\", \"cellInfo\", \"rcOffset\", \"indexes\", \"sourceInPatchCol\", \"patchInSourceCol\", \"destInPatchCol\", \"patchInDestCol\", \"patchInSourceRow\", \"lastSourceRow\", \"actions\", \"rowPermutation\", \"rowPermutationRev\", \"colPermutation\", \"colPermutationRev\", \"haveDroppedColumns\", \"headerRow\", \"preambleRow\", \"flags\", \"meta_change\", \"process_meta\", \"prev_meta\", \"next_meta\", \"finished_columns\", \"meta\"]\n    _hx_methods = [\"reset\", \"processMeta\", \"apply\", \"needSourceColumns\", \"needDestColumns\", \"needSourceIndex\", \"setMetaProp\", \"applyMetaRow\", \"applyRow\", \"getDatum\", \"getString\", \"getStringNull\", \"applyMeta\", \"applyHeader\", \"lookUp\", \"applyActionExternal\", \"applyAction\", \"checkAct\", \"getPreString\", \"getRowString\", \"isPreamble\", \"sortMods\", \"processMods\", \"useMetaForColumnChanges\", \"useMetaForRowChanges\", \"computeOrdering\", \"permuteRows\", \"fillInNewColumns\", \"finishRows\", \"permuteColumns\", \"finishColumns\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "HighlightPatch",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class HighlightPatch:\n    _hx_class_name = \"HighlightPatch\"\n    __slots__ = (\"source\", \"patch\", \"view\", \"sourceView\", \"csv\", \"header\", \"headerPre\", \"headerPost\", \"headerRename\", \"headerMove\", \"modifier\", \"currentRow\", \"payloadCol\", \"payloadTop\", \"mods\", \"cmods\", \"rowInfo\", \"cellInfo\", \"rcOffset\", \"indexes\", \"sourceInPatchCol\", \"patchInSourceCol\", \"destInPatchCol\", \"patchInDestCol\", \"patchInSourceRow\", \"lastSourceRow\", \"actions\", \"rowPermutation\", \"rowPermutationRev\", \"colPermutation\", \"colPermutationRev\", \"haveDroppedColumns\", \"headerRow\", \"preambleRow\", \"flags\", \"meta_change\", \"process_meta\", \"prev_meta\", \"next_meta\", \"finished_columns\", \"meta\")\n    _hx_fields = [\"source\", \"patch\", \"view\", \"sourceView\", \"csv\", \"header\", \"headerPre\", \"headerPost\", \"headerRename\", \"headerMove\", \"modifier\", \"currentRow\", \"payloadCol\", \"payloadTop\", \"mods\", \"cmods\", \"rowInfo\", \"cellInfo\", \"rcOffset\", \"indexes\", \"sourceInPatchCol\", \"patchInSourceCol\", \"destInPatchCol\", \"patchInDestCol\", \"patchInSourceRow\", \"lastSourceRow\", \"actions\", \"rowPermutation\", \"rowPermutationRev\", \"colPermutation\", \"colPermutationRev\", \"haveDroppedColumns\", \"headerRow\", \"preambleRow\", \"flags\", \"meta_change\", \"process_meta\", \"prev_meta\", \"next_meta\", \"finished_columns\", \"meta\"]\n    _hx_methods = [\"reset\", \"processMeta\", \"apply\", \"needSourceColumns\", \"needDestColumns\", \"needSourceIndex\", \"setMetaProp\", \"applyMetaRow\", \"applyRow\", \"getDatum\", \"getString\", \"getStringNull\", \"applyMeta\", \"applyHeader\", \"lookUp\", \"applyActionExternal\", \"applyAction\", \"checkAct\", \"getPreString\", \"getRowString\", \"isPreamble\", \"sortMods\", \"processMods\", \"useMetaForColumnChanges\", \"useMetaForRowChanges\", \"computeOrdering\", \"permuteRows\", \"fillInNewColumns\", \"finishRows\", \"permuteColumns\", \"finishColumns\"]\n    _hx_interfaces = [Row]\n    def __init__(self,source,patch,flags = None):\n        self.finished_columns = None\n        self.next_meta = None\n        self.prev_meta = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "HighlightPatchUnit",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class HighlightPatchUnit:\n    _hx_class_name = \"HighlightPatchUnit\"\n    __slots__ = (\"add\", \"rem\", \"update\", \"code\", \"sourceRow\", \"sourceRowOffset\", \"sourcePrevRow\", \"sourceNextRow\", \"destRow\", \"patchRow\")\n    _hx_fields = [\"add\", \"rem\", \"update\", \"code\", \"sourceRow\", \"sourceRowOffset\", \"sourcePrevRow\", \"sourceNextRow\", \"destRow\", \"patchRow\"]\n    _hx_methods = [\"toString\"]\n    def __init__(self):\n        self.add = False\n        self.rem = False\n        self.update = False\n        self.sourceRow = -1",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Index",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Index:\n    _hx_class_name = \"Index\"\n    __slots__ = (\"items\", \"keys\", \"top_freq\", \"height\", \"cols\", \"v\", \"indexed_table\", \"hdr\", \"ignore_whitespace\", \"ignore_case\")\n    _hx_fields = [\"items\", \"keys\", \"top_freq\", \"height\", \"cols\", \"v\", \"indexed_table\", \"hdr\", \"ignore_whitespace\", \"ignore_case\"]\n    _hx_methods = [\"addColumn\", \"indexTable\", \"toKey\", \"toKeyByContent\", \"getTable\"]\n    def __init__(self,flags):\n        self.indexed_table = None\n        self.v = None\n        self.items = haxe_ds_StringMap()\n        self.cols = list()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "IndexItem",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class IndexItem:\n    _hx_class_name = \"IndexItem\"\n    __slots__ = (\"lst\",)\n    _hx_fields = [\"lst\"]\n    _hx_methods = [\"add\", \"length\", \"value\", \"asList\"]\n    def __init__(self):\n        self.lst = None\n    def add(self,i):\n        if (self.lst is None):\n            self.lst = list()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "IndexPair",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class IndexPair:\n    _hx_class_name = \"IndexPair\"\n    __slots__ = (\"ia\", \"ib\", \"hdr\", \"quality\", \"flags\")\n    _hx_fields = [\"ia\", \"ib\", \"hdr\", \"quality\", \"flags\"]\n    _hx_methods = [\"addColumns\", \"indexTables\", \"queryByKey\", \"queryByContent\", \"queryLocal\", \"localKey\", \"remoteKey\", \"getTopFreq\", \"getQuality\"]\n    def __init__(self,flags):\n        self.flags = flags\n        self.ia = Index(flags)\n        self.ib = Index(flags)\n        self.quality = 0",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Meta",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Meta:\n    _hx_class_name = \"Meta\"\n    __slots__ = ()\n    _hx_methods = [\"alterColumns\", \"changeRow\", \"applyFlags\", \"asTable\", \"cloneMeta\", \"useForColumnChanges\", \"useForRowChanges\", \"getRowStream\", \"isNested\", \"isSql\", \"getName\"]\nMeta._hx_class = Meta\nclass JsonTable:\n    _hx_class_name = \"JsonTable\"\n    __slots__ = (\"w\", \"h\", \"columns\", \"rows\", \"data\", \"idx2col\", \"name\")\n    _hx_fields = [\"w\", \"h\", \"columns\", \"rows\", \"data\", \"idx2col\", \"name\"]\n    _hx_methods = [\"getTable\", \"get_width\", \"get_height\", \"getCell\", \"setCell\", \"toString\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"getData\", \"clone\", \"setMeta\", \"getMeta\", \"create\", \"alterColumns\", \"changeRow\", \"applyFlags\", \"asTable\", \"cloneMeta\", \"useForColumnChanges\", \"useForRowChanges\", \"getRowStream\", \"isNested\", \"isSql\", \"getName\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "JsonTable",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class JsonTable:\n    _hx_class_name = \"JsonTable\"\n    __slots__ = (\"w\", \"h\", \"columns\", \"rows\", \"data\", \"idx2col\", \"name\")\n    _hx_fields = [\"w\", \"h\", \"columns\", \"rows\", \"data\", \"idx2col\", \"name\"]\n    _hx_methods = [\"getTable\", \"get_width\", \"get_height\", \"getCell\", \"setCell\", \"toString\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"getData\", \"clone\", \"setMeta\", \"getMeta\", \"create\", \"alterColumns\", \"changeRow\", \"applyFlags\", \"asTable\", \"cloneMeta\", \"useForColumnChanges\", \"useForRowChanges\", \"getRowStream\", \"isNested\", \"isSql\", \"getName\"]\n    _hx_interfaces = [Meta, Table]\n    def __init__(self,data,name):\n        self.name = None\n        self.idx2col = None\n        self.h = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "JsonTables",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class JsonTables:\n    _hx_class_name = \"JsonTables\"\n    __slots__ = (\"db\", \"t\", \"flags\")\n    _hx_fields = [\"db\", \"t\", \"flags\"]\n    _hx_methods = [\"getCell\", \"setCell\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"get_width\", \"get_height\", \"getData\", \"clone\", \"getMeta\", \"create\"]\n    _hx_interfaces = [Table]\n    def __init__(self,json,flags):\n        self.flags = None\n        self.db = json\n        names = Reflect.field(json,\"names\")",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Lambda",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Lambda:\n    _hx_class_name = \"Lambda\"\n    __slots__ = ()\n    _hx_statics = [\"array\", \"has\"]\n    @staticmethod\n    def array(it):\n        a = list()\n        i = HxOverrides.iterator(it)\n        while i.hasNext():\n            i1 = i.next()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Merger",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Merger:\n    _hx_class_name = \"Merger\"\n    __slots__ = (\"parent\", \"local\", \"remote\", \"flags\", \"order\", \"units\", \"column_order\", \"column_units\", \"row_mix_local\", \"row_mix_remote\", \"column_mix_local\", \"column_mix_remote\", \"conflicts\", \"conflict_infos\")\n    _hx_fields = [\"parent\", \"local\", \"remote\", \"flags\", \"order\", \"units\", \"column_order\", \"column_units\", \"row_mix_local\", \"row_mix_remote\", \"column_mix_local\", \"column_mix_remote\", \"conflicts\", \"conflict_infos\"]\n    _hx_methods = [\"shuffleDimension\", \"shuffleColumns\", \"shuffleRows\", \"apply\", \"getConflictInfos\", \"addConflictInfo\"]\n    _hx_statics = [\"makeConflictedCell\"]\n    def __init__(self,parent,local,remote,flags):\n        self.conflict_infos = None\n        self.conflicts = None\n        self.column_mix_remote = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Mover",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Mover:\n    _hx_class_name = \"Mover\"\n    __slots__ = ()\n    _hx_statics = [\"moveUnits\", \"move\", \"moveWithoutExtras\"]\n    @staticmethod\n    def moveUnits(units):\n        isrc = list()\n        idest = list()\n        _hx_len = len(units)\n        ltop = -1",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Ndjson",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Ndjson:\n    _hx_class_name = \"Ndjson\"\n    __slots__ = (\"tab\", \"view\", \"columns\", \"header_row\")\n    _hx_fields = [\"tab\", \"view\", \"columns\", \"header_row\"]\n    _hx_methods = [\"renderRow\", \"render\", \"addRow\", \"addHeaderRow\", \"parse\"]\n    def __init__(self,tab):\n        self.columns = None\n        self.tab = tab\n        self.view = tab.getCellView()\n        self.header_row = 0",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "NestedCellBuilder",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class NestedCellBuilder:\n    _hx_class_name = \"NestedCellBuilder\"\n    __slots__ = (\"view\",)\n    _hx_fields = [\"view\"]\n    _hx_methods = [\"needSeparator\", \"setSeparator\", \"setConflictSeparator\", \"setView\", \"update\", \"conflict\", \"marker\", \"negToNull\", \"links\"]\n    _hx_interfaces = [CellBuilder]\n    def __init__(self):\n        self.view = None\n    def needSeparator(self):\n        return False",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Ordering",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Ordering:\n    _hx_class_name = \"Ordering\"\n    __slots__ = (\"order\", \"ignore_parent\")\n    _hx_fields = [\"order\", \"ignore_parent\"]\n    _hx_methods = [\"add\", \"getList\", \"setList\", \"toString\", \"ignoreParent\"]\n    def __init__(self):\n        self.order = list()\n        self.ignore_parent = False\n    def add(self,l,r,p = None):\n        if (p is None):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "PropertyChange",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class PropertyChange:\n    _hx_class_name = \"PropertyChange\"\n    __slots__ = (\"prevName\", \"name\", \"val\")\n    _hx_fields = [\"prevName\", \"name\", \"val\"]\n    def __init__(self):\n        self.val = None\n        self.name = None\n        self.prevName = None\nPropertyChange._hx_class = PropertyChange\nclass Reflect:",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Reflect",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Reflect:\n    _hx_class_name = \"Reflect\"\n    __slots__ = ()\n    _hx_statics = [\"field\", \"isFunction\", \"compare\"]\n    @staticmethod\n    def field(o,field):\n        return python_Boot.field(o,field)\n    @staticmethod\n    def isFunction(f):\n        if (not ((python_lib_Inspect.isfunction(f) or python_lib_Inspect.ismethod(f)))):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "RowChange",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class RowChange:\n    _hx_class_name = \"RowChange\"\n    __slots__ = (\"cond\", \"val\", \"conflicting_val\", \"conflicting_parent_val\", \"conflicted\", \"is_key\", \"action\")\n    _hx_fields = [\"cond\", \"val\", \"conflicting_val\", \"conflicting_parent_val\", \"conflicted\", \"is_key\", \"action\"]\n    _hx_methods = [\"showMap\", \"toString\"]\n    def __init__(self):\n        self.action = None\n        self.is_key = None\n        self.conflicted = None\n        self.conflicting_parent_val = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "RowStream",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class RowStream:\n    _hx_class_name = \"RowStream\"\n    __slots__ = ()\n    _hx_methods = [\"fetchColumns\", \"fetchRow\"]\nRowStream._hx_class = RowStream\nclass SimpleMeta:\n    _hx_class_name = \"SimpleMeta\"\n    __slots__ = (\"t\", \"name2row\", \"name2col\", \"has_properties\", \"metadata\", \"keys\", \"row_active\", \"row_change_cache\", \"may_be_nested\")\n    _hx_fields = [\"t\", \"name2row\", \"name2col\", \"has_properties\", \"metadata\", \"keys\", \"row_active\", \"row_change_cache\", \"may_be_nested\"]\n    _hx_methods = [\"storeRowChanges\", \"rowChange\", \"colChange\", \"col\", \"row\", \"alterColumns\", \"setCell\", \"addMetaData\", \"asTable\", \"cloneMeta\", \"useForColumnChanges\", \"useForRowChanges\", \"changeRow\", \"applyFlags\", \"getRowStream\", \"isNested\", \"isSql\", \"getName\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SimpleMeta",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class SimpleMeta:\n    _hx_class_name = \"SimpleMeta\"\n    __slots__ = (\"t\", \"name2row\", \"name2col\", \"has_properties\", \"metadata\", \"keys\", \"row_active\", \"row_change_cache\", \"may_be_nested\")\n    _hx_fields = [\"t\", \"name2row\", \"name2col\", \"has_properties\", \"metadata\", \"keys\", \"row_active\", \"row_change_cache\", \"may_be_nested\"]\n    _hx_methods = [\"storeRowChanges\", \"rowChange\", \"colChange\", \"col\", \"row\", \"alterColumns\", \"setCell\", \"addMetaData\", \"asTable\", \"cloneMeta\", \"useForColumnChanges\", \"useForRowChanges\", \"changeRow\", \"applyFlags\", \"getRowStream\", \"isNested\", \"isSql\", \"getName\"]\n    _hx_interfaces = [Meta]\n    def __init__(self,t,has_properties = None,may_be_nested = None):\n        if (has_properties is None):\n            has_properties = True\n        if (may_be_nested is None):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SimpleTable",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class SimpleTable:\n    _hx_class_name = \"SimpleTable\"\n    __slots__ = (\"data\", \"w\", \"h\", \"meta\")\n    _hx_fields = [\"data\", \"w\", \"h\", \"meta\"]\n    _hx_methods = [\"getTable\", \"get_width\", \"get_height\", \"getCell\", \"setCell\", \"toString\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"getData\", \"clone\", \"create\", \"setMeta\", \"getMeta\"]\n    _hx_statics = [\"tableToString\", \"tableIsSimilar\"]\n    _hx_interfaces = [Table]\n    def __init__(self,w,h):\n        self.data = haxe_ds_IntMap()\n        self.w = w",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "View",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class View:\n    _hx_class_name = \"View\"\n    __slots__ = ()\n    _hx_methods = [\"toString\", \"equals\", \"toDatum\", \"makeHash\", \"hashSet\", \"isHash\", \"hashExists\", \"hashGet\", \"isTable\", \"getTable\", \"wrapTable\"]\nView._hx_class = View\nclass SimpleView:\n    _hx_class_name = \"SimpleView\"\n    __slots__ = ()\n    _hx_methods = [\"toString\", \"equals\", \"toDatum\", \"makeHash\", \"hashSet\", \"hashExists\", \"hashGet\", \"isHash\", \"isTable\", \"getTable\", \"wrapTable\"]\n    _hx_interfaces = [View]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SimpleView",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class SimpleView:\n    _hx_class_name = \"SimpleView\"\n    __slots__ = ()\n    _hx_methods = [\"toString\", \"equals\", \"toDatum\", \"makeHash\", \"hashSet\", \"hashExists\", \"hashGet\", \"isHash\", \"isTable\", \"getTable\", \"wrapTable\"]\n    _hx_interfaces = [View]\n    def __init__(self):\n        pass\n    def toString(self,d):\n        if (d is None):\n            return \"\"",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SparseSheet",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class SparseSheet:\n    _hx_class_name = \"SparseSheet\"\n    __slots__ = (\"h\", \"w\", \"row\", \"zero\")\n    _hx_fields = [\"h\", \"w\", \"row\", \"zero\"]\n    _hx_methods = [\"resize\", \"nonDestructiveResize\", \"get\", \"set\"]\n    def __init__(self):\n        self.zero = None\n        self.row = None\n        def _hx_local_0():\n            self.w = 0",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SqlColumn",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class SqlColumn:\n    _hx_class_name = \"SqlColumn\"\n    __slots__ = (\"name\", \"primary\", \"type_value\", \"type_family\")\n    _hx_fields = [\"name\", \"primary\", \"type_value\", \"type_family\"]\n    _hx_methods = [\"setName\", \"setPrimaryKey\", \"setType\", \"getName\", \"isPrimaryKey\", \"toString\"]\n    def __init__(self):\n        self.name = \"\"\n        self.primary = False\n        self.type_value = None\n        self.type_family = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SqlCompare",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class SqlCompare:\n    _hx_class_name = \"SqlCompare\"\n    __slots__ = (\"db\", \"local\", \"remote\", \"alt\", \"at0\", \"at1\", \"at2\", \"diff_ct\", \"align\", \"peered\", \"alt_peered\", \"needed\", \"flags\")\n    _hx_fields = [\"db\", \"local\", \"remote\", \"alt\", \"at0\", \"at1\", \"at2\", \"diff_ct\", \"align\", \"peered\", \"alt_peered\", \"needed\", \"flags\"]\n    _hx_methods = [\"equalArray\", \"validateSchema\", \"denull\", \"link\", \"linkQuery\", \"where\", \"scanColumns\", \"apply\"]\n    def __init__(self,db,local,remote,alt,align = None,flags = None):\n        self.needed = None\n        self.alt_peered = None\n        self.peered = None\n        self.diff_ct = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SqlDatabase",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class SqlDatabase:\n    _hx_class_name = \"SqlDatabase\"\n    __slots__ = ()\n    _hx_methods = [\"getColumns\", \"getQuotedTableName\", \"getQuotedColumnName\", \"exec\", \"begin\", \"beginRow\", \"read\", \"get\", \"end\", \"width\", \"rowid\", \"getHelper\", \"getNameForAttachment\"]\nSqlDatabase._hx_class = SqlDatabase\nclass SqlHelper:\n    _hx_class_name = \"SqlHelper\"\n    __slots__ = ()\n    _hx_methods = [\"getTableNames\", \"countRows\", \"getRowIDs\", \"insert\", \"delete\", \"update\", \"attach\", \"alterColumns\"]\nSqlHelper._hx_class = SqlHelper",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SqlHelper",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class SqlHelper:\n    _hx_class_name = \"SqlHelper\"\n    __slots__ = ()\n    _hx_methods = [\"getTableNames\", \"countRows\", \"getRowIDs\", \"insert\", \"delete\", \"update\", \"attach\", \"alterColumns\"]\nSqlHelper._hx_class = SqlHelper\nclass SqlTable:\n    _hx_class_name = \"SqlTable\"\n    __slots__ = (\"db\", \"columns\", \"name\", \"quotedTableName\", \"cache\", \"columnNames\", \"h\", \"helper\", \"id2rid\")\n    _hx_fields = [\"db\", \"columns\", \"name\", \"quotedTableName\", \"cache\", \"columnNames\", \"h\", \"helper\", \"id2rid\"]\n    _hx_methods = [\"getColumns\", \"getPrimaryKey\", \"getAllButPrimaryKey\", \"getColumnNames\", \"getQuotedTableName\", \"getQuotedColumnName\", \"getCell\", \"setCellCache\", \"setCell\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"get_width\", \"get_height\", \"getData\", \"clone\", \"create\", \"getMeta\", \"alterColumns\", \"changeRow\", \"asTable\", \"useForColumnChanges\", \"useForRowChanges\", \"cloneMeta\", \"applyFlags\", \"getDatabase\", \"getRowStream\", \"isNested\", \"isSql\", \"fetchRow\", \"fetchColumns\", \"getName\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SqlTable",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class SqlTable:\n    _hx_class_name = \"SqlTable\"\n    __slots__ = (\"db\", \"columns\", \"name\", \"quotedTableName\", \"cache\", \"columnNames\", \"h\", \"helper\", \"id2rid\")\n    _hx_fields = [\"db\", \"columns\", \"name\", \"quotedTableName\", \"cache\", \"columnNames\", \"h\", \"helper\", \"id2rid\"]\n    _hx_methods = [\"getColumns\", \"getPrimaryKey\", \"getAllButPrimaryKey\", \"getColumnNames\", \"getQuotedTableName\", \"getQuotedColumnName\", \"getCell\", \"setCellCache\", \"setCell\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"get_width\", \"get_height\", \"getData\", \"clone\", \"create\", \"getMeta\", \"alterColumns\", \"changeRow\", \"asTable\", \"useForColumnChanges\", \"useForRowChanges\", \"cloneMeta\", \"applyFlags\", \"getDatabase\", \"getRowStream\", \"isNested\", \"isSql\", \"fetchRow\", \"fetchColumns\", \"getName\"]\n    _hx_interfaces = [RowStream, Meta, Table]\n    def __init__(self,db,name,helper = None):\n        self.columnNames = None\n        self.quotedTableName = None\n        self.columns = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SqlTableName",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class SqlTableName:\n    _hx_class_name = \"SqlTableName\"\n    __slots__ = (\"name\", \"prefix\")\n    _hx_fields = [\"name\", \"prefix\"]\n    _hx_methods = [\"toString\"]\n    def __init__(self,name = None,prefix = None):\n        if (name is None):\n            name = \"\"\n        if (prefix is None):\n            prefix = \"\"",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SqlTables",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class SqlTables:\n    _hx_class_name = \"SqlTables\"\n    __slots__ = (\"db\", \"t\", \"flags\")\n    _hx_fields = [\"db\", \"t\", \"flags\"]\n    _hx_methods = [\"getCell\", \"setCell\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"get_width\", \"get_height\", \"getData\", \"clone\", \"create\", \"getMeta\"]\n    _hx_interfaces = [Table]\n    def __init__(self,db,flags,role):\n        self.flags = None\n        self.t = None\n        self.db = db",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SqliteHelper",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class SqliteHelper:\n    _hx_class_name = \"SqliteHelper\"\n    __slots__ = ()\n    _hx_methods = [\"getTableNames\", \"countRows\", \"getRowIDs\", \"update\", \"delete\", \"insert\", \"attach\", \"columnListSql\", \"fetchSchema\", \"splitSchema\", \"exec\", \"alterColumns\"]\n    _hx_interfaces = [SqlHelper]\n    def __init__(self):\n        pass\n    def getTableNames(self,db):\n        q = \"SELECT name FROM sqlite_master WHERE type='table' ORDER BY name\"\n        if (not db.begin(q,None,[\"name\"])):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Std",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Std:\n    _hx_class_name = \"Std\"\n    __slots__ = ()\n    _hx_statics = [\"isOfType\", \"string\", \"parseInt\", \"shortenPossibleNumber\", \"parseFloat\"]\n    @staticmethod\n    def isOfType(v,t):\n        if ((v is None) and ((t is None))):\n            return False\n        if (t is None):\n            return False",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Float",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Float: pass\nclass Int: pass\nclass Bool: pass\nclass Dynamic: pass\nclass StringBuf:\n    _hx_class_name = \"StringBuf\"\n    __slots__ = (\"b\",)\n    _hx_fields = [\"b\"]\n    _hx_methods = [\"get_length\"]\n    def __init__(self):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Int",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Int: pass\nclass Bool: pass\nclass Dynamic: pass\nclass StringBuf:\n    _hx_class_name = \"StringBuf\"\n    __slots__ = (\"b\",)\n    _hx_fields = [\"b\"]\n    _hx_methods = [\"get_length\"]\n    def __init__(self):\n        self.b = python_lib_io_StringIO()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Bool",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Bool: pass\nclass Dynamic: pass\nclass StringBuf:\n    _hx_class_name = \"StringBuf\"\n    __slots__ = (\"b\",)\n    _hx_fields = [\"b\"]\n    _hx_methods = [\"get_length\"]\n    def __init__(self):\n        self.b = python_lib_io_StringIO()\n    def get_length(self):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Dynamic",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Dynamic: pass\nclass StringBuf:\n    _hx_class_name = \"StringBuf\"\n    __slots__ = (\"b\",)\n    _hx_fields = [\"b\"]\n    _hx_methods = [\"get_length\"]\n    def __init__(self):\n        self.b = python_lib_io_StringIO()\n    def get_length(self):\n        pos = self.b.tell()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "StringBuf",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class StringBuf:\n    _hx_class_name = \"StringBuf\"\n    __slots__ = (\"b\",)\n    _hx_fields = [\"b\"]\n    _hx_methods = [\"get_length\"]\n    def __init__(self):\n        self.b = python_lib_io_StringIO()\n    def get_length(self):\n        pos = self.b.tell()\n        self.b.seek(0,2)",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "StringTools",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class StringTools:\n    _hx_class_name = \"StringTools\"\n    __slots__ = ()\n    _hx_statics = [\"htmlEscape\", \"isSpace\", \"ltrim\", \"rtrim\", \"trim\", \"lpad\", \"replace\"]\n    @staticmethod\n    def htmlEscape(s,quotes = None):\n        buf_b = python_lib_io_StringIO()\n        _g_offset = 0\n        _g_s = s\n        while (_g_offset < len(_g_s)):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "sys_FileSystem",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class sys_FileSystem:\n    _hx_class_name = \"sys.FileSystem\"\n    __slots__ = ()\n    _hx_statics = [\"exists\"]\n    @staticmethod\n    def exists(path):\n        return python_lib_os_Path.exists(path)\nsys_FileSystem._hx_class = sys_FileSystem\nclass Sys:\n    _hx_class_name = \"Sys\"",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Sys",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Sys:\n    _hx_class_name = \"Sys\"\n    __slots__ = ()\n    _hx_statics = [\"exit\", \"args\", \"getEnv\", \"command\", \"stdout\", \"stderr\"]\n    @staticmethod\n    def exit(code):\n        python_lib_Sys.exit(code)\n    @staticmethod\n    def args():\n        argv = python_lib_Sys.argv",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "TableComparisonState",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class TableComparisonState:\n    _hx_class_name = \"TableComparisonState\"\n    __slots__ = (\"p\", \"a\", \"b\", \"completed\", \"run_to_completion\", \"is_equal\", \"is_equal_known\", \"has_same_columns\", \"has_same_columns_known\", \"compare_flags\", \"p_meta\", \"a_meta\", \"b_meta\", \"alignment\", \"children\", \"child_order\")\n    _hx_fields = [\"p\", \"a\", \"b\", \"completed\", \"run_to_completion\", \"is_equal\", \"is_equal_known\", \"has_same_columns\", \"has_same_columns_known\", \"compare_flags\", \"p_meta\", \"a_meta\", \"b_meta\", \"alignment\", \"children\", \"child_order\"]\n    _hx_methods = [\"reset\", \"getMeta\"]\n    def __init__(self):\n        self.child_order = None\n        self.children = None\n        self.alignment = None\n        self.b_meta = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "TableDiff",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class TableDiff:\n    _hx_class_name = \"TableDiff\"\n    __slots__ = (\"align\", \"flags\", \"builder\", \"row_map\", \"col_map\", \"has_parent\", \"a\", \"b\", \"p\", \"rp_header\", \"ra_header\", \"rb_header\", \"is_index_p\", \"is_index_a\", \"is_index_b\", \"order\", \"row_units\", \"column_units\", \"show_rc_numbers\", \"row_moves\", \"col_moves\", \"active_row\", \"active_column\", \"allow_insert\", \"allow_delete\", \"allow_update\", \"allow_column\", \"v\", \"sep\", \"conflict_sep\", \"schema\", \"have_schema\", \"top_line_done\", \"have_addition\", \"act\", \"publish\", \"diff_found\", \"schema_diff_found\", \"preserve_columns\", \"row_deletes\", \"row_inserts\", \"row_updates\", \"row_reorders\", \"col_deletes\", \"col_inserts\", \"col_updates\", \"col_renames\", \"col_reorders\", \"column_units_updated\", \"nested\", \"nesting_present\")\n    _hx_fields = [\"align\", \"flags\", \"builder\", \"row_map\", \"col_map\", \"has_parent\", \"a\", \"b\", \"p\", \"rp_header\", \"ra_header\", \"rb_header\", \"is_index_p\", \"is_index_a\", \"is_index_b\", \"order\", \"row_units\", \"column_units\", \"show_rc_numbers\", \"row_moves\", \"col_moves\", \"active_row\", \"active_column\", \"allow_insert\", \"allow_delete\", \"allow_update\", \"allow_column\", \"v\", \"sep\", \"conflict_sep\", \"schema\", \"have_schema\", \"top_line_done\", \"have_addition\", \"act\", \"publish\", \"diff_found\", \"schema_diff_found\", \"preserve_columns\", \"row_deletes\", \"row_inserts\", \"row_updates\", \"row_reorders\", \"col_deletes\", \"col_inserts\", \"col_updates\", \"col_renames\", \"col_reorders\", \"column_units_updated\", \"nested\", \"nesting_present\"]\n    _hx_methods = [\"setCellBuilder\", \"getSeparator\", \"isReordered\", \"spreadContext\", \"setIgnore\", \"countActive\", \"reset\", \"setupTables\", \"scanActivity\", \"setupColumns\", \"setupMoves\", \"scanSchema\", \"checkRcNumbers\", \"addRcNumbers\", \"elideColumns\", \"addSchema\", \"addHeader\", \"checkMeta\", \"getMetaTable\", \"addMeta\", \"refineActivity\", \"normalizeString\", \"isEqual\", \"checkNesting\", \"scanRow\", \"hilite\", \"hiliteSingle\", \"hiliteWithNesting\", \"hasDifference\", \"hasSchemaDifference\", \"isNested\", \"getComparisonState\", \"getSummary\"]\n    def __init__(self,align,flags):\n        self.nesting_present = None\n        self.nested = None\n        self.column_units_updated = None\n        self.col_reorders = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "TableIO",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class TableIO:\n    _hx_class_name = \"TableIO\"\n    __slots__ = ()\n    _hx_methods = [\"valid\", \"getContent\", \"saveContent\", \"args\", \"writeStdout\", \"writeStderr\", \"command\", \"hasAsync\", \"exists\", \"isTtyKnown\", \"isTty\", \"openSqliteDatabase\", \"sendToBrowser\"]\n    def __init__(self):\n        pass\n    def valid(self):\n        return True\n    def getContent(self,name):\n        return sys_io_File.getContent(name)",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "TableModifier",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class TableModifier:\n    _hx_class_name = \"TableModifier\"\n    __slots__ = (\"t\",)\n    _hx_fields = [\"t\"]\n    _hx_methods = [\"removeColumn\"]\n    def __init__(self,t):\n        self.t = t\n    def removeColumn(self,at):\n        fate = []\n        _g = 0",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "TableStream",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class TableStream:\n    _hx_class_name = \"TableStream\"\n    __slots__ = (\"t\", \"at\", \"h\", \"src\", \"columns\", \"row\")\n    _hx_fields = [\"t\", \"at\", \"h\", \"src\", \"columns\", \"row\"]\n    _hx_methods = [\"fetchColumns\", \"fetchRow\", \"fetch\", \"getCell\", \"width\"]\n    _hx_interfaces = [RowStream]\n    def __init__(self,t):\n        self.row = None\n        self.columns = None\n        self.t = t",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Tables",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Tables:\n    _hx_class_name = \"Tables\"\n    __slots__ = (\"template\", \"tables\", \"table_order\", \"alignment\")\n    _hx_fields = [\"template\", \"tables\", \"table_order\", \"alignment\"]\n    _hx_methods = [\"add\", \"getOrder\", \"get\", \"one\", \"hasInsDel\"]\n    def __init__(self,template):\n        self.alignment = None\n        self.template = template\n        self.tables = haxe_ds_StringMap()\n        self.table_order = list()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "TerminalDiffRender",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class TerminalDiffRender:\n    _hx_class_name = \"TerminalDiffRender\"\n    __slots__ = (\"codes\", \"t\", \"csv\", \"v\", \"align_columns\", \"wide_columns\", \"use_glyphs\", \"flags\", \"delim\", \"diff\")\n    _hx_fields = [\"codes\", \"t\", \"csv\", \"v\", \"align_columns\", \"wide_columns\", \"use_glyphs\", \"flags\", \"delim\", \"diff\"]\n    _hx_methods = [\"alignColumns\", \"render\", \"getText\", \"pickSizes\"]\n    def __init__(self,flags = None,delim = None,diff = None):\n        if (diff is None):\n            diff = True\n        self.v = None\n        self.csv = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "ValueType",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class ValueType(Enum):\n    __slots__ = ()\n    _hx_class_name = \"ValueType\"\n    _hx_constructs = [\"TNull\", \"TInt\", \"TFloat\", \"TBool\", \"TObject\", \"TFunction\", \"TClass\", \"TEnum\", \"TUnknown\"]\n    @staticmethod\n    def TClass(c):\n        return ValueType(\"TClass\", 6, (c,))\n    @staticmethod\n    def TEnum(e):\n        return ValueType(\"TEnum\", 7, (e,))",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Type",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Type:\n    _hx_class_name = \"Type\"\n    __slots__ = ()\n    _hx_statics = [\"getClass\", \"typeof\"]\n    @staticmethod\n    def getClass(o):\n        if (o is None):\n            return None\n        o1 = o\n        if ((o1 is not None) and ((HxOverrides.eq(o1,str) or python_lib_Inspect.isclass(o1)))):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Unit",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Unit:\n    _hx_class_name = \"Unit\"\n    __slots__ = (\"l\", \"r\", \"p\")\n    _hx_fields = [\"l\", \"r\", \"p\"]\n    _hx_methods = [\"lp\", \"toString\", \"fromString\", \"base26\", \"toBase26String\"]\n    _hx_statics = [\"describe\"]\n    def __init__(self,l = None,r = None,p = None):\n        if (l is None):\n            l = -2\n        if (r is None):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Viterbi",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class Viterbi:\n    _hx_class_name = \"Viterbi\"\n    __slots__ = (\"K\", \"T\", \"index\", \"mode\", \"path_valid\", \"best_cost\", \"cost\", \"src\", \"path\")\n    _hx_fields = [\"K\", \"T\", \"index\", \"mode\", \"path_valid\", \"best_cost\", \"cost\", \"src\", \"path\"]\n    _hx_methods = [\"reset\", \"setSize\", \"assertMode\", \"addTransition\", \"endTransitions\", \"beginTransitions\", \"calculatePath\", \"toString\", \"length\", \"get\", \"getCost\"]\n    def __init__(self):\n        self.path = None\n        self.src = None\n        self.cost = None\n        self.best_cost = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_IMap",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class haxe_IMap:\n    _hx_class_name = \"haxe.IMap\"\n    __slots__ = ()\nhaxe_IMap._hx_class = haxe_IMap\nclass haxe_Exception(Exception):\n    _hx_class_name = \"haxe.Exception\"\n    __slots__ = (\"_hx___nativeStack\", \"_hx___skipStack\", \"_hx___nativeException\", \"_hx___previousException\")\n    _hx_fields = [\"__nativeStack\", \"__skipStack\", \"__nativeException\", \"__previousException\"]\n    _hx_methods = [\"unwrap\", \"toString\", \"get_message\", \"get_native\"]\n    _hx_statics = [\"caught\", \"thrown\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_Exception",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class haxe_Exception(Exception):\n    _hx_class_name = \"haxe.Exception\"\n    __slots__ = (\"_hx___nativeStack\", \"_hx___skipStack\", \"_hx___nativeException\", \"_hx___previousException\")\n    _hx_fields = [\"__nativeStack\", \"__skipStack\", \"__nativeException\", \"__previousException\"]\n    _hx_methods = [\"unwrap\", \"toString\", \"get_message\", \"get_native\"]\n    _hx_statics = [\"caught\", \"thrown\"]\n    _hx_interfaces = []\n    _hx_super = Exception\n    def __init__(self,message,previous = None,native = None):\n        self._hx___previousException = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_NativeStackTrace",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class haxe_NativeStackTrace:\n    _hx_class_name = \"haxe.NativeStackTrace\"\n    __slots__ = ()\n    _hx_statics = [\"saveStack\", \"exceptionStack\"]\n    @staticmethod\n    def saveStack(exception):\n        pass\n    @staticmethod\n    def exceptionStack():\n        exc = python_lib_Sys.exc_info()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_ValueException",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class haxe_ValueException(haxe_Exception):\n    _hx_class_name = \"haxe.ValueException\"\n    __slots__ = (\"value\",)\n    _hx_fields = [\"value\"]\n    _hx_methods = [\"unwrap\"]\n    _hx_statics = []\n    _hx_interfaces = []\n    _hx_super = haxe_Exception\n    def __init__(self,value,previous = None,native = None):\n        self.value = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_ds_IntMap",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class haxe_ds_IntMap:\n    _hx_class_name = \"haxe.ds.IntMap\"\n    __slots__ = (\"h\",)\n    _hx_fields = [\"h\"]\n    _hx_methods = [\"set\", \"remove\", \"keys\", \"toString\"]\n    _hx_interfaces = [haxe_IMap]\n    def __init__(self):\n        self.h = dict()\n    def set(self,key,value):\n        self.h[key] = value",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_ds_StringMap",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class haxe_ds_StringMap:\n    _hx_class_name = \"haxe.ds.StringMap\"\n    __slots__ = (\"h\",)\n    _hx_fields = [\"h\"]\n    _hx_methods = [\"keys\", \"iterator\"]\n    _hx_interfaces = [haxe_IMap]\n    def __init__(self):\n        self.h = dict()\n    def keys(self):\n        return python_HaxeIterator(iter(self.h.keys()))",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_exceptions_PosException",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class haxe_exceptions_PosException(haxe_Exception):\n    _hx_class_name = \"haxe.exceptions.PosException\"\n    __slots__ = (\"posInfos\",)\n    _hx_fields = [\"posInfos\"]\n    _hx_methods = [\"toString\"]\n    _hx_statics = []\n    _hx_interfaces = []\n    _hx_super = haxe_Exception\n    def __init__(self,message,previous = None,pos = None):\n        self.posInfos = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_exceptions_NotImplementedException",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class haxe_exceptions_NotImplementedException(haxe_exceptions_PosException):\n    _hx_class_name = \"haxe.exceptions.NotImplementedException\"\n    __slots__ = ()\n    _hx_fields = []\n    _hx_methods = []\n    _hx_statics = []\n    _hx_interfaces = []\n    _hx_super = haxe_exceptions_PosException\n    def __init__(self,message = None,previous = None,pos = None):\n        if (message is None):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_format_JsonPrinter",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class haxe_format_JsonPrinter:\n    _hx_class_name = \"haxe.format.JsonPrinter\"\n    __slots__ = (\"buf\", \"replacer\", \"indent\", \"pretty\", \"nind\")\n    _hx_fields = [\"buf\", \"replacer\", \"indent\", \"pretty\", \"nind\"]\n    _hx_methods = [\"write\", \"classString\", \"fieldsString\", \"quote\"]\n    _hx_statics = [\"print\"]\n    def __init__(self,replacer,space):\n        self.replacer = replacer\n        self.indent = space\n        self.pretty = (space is not None)",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_io_Bytes",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class haxe_io_Bytes:\n    _hx_class_name = \"haxe.io.Bytes\"\n    __slots__ = (\"length\", \"b\")\n    _hx_fields = [\"length\", \"b\"]\n    _hx_statics = [\"ofString\"]\n    def __init__(self,length,b):\n        self.length = length\n        self.b = b\n    @staticmethod\n    def ofString(s,encoding = None):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_io_Encoding",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class haxe_io_Encoding(Enum):\n    __slots__ = ()\n    _hx_class_name = \"haxe.io.Encoding\"\n    _hx_constructs = [\"UTF8\", \"RawNative\"]\nhaxe_io_Encoding.UTF8 = haxe_io_Encoding(\"UTF8\", 0, ())\nhaxe_io_Encoding.RawNative = haxe_io_Encoding(\"RawNative\", 1, ())\nhaxe_io_Encoding._hx_class = haxe_io_Encoding\nclass haxe_io_Error(Enum):\n    __slots__ = ()\n    _hx_class_name = \"haxe.io.Error\"",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_io_Error",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class haxe_io_Error(Enum):\n    __slots__ = ()\n    _hx_class_name = \"haxe.io.Error\"\n    _hx_constructs = [\"Blocked\", \"Overflow\", \"OutsideBounds\", \"Custom\"]\n    @staticmethod\n    def Custom(e):\n        return haxe_io_Error(\"Custom\", 3, (e,))\nhaxe_io_Error.Blocked = haxe_io_Error(\"Blocked\", 0, ())\nhaxe_io_Error.Overflow = haxe_io_Error(\"Overflow\", 1, ())\nhaxe_io_Error.OutsideBounds = haxe_io_Error(\"OutsideBounds\", 2, ())",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_io_Output",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class haxe_io_Output:\n    _hx_class_name = \"haxe.io.Output\"\n    __slots__ = (\"bigEndian\",)\n    _hx_fields = [\"bigEndian\"]\n    _hx_methods = [\"writeByte\", \"writeBytes\", \"set_bigEndian\", \"writeFullBytes\", \"writeString\"]\n    def writeByte(self,c):\n        raise haxe_exceptions_NotImplementedException(None,None,_hx_AnonObject({'fileName': \"haxe/io/Output.hx\", 'lineNumber': 47, 'className': \"haxe.io.Output\", 'methodName': \"writeByte\"}))\n    def writeBytes(self,s,pos,_hx_len):\n        if (((pos < 0) or ((_hx_len < 0))) or (((pos + _hx_len) > s.length))):\n            raise haxe_Exception.thrown(haxe_io_Error.OutsideBounds)",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_iterators_ArrayIterator",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class haxe_iterators_ArrayIterator:\n    _hx_class_name = \"haxe.iterators.ArrayIterator\"\n    __slots__ = (\"array\", \"current\")\n    _hx_fields = [\"array\", \"current\"]\n    _hx_methods = [\"hasNext\", \"next\"]\n    def __init__(self,array):\n        self.current = 0\n        self.array = array\n    def hasNext(self):\n        return (self.current < len(self.array))",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_iterators_ArrayKeyValueIterator",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class haxe_iterators_ArrayKeyValueIterator:\n    _hx_class_name = \"haxe.iterators.ArrayKeyValueIterator\"\n    __slots__ = (\"current\", \"array\")\n    _hx_fields = [\"current\", \"array\"]\n    _hx_methods = [\"hasNext\", \"next\"]\n    def __init__(self,array):\n        self.current = 0\n        self.array = array\n    def hasNext(self):\n        return (self.current < len(self.array))",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_Boot",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class python_Boot:\n    _hx_class_name = \"python.Boot\"\n    __slots__ = ()\n    _hx_statics = [\"keywords\", \"toString1\", \"fields\", \"simpleField\", \"hasField\", \"field\", \"getInstanceFields\", \"getSuperClass\", \"getClassFields\", \"prefixLength\", \"unhandleKeywords\"]\n    @staticmethod\n    def toString1(o,s):\n        if (o is None):\n            return \"null\"\n        if isinstance(o,str):\n            return o",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_HaxeIterator",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class python_HaxeIterator:\n    _hx_class_name = \"python.HaxeIterator\"\n    __slots__ = (\"it\", \"x\", \"has\", \"checked\")\n    _hx_fields = [\"it\", \"x\", \"has\", \"checked\"]\n    _hx_methods = [\"next\", \"hasNext\"]\n    def __init__(self,it):\n        self.checked = False\n        self.has = False\n        self.x = None\n        self.it = it",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python__KwArgs_KwArgs_Impl_",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class python__KwArgs_KwArgs_Impl_:\n    _hx_class_name = \"python._KwArgs.KwArgs_Impl_\"\n    __slots__ = ()\n    _hx_statics = [\"fromT\"]\n    @staticmethod\n    def fromT(d):\n        return python_Lib.anonAsDict(d)\npython__KwArgs_KwArgs_Impl_._hx_class = python__KwArgs_KwArgs_Impl_\nclass python_Lib:\n    _hx_class_name = \"python.Lib\"",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_Lib",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class python_Lib:\n    _hx_class_name = \"python.Lib\"\n    __slots__ = ()\n    _hx_statics = [\"dictToAnon\", \"anonToDict\", \"anonAsDict\"]\n    @staticmethod\n    def dictToAnon(v):\n        return _hx_AnonObject(v.copy())\n    @staticmethod\n    def anonToDict(o):\n        if isinstance(o,_hx_AnonObject):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_internal_ArrayImpl",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class python_internal_ArrayImpl:\n    _hx_class_name = \"python.internal.ArrayImpl\"\n    __slots__ = ()\n    _hx_statics = [\"concat\", \"copy\", \"iterator\", \"keyValueIterator\", \"indexOf\", \"lastIndexOf\", \"join\", \"toString\", \"pop\", \"push\", \"unshift\", \"remove\", \"contains\", \"shift\", \"slice\", \"sort\", \"splice\", \"map\", \"filter\", \"insert\", \"reverse\", \"_get\", \"_set\"]\n    @staticmethod\n    def concat(a1,a2):\n        return (a1 + a2)\n    @staticmethod\n    def copy(x):\n        return list(x)",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "HxOverrides",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class HxOverrides:\n    _hx_class_name = \"HxOverrides\"\n    __slots__ = ()\n    _hx_statics = [\"iterator\", \"eq\", \"stringOrNull\", \"modf\", \"mod\", \"mapKwArgs\"]\n    @staticmethod\n    def iterator(x):\n        if isinstance(x,list):\n            return haxe_iterators_ArrayIterator(x)\n        return x.iterator()\n    @staticmethod",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_internal_MethodClosure",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class python_internal_MethodClosure:\n    _hx_class_name = \"python.internal.MethodClosure\"\n    __slots__ = (\"obj\", \"func\")\n    _hx_fields = [\"obj\", \"func\"]\n    _hx_methods = [\"__call__\"]\n    def __init__(self,obj,func):\n        self.obj = obj\n        self.func = func\n    def __call__(self,*args):\n        return self.func(self.obj,*args)",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "HxString",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class HxString:\n    _hx_class_name = \"HxString\"\n    __slots__ = ()\n    _hx_statics = [\"split\", \"charCodeAt\", \"charAt\", \"lastIndexOf\", \"toUpperCase\", \"toLowerCase\", \"indexOf\", \"indexOfImpl\", \"toString\", \"substring\", \"substr\"]\n    @staticmethod\n    def split(s,d):\n        if (d == \"\"):\n            return list(s)\n        else:\n            return s.split(d)",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_io_NativeOutput",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class python_io_NativeOutput(haxe_io_Output):\n    _hx_class_name = \"python.io.NativeOutput\"\n    __slots__ = (\"stream\",)\n    _hx_fields = [\"stream\"]\n    _hx_methods = []\n    _hx_statics = []\n    _hx_interfaces = []\n    _hx_super = haxe_io_Output\n    def __init__(self,stream):\n        self.stream = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_io_IOutput",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class python_io_IOutput:\n    _hx_class_name = \"python.io.IOutput\"\n    __slots__ = (\"bigEndian\",)\n    _hx_fields = [\"bigEndian\"]\n    _hx_methods = [\"set_bigEndian\", \"writeByte\", \"writeBytes\", \"writeFullBytes\", \"writeString\"]\npython_io_IOutput._hx_class = python_io_IOutput\nclass python_io_IFileOutput:\n    _hx_class_name = \"python.io.IFileOutput\"\n    __slots__ = ()\n    _hx_interfaces = [python_io_IOutput]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_io_IFileOutput",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class python_io_IFileOutput:\n    _hx_class_name = \"python.io.IFileOutput\"\n    __slots__ = ()\n    _hx_interfaces = [python_io_IOutput]\npython_io_IFileOutput._hx_class = python_io_IFileOutput\nclass python_io_NativeTextOutput(python_io_NativeOutput):\n    _hx_class_name = \"python.io.NativeTextOutput\"\n    __slots__ = ()\n    _hx_fields = []\n    _hx_methods = [\"writeBytes\", \"writeByte\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_io_NativeTextOutput",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class python_io_NativeTextOutput(python_io_NativeOutput):\n    _hx_class_name = \"python.io.NativeTextOutput\"\n    __slots__ = ()\n    _hx_fields = []\n    _hx_methods = [\"writeBytes\", \"writeByte\"]\n    _hx_statics = []\n    _hx_interfaces = []\n    _hx_super = python_io_NativeOutput\n    def __init__(self,stream):\n        super().__init__(stream)",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_io_FileTextOutput",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class python_io_FileTextOutput(python_io_NativeTextOutput):\n    _hx_class_name = \"python.io.FileTextOutput\"\n    __slots__ = ()\n    _hx_fields = []\n    _hx_methods = []\n    _hx_statics = []\n    _hx_interfaces = [python_io_IFileOutput]\n    _hx_super = python_io_NativeTextOutput\n    def __init__(self,stream):\n        super().__init__(stream)",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_io_IoTools",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class python_io_IoTools:\n    _hx_class_name = \"python.io.IoTools\"\n    __slots__ = ()\n    _hx_statics = [\"createFileOutputFromText\"]\n    @staticmethod\n    def createFileOutputFromText(t):\n        return sys_io_FileOutput(python_io_FileTextOutput(t))\npython_io_IoTools._hx_class = python_io_IoTools\nclass sys_io_File:\n    _hx_class_name = \"sys.io.File\"",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "sys_io_File",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class sys_io_File:\n    _hx_class_name = \"sys.io.File\"\n    __slots__ = ()\n    _hx_statics = [\"getContent\", \"saveContent\"]\n    @staticmethod\n    def getContent(path):\n        f = python_lib_Builtins.open(path,\"r\",-1,\"utf-8\",None,\"\")\n        content = f.read(-1)\n        f.close()\n        return content",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "sys_io_FileOutput",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class sys_io_FileOutput(haxe_io_Output):\n    _hx_class_name = \"sys.io.FileOutput\"\n    __slots__ = (\"impl\",)\n    _hx_fields = [\"impl\"]\n    _hx_methods = [\"set_bigEndian\", \"writeByte\", \"writeBytes\", \"writeFullBytes\", \"writeString\"]\n    _hx_statics = []\n    _hx_interfaces = []\n    _hx_super = haxe_io_Output\n    def __init__(self,impl):\n        self.impl = impl",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "PythonCellView",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class PythonCellView(View):\n    def __init__(self):\n        pass\n    def toString(self,d):\n        return str(d) if (d!=None) else \"\"\n    def equals(self,d1,d2):\n        return str(d1) == str(d2)\n    def toDatum(self,d):\n        return d\n    def makeHash(self):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "PythonTableView",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class PythonTableView(Table):\n    def __init__(self,data):\n        self.data = data\n        self.height = len(data)\n        self.width = 0\n        if self.height>0:\n            self.width = len(data[0])\n    def get_width(self):\n        return self.width\n    def get_height(self):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SqliteDatabase",
+        "kind": 6,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "class SqliteDatabase(SqlDatabase):\n    def __init__(self,db):\n        import sqlite3\n        if not hasattr(db, 'cursor'):\n            db = sqlite3.connect(db)\n            self.fname = 'external'\n        else:\n            self.fname = db\n        self.db = db\n        db.isolation_level = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "get_stdout",
+        "kind": 2,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "def get_stdout():\n\treturn (python_lib_Sys.stdout.buffer if hasattr(python_lib_Sys.stdout,\"buffer\") else python_lib_Sys.stdout)\ndef stream_write(s):\n\treturn lambda txt: (s.buffer.write(txt) if hasattr(s,\"buffer\") else (s.write(txt) or len(txt)))\nif __name__ == '__main__':\n\tCoopy.main()\ndef main():\n\tCoopy.main()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "stream_write",
+        "kind": 2,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "def stream_write(s):\n\treturn lambda txt: (s.buffer.write(txt) if hasattr(s,\"buffer\") else (s.write(txt) or len(txt)))\nif __name__ == '__main__':\n\tCoopy.main()\ndef main():\n\tCoopy.main()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "def main():\n\tCoopy.main()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Enum._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Enum._hx_class = Enum\nclass Alignment:\n    _hx_class_name = \"Alignment\"\n    __slots__ = (\"map_a2b\", \"map_b2a\", \"ha\", \"hb\", \"ta\", \"tb\", \"ia\", \"ib\", \"map_count\", \"order_cache\", \"order_cache_has_reference\", \"index_columns\", \"marked_as_identical\", \"reference\", \"meta\", \"comp\", \"has_addition\", \"has_removal\")\n    _hx_fields = [\"map_a2b\", \"map_b2a\", \"ha\", \"hb\", \"ta\", \"tb\", \"ia\", \"ib\", \"map_count\", \"order_cache\", \"order_cache_has_reference\", \"index_columns\", \"marked_as_identical\", \"reference\", \"meta\", \"comp\", \"has_addition\", \"has_removal\"]\n    _hx_methods = [\"range\", \"tables\", \"headers\", \"setRowlike\", \"link\", \"addIndexColumns\", \"getIndexColumns\", \"a2b\", \"b2a\", \"count\", \"toString\", \"toOrder\", \"addToOrder\", \"getSource\", \"getTarget\", \"getSourceHeader\", \"getTargetHeader\", \"toOrder3\", \"markIdentical\", \"isMarkedAsIdentical\"]\n    def __init__(self):\n        self.has_removal = None\n        self.has_addition = None\n        self.index_columns = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Alignment._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Alignment._hx_class = Alignment\nclass CellBuilder:\n    _hx_class_name = \"CellBuilder\"\n    __slots__ = ()\n    _hx_methods = [\"needSeparator\", \"setSeparator\", \"setConflictSeparator\", \"setView\", \"update\", \"conflict\", \"marker\", \"links\"]\nCellBuilder._hx_class = CellBuilder\nclass CellInfo:\n    _hx_class_name = \"CellInfo\"\n    __slots__ = (\"raw\", \"value\", \"pretty_value\", \"category\", \"category_given_tr\", \"separator\", \"pretty_separator\", \"updated\", \"conflicted\", \"pvalue\", \"lvalue\", \"rvalue\", \"meta\")\n    _hx_fields = [\"raw\", \"value\", \"pretty_value\", \"category\", \"category_given_tr\", \"separator\", \"pretty_separator\", \"updated\", \"conflicted\", \"pvalue\", \"lvalue\", \"rvalue\", \"meta\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "CellBuilder._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "CellBuilder._hx_class = CellBuilder\nclass CellInfo:\n    _hx_class_name = \"CellInfo\"\n    __slots__ = (\"raw\", \"value\", \"pretty_value\", \"category\", \"category_given_tr\", \"separator\", \"pretty_separator\", \"updated\", \"conflicted\", \"pvalue\", \"lvalue\", \"rvalue\", \"meta\")\n    _hx_fields = [\"raw\", \"value\", \"pretty_value\", \"category\", \"category_given_tr\", \"separator\", \"pretty_separator\", \"updated\", \"conflicted\", \"pvalue\", \"lvalue\", \"rvalue\", \"meta\"]\n    _hx_methods = [\"toString\"]\n    def __init__(self):\n        self.meta = None\n        self.rvalue = None\n        self.lvalue = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "CellInfo._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "CellInfo._hx_class = CellInfo\nclass Class: pass\nclass ColumnChange:\n    _hx_class_name = \"ColumnChange\"\n    __slots__ = (\"prevName\", \"name\", \"props\")\n    _hx_fields = [\"prevName\", \"name\", \"props\"]\n    def __init__(self):\n        self.props = None\n        self.name = None\n        self.prevName = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "ColumnChange._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "ColumnChange._hx_class = ColumnChange\nclass Table:\n    _hx_class_name = \"Table\"\n    __slots__ = ()\n    _hx_methods = [\"getCell\", \"setCell\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"get_width\", \"get_height\", \"getData\", \"clone\", \"create\", \"getMeta\"]\nTable._hx_class = Table\nclass CombinedTable:\n    _hx_class_name = \"CombinedTable\"\n    __slots__ = (\"t\", \"body\", \"head\", \"dx\", \"dy\", \"core\", \"meta\")\n    _hx_fields = [\"t\", \"body\", \"head\", \"dx\", \"dy\", \"core\", \"meta\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Table._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Table._hx_class = Table\nclass CombinedTable:\n    _hx_class_name = \"CombinedTable\"\n    __slots__ = (\"t\", \"body\", \"head\", \"dx\", \"dy\", \"core\", \"meta\")\n    _hx_fields = [\"t\", \"body\", \"head\", \"dx\", \"dy\", \"core\", \"meta\"]\n    _hx_methods = [\"all\", \"getTable\", \"get_width\", \"get_height\", \"getCell\", \"setCell\", \"toString\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"getData\", \"clone\", \"create\", \"getMeta\"]\n    _hx_interfaces = [Table]\n    def __init__(self,t):\n        self.meta = None\n        self.body = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "CombinedTable._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "CombinedTable._hx_class = CombinedTable\nclass CombinedTableBody:\n    _hx_class_name = \"CombinedTableBody\"\n    __slots__ = (\"parent\", \"dx\", \"dy\", \"all\", \"meta\")\n    _hx_fields = [\"parent\", \"dx\", \"dy\", \"all\", \"meta\"]\n    _hx_methods = [\"getTable\", \"get_width\", \"get_height\", \"getCell\", \"setCell\", \"toString\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"getData\", \"clone\", \"create\", \"getMeta\"]\n    _hx_interfaces = [Table]\n    def __init__(self,parent,dx,dy):\n        self.meta = None\n        self.parent = parent",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "CombinedTableBody._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "CombinedTableBody._hx_class = CombinedTableBody\nclass CombinedTableHead:\n    _hx_class_name = \"CombinedTableHead\"\n    __slots__ = (\"parent\", \"dx\", \"dy\", \"all\")\n    _hx_fields = [\"parent\", \"dx\", \"dy\", \"all\"]\n    _hx_methods = [\"getTable\", \"get_width\", \"get_height\", \"getCell\", \"setCell\", \"toString\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"getData\", \"clone\", \"create\", \"getMeta\"]\n    _hx_interfaces = [Table]\n    def __init__(self,parent,dx,dy):\n        self.parent = parent\n        self.dx = dx",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "CombinedTableHead._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "CombinedTableHead._hx_class = CombinedTableHead\nclass CompareFlags:\n    _hx_class_name = \"CompareFlags\"\n    __slots__ = (\"ordered\", \"show_unchanged\", \"unchanged_context\", \"always_show_order\", \"never_show_order\", \"show_unchanged_columns\", \"unchanged_column_context\", \"always_show_header\", \"acts\", \"ids\", \"columns_to_ignore\", \"tables\", \"allow_nested_cells\", \"warnings\", \"diff_strategy\", \"padding_strategy\", \"show_meta\", \"show_unchanged_meta\", \"parent\", \"count_like_a_spreadsheet\", \"ignore_whitespace\", \"ignore_case\", \"ignore_epsilon\", \"terminal_format\", \"use_glyphs\", \"quote_html\")\n    _hx_fields = [\"ordered\", \"show_unchanged\", \"unchanged_context\", \"always_show_order\", \"never_show_order\", \"show_unchanged_columns\", \"unchanged_column_context\", \"always_show_header\", \"acts\", \"ids\", \"columns_to_ignore\", \"tables\", \"allow_nested_cells\", \"warnings\", \"diff_strategy\", \"padding_strategy\", \"show_meta\", \"show_unchanged_meta\", \"parent\", \"count_like_a_spreadsheet\", \"ignore_whitespace\", \"ignore_case\", \"ignore_epsilon\", \"terminal_format\", \"use_glyphs\", \"quote_html\"]\n    _hx_methods = [\"filter\", \"allowUpdate\", \"allowInsert\", \"allowDelete\", \"allowColumn\", \"getIgnoredColumns\", \"addPrimaryKey\", \"ignoreColumn\", \"addTable\", \"addWarning\", \"getWarning\", \"getNameByRole\", \"getCanonicalName\", \"getIdsByRole\"]\n    def __init__(self):\n        self.padding_strategy = None\n        self.ordered = True\n        self.show_unchanged = False",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "CompareFlags._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "CompareFlags._hx_class = CompareFlags\nclass CompareTable:\n    _hx_class_name = \"CompareTable\"\n    __slots__ = (\"comp\", \"indexes\")\n    _hx_fields = [\"comp\", \"indexes\"]\n    _hx_methods = [\"run\", \"align\", \"getComparisonState\", \"alignCore\", \"alignCore2\", \"alignColumns\", \"testHasSameColumns\", \"hasSameColumns2\", \"testIsEqual\", \"isEqual2\", \"compareCore\", \"storeIndexes\", \"getIndexes\", \"useSql\"]\n    def __init__(self,comp):\n        self.indexes = None\n        self.comp = comp\n        if (comp.compare_flags is not None):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "CompareTable._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "CompareTable._hx_class = CompareTable\nclass ConflictInfo:\n    _hx_class_name = \"ConflictInfo\"\n    __slots__ = (\"row\", \"col\", \"pvalue\", \"lvalue\", \"rvalue\")\n    _hx_fields = [\"row\", \"col\", \"pvalue\", \"lvalue\", \"rvalue\"]\n    def __init__(self,row,col,pvalue,lvalue,rvalue):\n        self.row = row\n        self.col = col\n        self.pvalue = pvalue\n        self.lvalue = lvalue",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "ConflictInfo._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "ConflictInfo._hx_class = ConflictInfo\nclass Coopy:\n    _hx_class_name = \"Coopy\"\n    __slots__ = (\"format_preference\", \"delim_preference\", \"csv_eol_preference\", \"extern_preference\", \"output_format\", \"output_format_set\", \"nested_output\", \"order_set\", \"order_preference\", \"io\", \"strategy\", \"css_output\", \"fragment\", \"flags\", \"cache_txt\", \"fail_if_diff\", \"diffs_found\", \"mv\", \"status\", \"daff_cmd\")\n    _hx_fields = [\"format_preference\", \"delim_preference\", \"csv_eol_preference\", \"extern_preference\", \"output_format\", \"output_format_set\", \"nested_output\", \"order_set\", \"order_preference\", \"io\", \"strategy\", \"css_output\", \"fragment\", \"flags\", \"cache_txt\", \"fail_if_diff\", \"diffs_found\", \"mv\", \"status\", \"daff_cmd\"]\n    _hx_methods = [\"init\", \"checkFormat\", \"setFormat\", \"getRenderer\", \"applyRenderer\", \"renderTable\", \"renderTables\", \"saveTable\", \"encodeTable\", \"saveTables\", \"saveText\", \"jsonToTables\", \"jsonToTable\", \"useColor\", \"runDiff\", \"loadTable\", \"command\", \"installGitDriver\", \"run\", \"coopyhx\"]\n    _hx_statics = [\"VERSION\", \"diffAsHtml\", \"diffAsAnsi\", \"diff\", \"getBlankTable\", \"align\", \"patch\", \"compareTables\", \"compareTables3\", \"keepAround\", \"cellFor\", \"main\", \"show\", \"jsonify\", \"tablify\"]\n    def __init__(self,io = None):\n        self.daff_cmd = None\n        self.status = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Coopy._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Coopy._hx_class = Coopy\nclass CrossMatch:\n    _hx_class_name = \"CrossMatch\"\n    __slots__ = (\"spot_a\", \"spot_b\", \"item_a\", \"item_b\")\n    _hx_fields = [\"spot_a\", \"spot_b\", \"item_a\", \"item_b\"]\n    def __init__(self):\n        self.item_b = None\n        self.item_a = None\n        self.spot_b = None\n        self.spot_a = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "CrossMatch._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "CrossMatch._hx_class = CrossMatch\nclass Csv:\n    _hx_class_name = \"Csv\"\n    __slots__ = (\"cursor\", \"row_ended\", \"has_structure\", \"delim\", \"discovered_eol\", \"preferred_eol\")\n    _hx_fields = [\"cursor\", \"row_ended\", \"has_structure\", \"delim\", \"discovered_eol\", \"preferred_eol\"]\n    _hx_methods = [\"renderTable\", \"renderCell\", \"parseTable\", \"makeTable\", \"parseCellPart\", \"parseCell\", \"getDiscoveredEol\", \"setPreferredEol\"]\n    def __init__(self,delim = None,eol = None):\n        if (delim is None):\n            delim = \",\"\n        self.has_structure = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Csv._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Csv._hx_class = Csv\nclass Date:\n    _hx_class_name = \"Date\"\n    __slots__ = (\"date\", \"dateUTC\")\n    _hx_fields = [\"date\", \"dateUTC\"]\n    _hx_methods = [\"toString\"]\n    _hx_statics = [\"makeLocal\"]\n    def __init__(self,year,month,day,hour,_hx_min,sec):\n        self.dateUTC = None\n        if (year < python_lib_datetime_Datetime.min.year):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Date._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Date._hx_class = Date\nclass DiffRender:\n    _hx_class_name = \"DiffRender\"\n    __slots__ = (\"text_to_insert\", \"td_open\", \"td_close\", \"open\", \"pretty_arrows\", \"quote_html\", \"section\")\n    _hx_fields = [\"text_to_insert\", \"td_open\", \"td_close\", \"open\", \"pretty_arrows\", \"quote_html\", \"section\"]\n    _hx_methods = [\"usePrettyArrows\", \"quoteHtml\", \"insert\", \"beginTable\", \"setSection\", \"beginRow\", \"insertCell\", \"endRow\", \"endTable\", \"html\", \"toString\", \"render\", \"renderTables\", \"sampleCss\", \"completeHtml\"]\n    _hx_statics = [\"examineCell\", \"markSpaces\", \"renderCell\"]\n    def __init__(self):\n        self.section = None\n        self.td_close = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "DiffRender._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "DiffRender._hx_class = DiffRender\nclass DiffSummary:\n    _hx_class_name = \"DiffSummary\"\n    __slots__ = (\"row_deletes\", \"row_inserts\", \"row_updates\", \"row_reorders\", \"col_deletes\", \"col_inserts\", \"col_updates\", \"col_renames\", \"col_reorders\", \"row_count_initial_with_header\", \"row_count_final_with_header\", \"row_count_initial\", \"row_count_final\", \"col_count_initial\", \"col_count_final\", \"different\")\n    _hx_fields = [\"row_deletes\", \"row_inserts\", \"row_updates\", \"row_reorders\", \"col_deletes\", \"col_inserts\", \"col_updates\", \"col_renames\", \"col_reorders\", \"row_count_initial_with_header\", \"row_count_final_with_header\", \"row_count_initial\", \"row_count_final\", \"col_count_initial\", \"col_count_final\", \"different\"]\n    def __init__(self):\n        self.different = None\n        self.col_count_final = None\n        self.col_count_initial = None\n        self.row_count_final = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "DiffSummary._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "DiffSummary._hx_class = DiffSummary\nclass FlatCellBuilder:\n    _hx_class_name = \"FlatCellBuilder\"\n    __slots__ = (\"view\", \"separator\", \"conflict_separator\", \"flags\")\n    _hx_fields = [\"view\", \"separator\", \"conflict_separator\", \"flags\"]\n    _hx_methods = [\"needSeparator\", \"setSeparator\", \"setConflictSeparator\", \"setView\", \"update\", \"conflict\", \"marker\", \"links\"]\n    _hx_statics = [\"quoteForDiff\"]\n    _hx_interfaces = [CellBuilder]\n    def __init__(self,flags):\n        self.conflict_separator = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "FlatCellBuilder._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "FlatCellBuilder._hx_class = FlatCellBuilder\nclass Row:\n    _hx_class_name = \"Row\"\n    __slots__ = ()\n    _hx_methods = [\"getRowString\", \"isPreamble\"]\nRow._hx_class = Row\nclass HighlightPatch:\n    _hx_class_name = \"HighlightPatch\"\n    __slots__ = (\"source\", \"patch\", \"view\", \"sourceView\", \"csv\", \"header\", \"headerPre\", \"headerPost\", \"headerRename\", \"headerMove\", \"modifier\", \"currentRow\", \"payloadCol\", \"payloadTop\", \"mods\", \"cmods\", \"rowInfo\", \"cellInfo\", \"rcOffset\", \"indexes\", \"sourceInPatchCol\", \"patchInSourceCol\", \"destInPatchCol\", \"patchInDestCol\", \"patchInSourceRow\", \"lastSourceRow\", \"actions\", \"rowPermutation\", \"rowPermutationRev\", \"colPermutation\", \"colPermutationRev\", \"haveDroppedColumns\", \"headerRow\", \"preambleRow\", \"flags\", \"meta_change\", \"process_meta\", \"prev_meta\", \"next_meta\", \"finished_columns\", \"meta\")\n    _hx_fields = [\"source\", \"patch\", \"view\", \"sourceView\", \"csv\", \"header\", \"headerPre\", \"headerPost\", \"headerRename\", \"headerMove\", \"modifier\", \"currentRow\", \"payloadCol\", \"payloadTop\", \"mods\", \"cmods\", \"rowInfo\", \"cellInfo\", \"rcOffset\", \"indexes\", \"sourceInPatchCol\", \"patchInSourceCol\", \"destInPatchCol\", \"patchInDestCol\", \"patchInSourceRow\", \"lastSourceRow\", \"actions\", \"rowPermutation\", \"rowPermutationRev\", \"colPermutation\", \"colPermutationRev\", \"haveDroppedColumns\", \"headerRow\", \"preambleRow\", \"flags\", \"meta_change\", \"process_meta\", \"prev_meta\", \"next_meta\", \"finished_columns\", \"meta\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Row._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Row._hx_class = Row\nclass HighlightPatch:\n    _hx_class_name = \"HighlightPatch\"\n    __slots__ = (\"source\", \"patch\", \"view\", \"sourceView\", \"csv\", \"header\", \"headerPre\", \"headerPost\", \"headerRename\", \"headerMove\", \"modifier\", \"currentRow\", \"payloadCol\", \"payloadTop\", \"mods\", \"cmods\", \"rowInfo\", \"cellInfo\", \"rcOffset\", \"indexes\", \"sourceInPatchCol\", \"patchInSourceCol\", \"destInPatchCol\", \"patchInDestCol\", \"patchInSourceRow\", \"lastSourceRow\", \"actions\", \"rowPermutation\", \"rowPermutationRev\", \"colPermutation\", \"colPermutationRev\", \"haveDroppedColumns\", \"headerRow\", \"preambleRow\", \"flags\", \"meta_change\", \"process_meta\", \"prev_meta\", \"next_meta\", \"finished_columns\", \"meta\")\n    _hx_fields = [\"source\", \"patch\", \"view\", \"sourceView\", \"csv\", \"header\", \"headerPre\", \"headerPost\", \"headerRename\", \"headerMove\", \"modifier\", \"currentRow\", \"payloadCol\", \"payloadTop\", \"mods\", \"cmods\", \"rowInfo\", \"cellInfo\", \"rcOffset\", \"indexes\", \"sourceInPatchCol\", \"patchInSourceCol\", \"destInPatchCol\", \"patchInDestCol\", \"patchInSourceRow\", \"lastSourceRow\", \"actions\", \"rowPermutation\", \"rowPermutationRev\", \"colPermutation\", \"colPermutationRev\", \"haveDroppedColumns\", \"headerRow\", \"preambleRow\", \"flags\", \"meta_change\", \"process_meta\", \"prev_meta\", \"next_meta\", \"finished_columns\", \"meta\"]\n    _hx_methods = [\"reset\", \"processMeta\", \"apply\", \"needSourceColumns\", \"needDestColumns\", \"needSourceIndex\", \"setMetaProp\", \"applyMetaRow\", \"applyRow\", \"getDatum\", \"getString\", \"getStringNull\", \"applyMeta\", \"applyHeader\", \"lookUp\", \"applyActionExternal\", \"applyAction\", \"checkAct\", \"getPreString\", \"getRowString\", \"isPreamble\", \"sortMods\", \"processMods\", \"useMetaForColumnChanges\", \"useMetaForRowChanges\", \"computeOrdering\", \"permuteRows\", \"fillInNewColumns\", \"finishRows\", \"permuteColumns\", \"finishColumns\"]\n    _hx_interfaces = [Row]\n    def __init__(self,source,patch,flags = None):\n        self.finished_columns = None\n        self.next_meta = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "HighlightPatch._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "HighlightPatch._hx_class = HighlightPatch\nclass HighlightPatchUnit:\n    _hx_class_name = \"HighlightPatchUnit\"\n    __slots__ = (\"add\", \"rem\", \"update\", \"code\", \"sourceRow\", \"sourceRowOffset\", \"sourcePrevRow\", \"sourceNextRow\", \"destRow\", \"patchRow\")\n    _hx_fields = [\"add\", \"rem\", \"update\", \"code\", \"sourceRow\", \"sourceRowOffset\", \"sourcePrevRow\", \"sourceNextRow\", \"destRow\", \"patchRow\"]\n    _hx_methods = [\"toString\"]\n    def __init__(self):\n        self.add = False\n        self.rem = False\n        self.update = False",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "HighlightPatchUnit._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "HighlightPatchUnit._hx_class = HighlightPatchUnit\nclass Index:\n    _hx_class_name = \"Index\"\n    __slots__ = (\"items\", \"keys\", \"top_freq\", \"height\", \"cols\", \"v\", \"indexed_table\", \"hdr\", \"ignore_whitespace\", \"ignore_case\")\n    _hx_fields = [\"items\", \"keys\", \"top_freq\", \"height\", \"cols\", \"v\", \"indexed_table\", \"hdr\", \"ignore_whitespace\", \"ignore_case\"]\n    _hx_methods = [\"addColumn\", \"indexTable\", \"toKey\", \"toKeyByContent\", \"getTable\"]\n    def __init__(self,flags):\n        self.indexed_table = None\n        self.v = None\n        self.items = haxe_ds_StringMap()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Index._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Index._hx_class = Index\nclass IndexItem:\n    _hx_class_name = \"IndexItem\"\n    __slots__ = (\"lst\",)\n    _hx_fields = [\"lst\"]\n    _hx_methods = [\"add\", \"length\", \"value\", \"asList\"]\n    def __init__(self):\n        self.lst = None\n    def add(self,i):\n        if (self.lst is None):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "IndexItem._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "IndexItem._hx_class = IndexItem\nclass IndexPair:\n    _hx_class_name = \"IndexPair\"\n    __slots__ = (\"ia\", \"ib\", \"hdr\", \"quality\", \"flags\")\n    _hx_fields = [\"ia\", \"ib\", \"hdr\", \"quality\", \"flags\"]\n    _hx_methods = [\"addColumns\", \"indexTables\", \"queryByKey\", \"queryByContent\", \"queryLocal\", \"localKey\", \"remoteKey\", \"getTopFreq\", \"getQuality\"]\n    def __init__(self,flags):\n        self.flags = flags\n        self.ia = Index(flags)\n        self.ib = Index(flags)",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "IndexPair._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "IndexPair._hx_class = IndexPair\nclass Meta:\n    _hx_class_name = \"Meta\"\n    __slots__ = ()\n    _hx_methods = [\"alterColumns\", \"changeRow\", \"applyFlags\", \"asTable\", \"cloneMeta\", \"useForColumnChanges\", \"useForRowChanges\", \"getRowStream\", \"isNested\", \"isSql\", \"getName\"]\nMeta._hx_class = Meta\nclass JsonTable:\n    _hx_class_name = \"JsonTable\"\n    __slots__ = (\"w\", \"h\", \"columns\", \"rows\", \"data\", \"idx2col\", \"name\")\n    _hx_fields = [\"w\", \"h\", \"columns\", \"rows\", \"data\", \"idx2col\", \"name\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Meta._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Meta._hx_class = Meta\nclass JsonTable:\n    _hx_class_name = \"JsonTable\"\n    __slots__ = (\"w\", \"h\", \"columns\", \"rows\", \"data\", \"idx2col\", \"name\")\n    _hx_fields = [\"w\", \"h\", \"columns\", \"rows\", \"data\", \"idx2col\", \"name\"]\n    _hx_methods = [\"getTable\", \"get_width\", \"get_height\", \"getCell\", \"setCell\", \"toString\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"getData\", \"clone\", \"setMeta\", \"getMeta\", \"create\", \"alterColumns\", \"changeRow\", \"applyFlags\", \"asTable\", \"cloneMeta\", \"useForColumnChanges\", \"useForRowChanges\", \"getRowStream\", \"isNested\", \"isSql\", \"getName\"]\n    _hx_interfaces = [Meta, Table]\n    def __init__(self,data,name):\n        self.name = None\n        self.idx2col = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "JsonTable._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "JsonTable._hx_class = JsonTable\nclass JsonTables:\n    _hx_class_name = \"JsonTables\"\n    __slots__ = (\"db\", \"t\", \"flags\")\n    _hx_fields = [\"db\", \"t\", \"flags\"]\n    _hx_methods = [\"getCell\", \"setCell\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"get_width\", \"get_height\", \"getData\", \"clone\", \"getMeta\", \"create\"]\n    _hx_interfaces = [Table]\n    def __init__(self,json,flags):\n        self.flags = None\n        self.db = json",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "JsonTables._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "JsonTables._hx_class = JsonTables\nclass Lambda:\n    _hx_class_name = \"Lambda\"\n    __slots__ = ()\n    _hx_statics = [\"array\", \"has\"]\n    @staticmethod\n    def array(it):\n        a = list()\n        i = HxOverrides.iterator(it)\n        while i.hasNext():",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Lambda._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Lambda._hx_class = Lambda\nclass Merger:\n    _hx_class_name = \"Merger\"\n    __slots__ = (\"parent\", \"local\", \"remote\", \"flags\", \"order\", \"units\", \"column_order\", \"column_units\", \"row_mix_local\", \"row_mix_remote\", \"column_mix_local\", \"column_mix_remote\", \"conflicts\", \"conflict_infos\")\n    _hx_fields = [\"parent\", \"local\", \"remote\", \"flags\", \"order\", \"units\", \"column_order\", \"column_units\", \"row_mix_local\", \"row_mix_remote\", \"column_mix_local\", \"column_mix_remote\", \"conflicts\", \"conflict_infos\"]\n    _hx_methods = [\"shuffleDimension\", \"shuffleColumns\", \"shuffleRows\", \"apply\", \"getConflictInfos\", \"addConflictInfo\"]\n    _hx_statics = [\"makeConflictedCell\"]\n    def __init__(self,parent,local,remote,flags):\n        self.conflict_infos = None\n        self.conflicts = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Merger._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Merger._hx_class = Merger\nclass Mover:\n    _hx_class_name = \"Mover\"\n    __slots__ = ()\n    _hx_statics = [\"moveUnits\", \"move\", \"moveWithoutExtras\"]\n    @staticmethod\n    def moveUnits(units):\n        isrc = list()\n        idest = list()\n        _hx_len = len(units)",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Mover._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Mover._hx_class = Mover\nclass Ndjson:\n    _hx_class_name = \"Ndjson\"\n    __slots__ = (\"tab\", \"view\", \"columns\", \"header_row\")\n    _hx_fields = [\"tab\", \"view\", \"columns\", \"header_row\"]\n    _hx_methods = [\"renderRow\", \"render\", \"addRow\", \"addHeaderRow\", \"parse\"]\n    def __init__(self,tab):\n        self.columns = None\n        self.tab = tab\n        self.view = tab.getCellView()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Ndjson._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Ndjson._hx_class = Ndjson\nclass NestedCellBuilder:\n    _hx_class_name = \"NestedCellBuilder\"\n    __slots__ = (\"view\",)\n    _hx_fields = [\"view\"]\n    _hx_methods = [\"needSeparator\", \"setSeparator\", \"setConflictSeparator\", \"setView\", \"update\", \"conflict\", \"marker\", \"negToNull\", \"links\"]\n    _hx_interfaces = [CellBuilder]\n    def __init__(self):\n        self.view = None\n    def needSeparator(self):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "NestedCellBuilder._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "NestedCellBuilder._hx_class = NestedCellBuilder\nclass Ordering:\n    _hx_class_name = \"Ordering\"\n    __slots__ = (\"order\", \"ignore_parent\")\n    _hx_fields = [\"order\", \"ignore_parent\"]\n    _hx_methods = [\"add\", \"getList\", \"setList\", \"toString\", \"ignoreParent\"]\n    def __init__(self):\n        self.order = list()\n        self.ignore_parent = False\n    def add(self,l,r,p = None):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Ordering._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Ordering._hx_class = Ordering\nclass PropertyChange:\n    _hx_class_name = \"PropertyChange\"\n    __slots__ = (\"prevName\", \"name\", \"val\")\n    _hx_fields = [\"prevName\", \"name\", \"val\"]\n    def __init__(self):\n        self.val = None\n        self.name = None\n        self.prevName = None\nPropertyChange._hx_class = PropertyChange",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "PropertyChange._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "PropertyChange._hx_class = PropertyChange\nclass Reflect:\n    _hx_class_name = \"Reflect\"\n    __slots__ = ()\n    _hx_statics = [\"field\", \"isFunction\", \"compare\"]\n    @staticmethod\n    def field(o,field):\n        return python_Boot.field(o,field)\n    @staticmethod\n    def isFunction(f):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Reflect._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Reflect._hx_class = Reflect\nclass RowChange:\n    _hx_class_name = \"RowChange\"\n    __slots__ = (\"cond\", \"val\", \"conflicting_val\", \"conflicting_parent_val\", \"conflicted\", \"is_key\", \"action\")\n    _hx_fields = [\"cond\", \"val\", \"conflicting_val\", \"conflicting_parent_val\", \"conflicted\", \"is_key\", \"action\"]\n    _hx_methods = [\"showMap\", \"toString\"]\n    def __init__(self):\n        self.action = None\n        self.is_key = None\n        self.conflicted = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "RowChange._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "RowChange._hx_class = RowChange\nclass RowStream:\n    _hx_class_name = \"RowStream\"\n    __slots__ = ()\n    _hx_methods = [\"fetchColumns\", \"fetchRow\"]\nRowStream._hx_class = RowStream\nclass SimpleMeta:\n    _hx_class_name = \"SimpleMeta\"\n    __slots__ = (\"t\", \"name2row\", \"name2col\", \"has_properties\", \"metadata\", \"keys\", \"row_active\", \"row_change_cache\", \"may_be_nested\")\n    _hx_fields = [\"t\", \"name2row\", \"name2col\", \"has_properties\", \"metadata\", \"keys\", \"row_active\", \"row_change_cache\", \"may_be_nested\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "RowStream._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "RowStream._hx_class = RowStream\nclass SimpleMeta:\n    _hx_class_name = \"SimpleMeta\"\n    __slots__ = (\"t\", \"name2row\", \"name2col\", \"has_properties\", \"metadata\", \"keys\", \"row_active\", \"row_change_cache\", \"may_be_nested\")\n    _hx_fields = [\"t\", \"name2row\", \"name2col\", \"has_properties\", \"metadata\", \"keys\", \"row_active\", \"row_change_cache\", \"may_be_nested\"]\n    _hx_methods = [\"storeRowChanges\", \"rowChange\", \"colChange\", \"col\", \"row\", \"alterColumns\", \"setCell\", \"addMetaData\", \"asTable\", \"cloneMeta\", \"useForColumnChanges\", \"useForRowChanges\", \"changeRow\", \"applyFlags\", \"getRowStream\", \"isNested\", \"isSql\", \"getName\"]\n    _hx_interfaces = [Meta]\n    def __init__(self,t,has_properties = None,may_be_nested = None):\n        if (has_properties is None):\n            has_properties = True",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SimpleMeta._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "SimpleMeta._hx_class = SimpleMeta\nclass SimpleTable:\n    _hx_class_name = \"SimpleTable\"\n    __slots__ = (\"data\", \"w\", \"h\", \"meta\")\n    _hx_fields = [\"data\", \"w\", \"h\", \"meta\"]\n    _hx_methods = [\"getTable\", \"get_width\", \"get_height\", \"getCell\", \"setCell\", \"toString\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"getData\", \"clone\", \"create\", \"setMeta\", \"getMeta\"]\n    _hx_statics = [\"tableToString\", \"tableIsSimilar\"]\n    _hx_interfaces = [Table]\n    def __init__(self,w,h):\n        self.data = haxe_ds_IntMap()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SimpleTable._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "SimpleTable._hx_class = SimpleTable\nclass View:\n    _hx_class_name = \"View\"\n    __slots__ = ()\n    _hx_methods = [\"toString\", \"equals\", \"toDatum\", \"makeHash\", \"hashSet\", \"isHash\", \"hashExists\", \"hashGet\", \"isTable\", \"getTable\", \"wrapTable\"]\nView._hx_class = View\nclass SimpleView:\n    _hx_class_name = \"SimpleView\"\n    __slots__ = ()\n    _hx_methods = [\"toString\", \"equals\", \"toDatum\", \"makeHash\", \"hashSet\", \"hashExists\", \"hashGet\", \"isHash\", \"isTable\", \"getTable\", \"wrapTable\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "View._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "View._hx_class = View\nclass SimpleView:\n    _hx_class_name = \"SimpleView\"\n    __slots__ = ()\n    _hx_methods = [\"toString\", \"equals\", \"toDatum\", \"makeHash\", \"hashSet\", \"hashExists\", \"hashGet\", \"isHash\", \"isTable\", \"getTable\", \"wrapTable\"]\n    _hx_interfaces = [View]\n    def __init__(self):\n        pass\n    def toString(self,d):\n        if (d is None):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SimpleView._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "SimpleView._hx_class = SimpleView\nclass SparseSheet:\n    _hx_class_name = \"SparseSheet\"\n    __slots__ = (\"h\", \"w\", \"row\", \"zero\")\n    _hx_fields = [\"h\", \"w\", \"row\", \"zero\"]\n    _hx_methods = [\"resize\", \"nonDestructiveResize\", \"get\", \"set\"]\n    def __init__(self):\n        self.zero = None\n        self.row = None\n        def _hx_local_0():",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SparseSheet._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "SparseSheet._hx_class = SparseSheet\nclass SqlColumn:\n    _hx_class_name = \"SqlColumn\"\n    __slots__ = (\"name\", \"primary\", \"type_value\", \"type_family\")\n    _hx_fields = [\"name\", \"primary\", \"type_value\", \"type_family\"]\n    _hx_methods = [\"setName\", \"setPrimaryKey\", \"setType\", \"getName\", \"isPrimaryKey\", \"toString\"]\n    def __init__(self):\n        self.name = \"\"\n        self.primary = False\n        self.type_value = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SqlColumn._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "SqlColumn._hx_class = SqlColumn\nclass SqlCompare:\n    _hx_class_name = \"SqlCompare\"\n    __slots__ = (\"db\", \"local\", \"remote\", \"alt\", \"at0\", \"at1\", \"at2\", \"diff_ct\", \"align\", \"peered\", \"alt_peered\", \"needed\", \"flags\")\n    _hx_fields = [\"db\", \"local\", \"remote\", \"alt\", \"at0\", \"at1\", \"at2\", \"diff_ct\", \"align\", \"peered\", \"alt_peered\", \"needed\", \"flags\"]\n    _hx_methods = [\"equalArray\", \"validateSchema\", \"denull\", \"link\", \"linkQuery\", \"where\", \"scanColumns\", \"apply\"]\n    def __init__(self,db,local,remote,alt,align = None,flags = None):\n        self.needed = None\n        self.alt_peered = None\n        self.peered = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SqlCompare._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "SqlCompare._hx_class = SqlCompare\nclass SqlDatabase:\n    _hx_class_name = \"SqlDatabase\"\n    __slots__ = ()\n    _hx_methods = [\"getColumns\", \"getQuotedTableName\", \"getQuotedColumnName\", \"exec\", \"begin\", \"beginRow\", \"read\", \"get\", \"end\", \"width\", \"rowid\", \"getHelper\", \"getNameForAttachment\"]\nSqlDatabase._hx_class = SqlDatabase\nclass SqlHelper:\n    _hx_class_name = \"SqlHelper\"\n    __slots__ = ()\n    _hx_methods = [\"getTableNames\", \"countRows\", \"getRowIDs\", \"insert\", \"delete\", \"update\", \"attach\", \"alterColumns\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SqlDatabase._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "SqlDatabase._hx_class = SqlDatabase\nclass SqlHelper:\n    _hx_class_name = \"SqlHelper\"\n    __slots__ = ()\n    _hx_methods = [\"getTableNames\", \"countRows\", \"getRowIDs\", \"insert\", \"delete\", \"update\", \"attach\", \"alterColumns\"]\nSqlHelper._hx_class = SqlHelper\nclass SqlTable:\n    _hx_class_name = \"SqlTable\"\n    __slots__ = (\"db\", \"columns\", \"name\", \"quotedTableName\", \"cache\", \"columnNames\", \"h\", \"helper\", \"id2rid\")\n    _hx_fields = [\"db\", \"columns\", \"name\", \"quotedTableName\", \"cache\", \"columnNames\", \"h\", \"helper\", \"id2rid\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SqlHelper._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "SqlHelper._hx_class = SqlHelper\nclass SqlTable:\n    _hx_class_name = \"SqlTable\"\n    __slots__ = (\"db\", \"columns\", \"name\", \"quotedTableName\", \"cache\", \"columnNames\", \"h\", \"helper\", \"id2rid\")\n    _hx_fields = [\"db\", \"columns\", \"name\", \"quotedTableName\", \"cache\", \"columnNames\", \"h\", \"helper\", \"id2rid\"]\n    _hx_methods = [\"getColumns\", \"getPrimaryKey\", \"getAllButPrimaryKey\", \"getColumnNames\", \"getQuotedTableName\", \"getQuotedColumnName\", \"getCell\", \"setCellCache\", \"setCell\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"get_width\", \"get_height\", \"getData\", \"clone\", \"create\", \"getMeta\", \"alterColumns\", \"changeRow\", \"asTable\", \"useForColumnChanges\", \"useForRowChanges\", \"cloneMeta\", \"applyFlags\", \"getDatabase\", \"getRowStream\", \"isNested\", \"isSql\", \"fetchRow\", \"fetchColumns\", \"getName\"]\n    _hx_interfaces = [RowStream, Meta, Table]\n    def __init__(self,db,name,helper = None):\n        self.columnNames = None\n        self.quotedTableName = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SqlTable._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "SqlTable._hx_class = SqlTable\nclass SqlTableName:\n    _hx_class_name = \"SqlTableName\"\n    __slots__ = (\"name\", \"prefix\")\n    _hx_fields = [\"name\", \"prefix\"]\n    _hx_methods = [\"toString\"]\n    def __init__(self,name = None,prefix = None):\n        if (name is None):\n            name = \"\"\n        if (prefix is None):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SqlTableName._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "SqlTableName._hx_class = SqlTableName\nclass SqlTables:\n    _hx_class_name = \"SqlTables\"\n    __slots__ = (\"db\", \"t\", \"flags\")\n    _hx_fields = [\"db\", \"t\", \"flags\"]\n    _hx_methods = [\"getCell\", \"setCell\", \"getCellView\", \"isResizable\", \"resize\", \"clear\", \"insertOrDeleteRows\", \"insertOrDeleteColumns\", \"trimBlank\", \"get_width\", \"get_height\", \"getData\", \"clone\", \"create\", \"getMeta\"]\n    _hx_interfaces = [Table]\n    def __init__(self,db,flags,role):\n        self.flags = None\n        self.t = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SqlTables._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "SqlTables._hx_class = SqlTables\nclass SqliteHelper:\n    _hx_class_name = \"SqliteHelper\"\n    __slots__ = ()\n    _hx_methods = [\"getTableNames\", \"countRows\", \"getRowIDs\", \"update\", \"delete\", \"insert\", \"attach\", \"columnListSql\", \"fetchSchema\", \"splitSchema\", \"exec\", \"alterColumns\"]\n    _hx_interfaces = [SqlHelper]\n    def __init__(self):\n        pass\n    def getTableNames(self,db):\n        q = \"SELECT name FROM sqlite_master WHERE type='table' ORDER BY name\"",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "SqliteHelper._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "SqliteHelper._hx_class = SqliteHelper\nclass Std:\n    _hx_class_name = \"Std\"\n    __slots__ = ()\n    _hx_statics = [\"isOfType\", \"string\", \"parseInt\", \"shortenPossibleNumber\", \"parseFloat\"]\n    @staticmethod\n    def isOfType(v,t):\n        if ((v is None) and ((t is None))):\n            return False\n        if (t is None):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Std._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Std._hx_class = Std\nclass Float: pass\nclass Int: pass\nclass Bool: pass\nclass Dynamic: pass\nclass StringBuf:\n    _hx_class_name = \"StringBuf\"\n    __slots__ = (\"b\",)\n    _hx_fields = [\"b\"]\n    _hx_methods = [\"get_length\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "StringBuf._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "StringBuf._hx_class = StringBuf\nclass StringTools:\n    _hx_class_name = \"StringTools\"\n    __slots__ = ()\n    _hx_statics = [\"htmlEscape\", \"isSpace\", \"ltrim\", \"rtrim\", \"trim\", \"lpad\", \"replace\"]\n    @staticmethod\n    def htmlEscape(s,quotes = None):\n        buf_b = python_lib_io_StringIO()\n        _g_offset = 0\n        _g_s = s",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "StringTools._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "StringTools._hx_class = StringTools\nclass sys_FileSystem:\n    _hx_class_name = \"sys.FileSystem\"\n    __slots__ = ()\n    _hx_statics = [\"exists\"]\n    @staticmethod\n    def exists(path):\n        return python_lib_os_Path.exists(path)\nsys_FileSystem._hx_class = sys_FileSystem\nclass Sys:",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "sys_FileSystem._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "sys_FileSystem._hx_class = sys_FileSystem\nclass Sys:\n    _hx_class_name = \"Sys\"\n    __slots__ = ()\n    _hx_statics = [\"exit\", \"args\", \"getEnv\", \"command\", \"stdout\", \"stderr\"]\n    @staticmethod\n    def exit(code):\n        python_lib_Sys.exit(code)\n    @staticmethod\n    def args():",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Sys._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Sys._hx_class = Sys\nclass TableComparisonState:\n    _hx_class_name = \"TableComparisonState\"\n    __slots__ = (\"p\", \"a\", \"b\", \"completed\", \"run_to_completion\", \"is_equal\", \"is_equal_known\", \"has_same_columns\", \"has_same_columns_known\", \"compare_flags\", \"p_meta\", \"a_meta\", \"b_meta\", \"alignment\", \"children\", \"child_order\")\n    _hx_fields = [\"p\", \"a\", \"b\", \"completed\", \"run_to_completion\", \"is_equal\", \"is_equal_known\", \"has_same_columns\", \"has_same_columns_known\", \"compare_flags\", \"p_meta\", \"a_meta\", \"b_meta\", \"alignment\", \"children\", \"child_order\"]\n    _hx_methods = [\"reset\", \"getMeta\"]\n    def __init__(self):\n        self.child_order = None\n        self.children = None\n        self.alignment = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "TableComparisonState._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "TableComparisonState._hx_class = TableComparisonState\nclass TableDiff:\n    _hx_class_name = \"TableDiff\"\n    __slots__ = (\"align\", \"flags\", \"builder\", \"row_map\", \"col_map\", \"has_parent\", \"a\", \"b\", \"p\", \"rp_header\", \"ra_header\", \"rb_header\", \"is_index_p\", \"is_index_a\", \"is_index_b\", \"order\", \"row_units\", \"column_units\", \"show_rc_numbers\", \"row_moves\", \"col_moves\", \"active_row\", \"active_column\", \"allow_insert\", \"allow_delete\", \"allow_update\", \"allow_column\", \"v\", \"sep\", \"conflict_sep\", \"schema\", \"have_schema\", \"top_line_done\", \"have_addition\", \"act\", \"publish\", \"diff_found\", \"schema_diff_found\", \"preserve_columns\", \"row_deletes\", \"row_inserts\", \"row_updates\", \"row_reorders\", \"col_deletes\", \"col_inserts\", \"col_updates\", \"col_renames\", \"col_reorders\", \"column_units_updated\", \"nested\", \"nesting_present\")\n    _hx_fields = [\"align\", \"flags\", \"builder\", \"row_map\", \"col_map\", \"has_parent\", \"a\", \"b\", \"p\", \"rp_header\", \"ra_header\", \"rb_header\", \"is_index_p\", \"is_index_a\", \"is_index_b\", \"order\", \"row_units\", \"column_units\", \"show_rc_numbers\", \"row_moves\", \"col_moves\", \"active_row\", \"active_column\", \"allow_insert\", \"allow_delete\", \"allow_update\", \"allow_column\", \"v\", \"sep\", \"conflict_sep\", \"schema\", \"have_schema\", \"top_line_done\", \"have_addition\", \"act\", \"publish\", \"diff_found\", \"schema_diff_found\", \"preserve_columns\", \"row_deletes\", \"row_inserts\", \"row_updates\", \"row_reorders\", \"col_deletes\", \"col_inserts\", \"col_updates\", \"col_renames\", \"col_reorders\", \"column_units_updated\", \"nested\", \"nesting_present\"]\n    _hx_methods = [\"setCellBuilder\", \"getSeparator\", \"isReordered\", \"spreadContext\", \"setIgnore\", \"countActive\", \"reset\", \"setupTables\", \"scanActivity\", \"setupColumns\", \"setupMoves\", \"scanSchema\", \"checkRcNumbers\", \"addRcNumbers\", \"elideColumns\", \"addSchema\", \"addHeader\", \"checkMeta\", \"getMetaTable\", \"addMeta\", \"refineActivity\", \"normalizeString\", \"isEqual\", \"checkNesting\", \"scanRow\", \"hilite\", \"hiliteSingle\", \"hiliteWithNesting\", \"hasDifference\", \"hasSchemaDifference\", \"isNested\", \"getComparisonState\", \"getSummary\"]\n    def __init__(self,align,flags):\n        self.nesting_present = None\n        self.nested = None\n        self.column_units_updated = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "TableDiff._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "TableDiff._hx_class = TableDiff\nclass TableIO:\n    _hx_class_name = \"TableIO\"\n    __slots__ = ()\n    _hx_methods = [\"valid\", \"getContent\", \"saveContent\", \"args\", \"writeStdout\", \"writeStderr\", \"command\", \"hasAsync\", \"exists\", \"isTtyKnown\", \"isTty\", \"openSqliteDatabase\", \"sendToBrowser\"]\n    def __init__(self):\n        pass\n    def valid(self):\n        return True\n    def getContent(self,name):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "TableIO._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "TableIO._hx_class = TableIO\nclass TableModifier:\n    _hx_class_name = \"TableModifier\"\n    __slots__ = (\"t\",)\n    _hx_fields = [\"t\"]\n    _hx_methods = [\"removeColumn\"]\n    def __init__(self,t):\n        self.t = t\n    def removeColumn(self,at):\n        fate = []",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "TableModifier._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "TableModifier._hx_class = TableModifier\nclass TableStream:\n    _hx_class_name = \"TableStream\"\n    __slots__ = (\"t\", \"at\", \"h\", \"src\", \"columns\", \"row\")\n    _hx_fields = [\"t\", \"at\", \"h\", \"src\", \"columns\", \"row\"]\n    _hx_methods = [\"fetchColumns\", \"fetchRow\", \"fetch\", \"getCell\", \"width\"]\n    _hx_interfaces = [RowStream]\n    def __init__(self,t):\n        self.row = None\n        self.columns = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "TableStream._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "TableStream._hx_class = TableStream\nclass Tables:\n    _hx_class_name = \"Tables\"\n    __slots__ = (\"template\", \"tables\", \"table_order\", \"alignment\")\n    _hx_fields = [\"template\", \"tables\", \"table_order\", \"alignment\"]\n    _hx_methods = [\"add\", \"getOrder\", \"get\", \"one\", \"hasInsDel\"]\n    def __init__(self,template):\n        self.alignment = None\n        self.template = template\n        self.tables = haxe_ds_StringMap()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Tables._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Tables._hx_class = Tables\nclass TerminalDiffRender:\n    _hx_class_name = \"TerminalDiffRender\"\n    __slots__ = (\"codes\", \"t\", \"csv\", \"v\", \"align_columns\", \"wide_columns\", \"use_glyphs\", \"flags\", \"delim\", \"diff\")\n    _hx_fields = [\"codes\", \"t\", \"csv\", \"v\", \"align_columns\", \"wide_columns\", \"use_glyphs\", \"flags\", \"delim\", \"diff\"]\n    _hx_methods = [\"alignColumns\", \"render\", \"getText\", \"pickSizes\"]\n    def __init__(self,flags = None,delim = None,diff = None):\n        if (diff is None):\n            diff = True\n        self.v = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "TerminalDiffRender._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "TerminalDiffRender._hx_class = TerminalDiffRender\nclass ValueType(Enum):\n    __slots__ = ()\n    _hx_class_name = \"ValueType\"\n    _hx_constructs = [\"TNull\", \"TInt\", \"TFloat\", \"TBool\", \"TObject\", \"TFunction\", \"TClass\", \"TEnum\", \"TUnknown\"]\n    @staticmethod\n    def TClass(c):\n        return ValueType(\"TClass\", 6, (c,))\n    @staticmethod\n    def TEnum(e):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "ValueType.TNull",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "ValueType.TNull = ValueType(\"TNull\", 0, ())\nValueType.TInt = ValueType(\"TInt\", 1, ())\nValueType.TFloat = ValueType(\"TFloat\", 2, ())\nValueType.TBool = ValueType(\"TBool\", 3, ())\nValueType.TObject = ValueType(\"TObject\", 4, ())\nValueType.TFunction = ValueType(\"TFunction\", 5, ())\nValueType.TUnknown = ValueType(\"TUnknown\", 8, ())\nValueType._hx_class = ValueType\nclass Type:\n    _hx_class_name = \"Type\"",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "ValueType.TInt",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "ValueType.TInt = ValueType(\"TInt\", 1, ())\nValueType.TFloat = ValueType(\"TFloat\", 2, ())\nValueType.TBool = ValueType(\"TBool\", 3, ())\nValueType.TObject = ValueType(\"TObject\", 4, ())\nValueType.TFunction = ValueType(\"TFunction\", 5, ())\nValueType.TUnknown = ValueType(\"TUnknown\", 8, ())\nValueType._hx_class = ValueType\nclass Type:\n    _hx_class_name = \"Type\"\n    __slots__ = ()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "ValueType.TFloat",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "ValueType.TFloat = ValueType(\"TFloat\", 2, ())\nValueType.TBool = ValueType(\"TBool\", 3, ())\nValueType.TObject = ValueType(\"TObject\", 4, ())\nValueType.TFunction = ValueType(\"TFunction\", 5, ())\nValueType.TUnknown = ValueType(\"TUnknown\", 8, ())\nValueType._hx_class = ValueType\nclass Type:\n    _hx_class_name = \"Type\"\n    __slots__ = ()\n    _hx_statics = [\"getClass\", \"typeof\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "ValueType.TBool",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "ValueType.TBool = ValueType(\"TBool\", 3, ())\nValueType.TObject = ValueType(\"TObject\", 4, ())\nValueType.TFunction = ValueType(\"TFunction\", 5, ())\nValueType.TUnknown = ValueType(\"TUnknown\", 8, ())\nValueType._hx_class = ValueType\nclass Type:\n    _hx_class_name = \"Type\"\n    __slots__ = ()\n    _hx_statics = [\"getClass\", \"typeof\"]\n    @staticmethod",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "ValueType.TObject",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "ValueType.TObject = ValueType(\"TObject\", 4, ())\nValueType.TFunction = ValueType(\"TFunction\", 5, ())\nValueType.TUnknown = ValueType(\"TUnknown\", 8, ())\nValueType._hx_class = ValueType\nclass Type:\n    _hx_class_name = \"Type\"\n    __slots__ = ()\n    _hx_statics = [\"getClass\", \"typeof\"]\n    @staticmethod\n    def getClass(o):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "ValueType.TFunction",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "ValueType.TFunction = ValueType(\"TFunction\", 5, ())\nValueType.TUnknown = ValueType(\"TUnknown\", 8, ())\nValueType._hx_class = ValueType\nclass Type:\n    _hx_class_name = \"Type\"\n    __slots__ = ()\n    _hx_statics = [\"getClass\", \"typeof\"]\n    @staticmethod\n    def getClass(o):\n        if (o is None):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "ValueType.TUnknown",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "ValueType.TUnknown = ValueType(\"TUnknown\", 8, ())\nValueType._hx_class = ValueType\nclass Type:\n    _hx_class_name = \"Type\"\n    __slots__ = ()\n    _hx_statics = [\"getClass\", \"typeof\"]\n    @staticmethod\n    def getClass(o):\n        if (o is None):\n            return None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "ValueType._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "ValueType._hx_class = ValueType\nclass Type:\n    _hx_class_name = \"Type\"\n    __slots__ = ()\n    _hx_statics = [\"getClass\", \"typeof\"]\n    @staticmethod\n    def getClass(o):\n        if (o is None):\n            return None\n        o1 = o",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Type._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Type._hx_class = Type\nclass Unit:\n    _hx_class_name = \"Unit\"\n    __slots__ = (\"l\", \"r\", \"p\")\n    _hx_fields = [\"l\", \"r\", \"p\"]\n    _hx_methods = [\"lp\", \"toString\", \"fromString\", \"base26\", \"toBase26String\"]\n    _hx_statics = [\"describe\"]\n    def __init__(self,l = None,r = None,p = None):\n        if (l is None):\n            l = -2",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Unit._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Unit._hx_class = Unit\nclass Viterbi:\n    _hx_class_name = \"Viterbi\"\n    __slots__ = (\"K\", \"T\", \"index\", \"mode\", \"path_valid\", \"best_cost\", \"cost\", \"src\", \"path\")\n    _hx_fields = [\"K\", \"T\", \"index\", \"mode\", \"path_valid\", \"best_cost\", \"cost\", \"src\", \"path\"]\n    _hx_methods = [\"reset\", \"setSize\", \"assertMode\", \"addTransition\", \"endTransitions\", \"beginTransitions\", \"calculatePath\", \"toString\", \"length\", \"get\", \"getCost\"]\n    def __init__(self):\n        self.path = None\n        self.src = None\n        self.cost = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Viterbi._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Viterbi._hx_class = Viterbi\nclass haxe_IMap:\n    _hx_class_name = \"haxe.IMap\"\n    __slots__ = ()\nhaxe_IMap._hx_class = haxe_IMap\nclass haxe_Exception(Exception):\n    _hx_class_name = \"haxe.Exception\"\n    __slots__ = (\"_hx___nativeStack\", \"_hx___skipStack\", \"_hx___nativeException\", \"_hx___previousException\")\n    _hx_fields = [\"__nativeStack\", \"__skipStack\", \"__nativeException\", \"__previousException\"]\n    _hx_methods = [\"unwrap\", \"toString\", \"get_message\", \"get_native\"]",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_IMap._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_IMap._hx_class = haxe_IMap\nclass haxe_Exception(Exception):\n    _hx_class_name = \"haxe.Exception\"\n    __slots__ = (\"_hx___nativeStack\", \"_hx___skipStack\", \"_hx___nativeException\", \"_hx___previousException\")\n    _hx_fields = [\"__nativeStack\", \"__skipStack\", \"__nativeException\", \"__previousException\"]\n    _hx_methods = [\"unwrap\", \"toString\", \"get_message\", \"get_native\"]\n    _hx_statics = [\"caught\", \"thrown\"]\n    _hx_interfaces = []\n    _hx_super = Exception\n    def __init__(self,message,previous = None,native = None):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_Exception._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_Exception._hx_class = haxe_Exception\nclass haxe_NativeStackTrace:\n    _hx_class_name = \"haxe.NativeStackTrace\"\n    __slots__ = ()\n    _hx_statics = [\"saveStack\", \"exceptionStack\"]\n    @staticmethod\n    def saveStack(exception):\n        pass\n    @staticmethod\n    def exceptionStack():",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_NativeStackTrace._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_NativeStackTrace._hx_class = haxe_NativeStackTrace\nclass haxe_ValueException(haxe_Exception):\n    _hx_class_name = \"haxe.ValueException\"\n    __slots__ = (\"value\",)\n    _hx_fields = [\"value\"]\n    _hx_methods = [\"unwrap\"]\n    _hx_statics = []\n    _hx_interfaces = []\n    _hx_super = haxe_Exception\n    def __init__(self,value,previous = None,native = None):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_ValueException._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_ValueException._hx_class = haxe_ValueException\nclass haxe_ds_IntMap:\n    _hx_class_name = \"haxe.ds.IntMap\"\n    __slots__ = (\"h\",)\n    _hx_fields = [\"h\"]\n    _hx_methods = [\"set\", \"remove\", \"keys\", \"toString\"]\n    _hx_interfaces = [haxe_IMap]\n    def __init__(self):\n        self.h = dict()\n    def set(self,key,value):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_ds_IntMap._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_ds_IntMap._hx_class = haxe_ds_IntMap\nclass haxe_ds_StringMap:\n    _hx_class_name = \"haxe.ds.StringMap\"\n    __slots__ = (\"h\",)\n    _hx_fields = [\"h\"]\n    _hx_methods = [\"keys\", \"iterator\"]\n    _hx_interfaces = [haxe_IMap]\n    def __init__(self):\n        self.h = dict()\n    def keys(self):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_ds_StringMap._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_ds_StringMap._hx_class = haxe_ds_StringMap\nclass haxe_exceptions_PosException(haxe_Exception):\n    _hx_class_name = \"haxe.exceptions.PosException\"\n    __slots__ = (\"posInfos\",)\n    _hx_fields = [\"posInfos\"]\n    _hx_methods = [\"toString\"]\n    _hx_statics = []\n    _hx_interfaces = []\n    _hx_super = haxe_Exception\n    def __init__(self,message,previous = None,pos = None):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_exceptions_PosException._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_exceptions_PosException._hx_class = haxe_exceptions_PosException\nclass haxe_exceptions_NotImplementedException(haxe_exceptions_PosException):\n    _hx_class_name = \"haxe.exceptions.NotImplementedException\"\n    __slots__ = ()\n    _hx_fields = []\n    _hx_methods = []\n    _hx_statics = []\n    _hx_interfaces = []\n    _hx_super = haxe_exceptions_PosException\n    def __init__(self,message = None,previous = None,pos = None):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_exceptions_NotImplementedException._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_exceptions_NotImplementedException._hx_class = haxe_exceptions_NotImplementedException\nclass haxe_format_JsonPrinter:\n    _hx_class_name = \"haxe.format.JsonPrinter\"\n    __slots__ = (\"buf\", \"replacer\", \"indent\", \"pretty\", \"nind\")\n    _hx_fields = [\"buf\", \"replacer\", \"indent\", \"pretty\", \"nind\"]\n    _hx_methods = [\"write\", \"classString\", \"fieldsString\", \"quote\"]\n    _hx_statics = [\"print\"]\n    def __init__(self,replacer,space):\n        self.replacer = replacer\n        self.indent = space",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_format_JsonPrinter._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_format_JsonPrinter._hx_class = haxe_format_JsonPrinter\nclass haxe_io_Bytes:\n    _hx_class_name = \"haxe.io.Bytes\"\n    __slots__ = (\"length\", \"b\")\n    _hx_fields = [\"length\", \"b\"]\n    _hx_statics = [\"ofString\"]\n    def __init__(self,length,b):\n        self.length = length\n        self.b = b\n    @staticmethod",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_io_Bytes._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_io_Bytes._hx_class = haxe_io_Bytes\nclass haxe_io_Encoding(Enum):\n    __slots__ = ()\n    _hx_class_name = \"haxe.io.Encoding\"\n    _hx_constructs = [\"UTF8\", \"RawNative\"]\nhaxe_io_Encoding.UTF8 = haxe_io_Encoding(\"UTF8\", 0, ())\nhaxe_io_Encoding.RawNative = haxe_io_Encoding(\"RawNative\", 1, ())\nhaxe_io_Encoding._hx_class = haxe_io_Encoding\nclass haxe_io_Error(Enum):\n    __slots__ = ()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_io_Encoding.UTF8",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_io_Encoding.UTF8 = haxe_io_Encoding(\"UTF8\", 0, ())\nhaxe_io_Encoding.RawNative = haxe_io_Encoding(\"RawNative\", 1, ())\nhaxe_io_Encoding._hx_class = haxe_io_Encoding\nclass haxe_io_Error(Enum):\n    __slots__ = ()\n    _hx_class_name = \"haxe.io.Error\"\n    _hx_constructs = [\"Blocked\", \"Overflow\", \"OutsideBounds\", \"Custom\"]\n    @staticmethod\n    def Custom(e):\n        return haxe_io_Error(\"Custom\", 3, (e,))",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_io_Encoding.RawNative",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_io_Encoding.RawNative = haxe_io_Encoding(\"RawNative\", 1, ())\nhaxe_io_Encoding._hx_class = haxe_io_Encoding\nclass haxe_io_Error(Enum):\n    __slots__ = ()\n    _hx_class_name = \"haxe.io.Error\"\n    _hx_constructs = [\"Blocked\", \"Overflow\", \"OutsideBounds\", \"Custom\"]\n    @staticmethod\n    def Custom(e):\n        return haxe_io_Error(\"Custom\", 3, (e,))\nhaxe_io_Error.Blocked = haxe_io_Error(\"Blocked\", 0, ())",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_io_Encoding._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_io_Encoding._hx_class = haxe_io_Encoding\nclass haxe_io_Error(Enum):\n    __slots__ = ()\n    _hx_class_name = \"haxe.io.Error\"\n    _hx_constructs = [\"Blocked\", \"Overflow\", \"OutsideBounds\", \"Custom\"]\n    @staticmethod\n    def Custom(e):\n        return haxe_io_Error(\"Custom\", 3, (e,))\nhaxe_io_Error.Blocked = haxe_io_Error(\"Blocked\", 0, ())\nhaxe_io_Error.Overflow = haxe_io_Error(\"Overflow\", 1, ())",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_io_Error.Blocked",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_io_Error.Blocked = haxe_io_Error(\"Blocked\", 0, ())\nhaxe_io_Error.Overflow = haxe_io_Error(\"Overflow\", 1, ())\nhaxe_io_Error.OutsideBounds = haxe_io_Error(\"OutsideBounds\", 2, ())\nhaxe_io_Error._hx_class = haxe_io_Error\nclass haxe_io_Output:\n    _hx_class_name = \"haxe.io.Output\"\n    __slots__ = (\"bigEndian\",)\n    _hx_fields = [\"bigEndian\"]\n    _hx_methods = [\"writeByte\", \"writeBytes\", \"set_bigEndian\", \"writeFullBytes\", \"writeString\"]\n    def writeByte(self,c):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_io_Error.Overflow",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_io_Error.Overflow = haxe_io_Error(\"Overflow\", 1, ())\nhaxe_io_Error.OutsideBounds = haxe_io_Error(\"OutsideBounds\", 2, ())\nhaxe_io_Error._hx_class = haxe_io_Error\nclass haxe_io_Output:\n    _hx_class_name = \"haxe.io.Output\"\n    __slots__ = (\"bigEndian\",)\n    _hx_fields = [\"bigEndian\"]\n    _hx_methods = [\"writeByte\", \"writeBytes\", \"set_bigEndian\", \"writeFullBytes\", \"writeString\"]\n    def writeByte(self,c):\n        raise haxe_exceptions_NotImplementedException(None,None,_hx_AnonObject({'fileName': \"haxe/io/Output.hx\", 'lineNumber': 47, 'className': \"haxe.io.Output\", 'methodName': \"writeByte\"}))",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_io_Error.OutsideBounds",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_io_Error.OutsideBounds = haxe_io_Error(\"OutsideBounds\", 2, ())\nhaxe_io_Error._hx_class = haxe_io_Error\nclass haxe_io_Output:\n    _hx_class_name = \"haxe.io.Output\"\n    __slots__ = (\"bigEndian\",)\n    _hx_fields = [\"bigEndian\"]\n    _hx_methods = [\"writeByte\", \"writeBytes\", \"set_bigEndian\", \"writeFullBytes\", \"writeString\"]\n    def writeByte(self,c):\n        raise haxe_exceptions_NotImplementedException(None,None,_hx_AnonObject({'fileName': \"haxe/io/Output.hx\", 'lineNumber': 47, 'className': \"haxe.io.Output\", 'methodName': \"writeByte\"}))\n    def writeBytes(self,s,pos,_hx_len):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_io_Error._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_io_Error._hx_class = haxe_io_Error\nclass haxe_io_Output:\n    _hx_class_name = \"haxe.io.Output\"\n    __slots__ = (\"bigEndian\",)\n    _hx_fields = [\"bigEndian\"]\n    _hx_methods = [\"writeByte\", \"writeBytes\", \"set_bigEndian\", \"writeFullBytes\", \"writeString\"]\n    def writeByte(self,c):\n        raise haxe_exceptions_NotImplementedException(None,None,_hx_AnonObject({'fileName': \"haxe/io/Output.hx\", 'lineNumber': 47, 'className': \"haxe.io.Output\", 'methodName': \"writeByte\"}))\n    def writeBytes(self,s,pos,_hx_len):\n        if (((pos < 0) or ((_hx_len < 0))) or (((pos + _hx_len) > s.length))):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_io_Output._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_io_Output._hx_class = haxe_io_Output\nclass haxe_iterators_ArrayIterator:\n    _hx_class_name = \"haxe.iterators.ArrayIterator\"\n    __slots__ = (\"array\", \"current\")\n    _hx_fields = [\"array\", \"current\"]\n    _hx_methods = [\"hasNext\", \"next\"]\n    def __init__(self,array):\n        self.current = 0\n        self.array = array\n    def hasNext(self):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_iterators_ArrayIterator._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_iterators_ArrayIterator._hx_class = haxe_iterators_ArrayIterator\nclass haxe_iterators_ArrayKeyValueIterator:\n    _hx_class_name = \"haxe.iterators.ArrayKeyValueIterator\"\n    __slots__ = (\"current\", \"array\")\n    _hx_fields = [\"current\", \"array\"]\n    _hx_methods = [\"hasNext\", \"next\"]\n    def __init__(self,array):\n        self.current = 0\n        self.array = array\n    def hasNext(self):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "haxe_iterators_ArrayKeyValueIterator._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "haxe_iterators_ArrayKeyValueIterator._hx_class = haxe_iterators_ArrayKeyValueIterator\nclass python_Boot:\n    _hx_class_name = \"python.Boot\"\n    __slots__ = ()\n    _hx_statics = [\"keywords\", \"toString1\", \"fields\", \"simpleField\", \"hasField\", \"field\", \"getInstanceFields\", \"getSuperClass\", \"getClassFields\", \"prefixLength\", \"unhandleKeywords\"]\n    @staticmethod\n    def toString1(o,s):\n        if (o is None):\n            return \"null\"\n        if isinstance(o,str):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_Boot._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "python_Boot._hx_class = python_Boot\nclass python_HaxeIterator:\n    _hx_class_name = \"python.HaxeIterator\"\n    __slots__ = (\"it\", \"x\", \"has\", \"checked\")\n    _hx_fields = [\"it\", \"x\", \"has\", \"checked\"]\n    _hx_methods = [\"next\", \"hasNext\"]\n    def __init__(self,it):\n        self.checked = False\n        self.has = False\n        self.x = None",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_HaxeIterator._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "python_HaxeIterator._hx_class = python_HaxeIterator\nclass python__KwArgs_KwArgs_Impl_:\n    _hx_class_name = \"python._KwArgs.KwArgs_Impl_\"\n    __slots__ = ()\n    _hx_statics = [\"fromT\"]\n    @staticmethod\n    def fromT(d):\n        return python_Lib.anonAsDict(d)\npython__KwArgs_KwArgs_Impl_._hx_class = python__KwArgs_KwArgs_Impl_\nclass python_Lib:",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python__KwArgs_KwArgs_Impl_._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "python__KwArgs_KwArgs_Impl_._hx_class = python__KwArgs_KwArgs_Impl_\nclass python_Lib:\n    _hx_class_name = \"python.Lib\"\n    __slots__ = ()\n    _hx_statics = [\"dictToAnon\", \"anonToDict\", \"anonAsDict\"]\n    @staticmethod\n    def dictToAnon(v):\n        return _hx_AnonObject(v.copy())\n    @staticmethod\n    def anonToDict(o):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_Lib._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "python_Lib._hx_class = python_Lib\nclass python_internal_ArrayImpl:\n    _hx_class_name = \"python.internal.ArrayImpl\"\n    __slots__ = ()\n    _hx_statics = [\"concat\", \"copy\", \"iterator\", \"keyValueIterator\", \"indexOf\", \"lastIndexOf\", \"join\", \"toString\", \"pop\", \"push\", \"unshift\", \"remove\", \"contains\", \"shift\", \"slice\", \"sort\", \"splice\", \"map\", \"filter\", \"insert\", \"reverse\", \"_get\", \"_set\"]\n    @staticmethod\n    def concat(a1,a2):\n        return (a1 + a2)\n    @staticmethod\n    def copy(x):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_internal_ArrayImpl._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "python_internal_ArrayImpl._hx_class = python_internal_ArrayImpl\nclass HxOverrides:\n    _hx_class_name = \"HxOverrides\"\n    __slots__ = ()\n    _hx_statics = [\"iterator\", \"eq\", \"stringOrNull\", \"modf\", \"mod\", \"mapKwArgs\"]\n    @staticmethod\n    def iterator(x):\n        if isinstance(x,list):\n            return haxe_iterators_ArrayIterator(x)\n        return x.iterator()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "HxOverrides._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "HxOverrides._hx_class = HxOverrides\nclass python_internal_MethodClosure:\n    _hx_class_name = \"python.internal.MethodClosure\"\n    __slots__ = (\"obj\", \"func\")\n    _hx_fields = [\"obj\", \"func\"]\n    _hx_methods = [\"__call__\"]\n    def __init__(self,obj,func):\n        self.obj = obj\n        self.func = func\n    def __call__(self,*args):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_internal_MethodClosure._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "python_internal_MethodClosure._hx_class = python_internal_MethodClosure\nclass HxString:\n    _hx_class_name = \"HxString\"\n    __slots__ = ()\n    _hx_statics = [\"split\", \"charCodeAt\", \"charAt\", \"lastIndexOf\", \"toUpperCase\", \"toLowerCase\", \"indexOf\", \"indexOfImpl\", \"toString\", \"substring\", \"substr\"]\n    @staticmethod\n    def split(s,d):\n        if (d == \"\"):\n            return list(s)\n        else:",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "HxString._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "HxString._hx_class = HxString\nclass python_io_NativeOutput(haxe_io_Output):\n    _hx_class_name = \"python.io.NativeOutput\"\n    __slots__ = (\"stream\",)\n    _hx_fields = [\"stream\"]\n    _hx_methods = []\n    _hx_statics = []\n    _hx_interfaces = []\n    _hx_super = haxe_io_Output\n    def __init__(self,stream):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_io_NativeOutput._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "python_io_NativeOutput._hx_class = python_io_NativeOutput\nclass python_io_IOutput:\n    _hx_class_name = \"python.io.IOutput\"\n    __slots__ = (\"bigEndian\",)\n    _hx_fields = [\"bigEndian\"]\n    _hx_methods = [\"set_bigEndian\", \"writeByte\", \"writeBytes\", \"writeFullBytes\", \"writeString\"]\npython_io_IOutput._hx_class = python_io_IOutput\nclass python_io_IFileOutput:\n    _hx_class_name = \"python.io.IFileOutput\"\n    __slots__ = ()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_io_IOutput._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "python_io_IOutput._hx_class = python_io_IOutput\nclass python_io_IFileOutput:\n    _hx_class_name = \"python.io.IFileOutput\"\n    __slots__ = ()\n    _hx_interfaces = [python_io_IOutput]\npython_io_IFileOutput._hx_class = python_io_IFileOutput\nclass python_io_NativeTextOutput(python_io_NativeOutput):\n    _hx_class_name = \"python.io.NativeTextOutput\"\n    __slots__ = ()\n    _hx_fields = []",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_io_IFileOutput._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "python_io_IFileOutput._hx_class = python_io_IFileOutput\nclass python_io_NativeTextOutput(python_io_NativeOutput):\n    _hx_class_name = \"python.io.NativeTextOutput\"\n    __slots__ = ()\n    _hx_fields = []\n    _hx_methods = [\"writeBytes\", \"writeByte\"]\n    _hx_statics = []\n    _hx_interfaces = []\n    _hx_super = python_io_NativeOutput\n    def __init__(self,stream):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_io_NativeTextOutput._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "python_io_NativeTextOutput._hx_class = python_io_NativeTextOutput\nclass python_io_FileTextOutput(python_io_NativeTextOutput):\n    _hx_class_name = \"python.io.FileTextOutput\"\n    __slots__ = ()\n    _hx_fields = []\n    _hx_methods = []\n    _hx_statics = []\n    _hx_interfaces = [python_io_IFileOutput]\n    _hx_super = python_io_NativeTextOutput\n    def __init__(self,stream):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_io_FileTextOutput._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "python_io_FileTextOutput._hx_class = python_io_FileTextOutput\nclass python_io_IoTools:\n    _hx_class_name = \"python.io.IoTools\"\n    __slots__ = ()\n    _hx_statics = [\"createFileOutputFromText\"]\n    @staticmethod\n    def createFileOutputFromText(t):\n        return sys_io_FileOutput(python_io_FileTextOutput(t))\npython_io_IoTools._hx_class = python_io_IoTools\nclass sys_io_File:",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_io_IoTools._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "python_io_IoTools._hx_class = python_io_IoTools\nclass sys_io_File:\n    _hx_class_name = \"sys.io.File\"\n    __slots__ = ()\n    _hx_statics = [\"getContent\", \"saveContent\"]\n    @staticmethod\n    def getContent(path):\n        f = python_lib_Builtins.open(path,\"r\",-1,\"utf-8\",None,\"\")\n        content = f.read(-1)\n        f.close()",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "sys_io_File._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "sys_io_File._hx_class = sys_io_File\nclass sys_io_FileOutput(haxe_io_Output):\n    _hx_class_name = \"sys.io.FileOutput\"\n    __slots__ = (\"impl\",)\n    _hx_fields = [\"impl\"]\n    _hx_methods = [\"set_bigEndian\", \"writeByte\", \"writeBytes\", \"writeFullBytes\", \"writeString\"]\n    _hx_statics = []\n    _hx_interfaces = []\n    _hx_super = haxe_io_Output\n    def __init__(self,impl):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "sys_io_FileOutput._hx_class",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "sys_io_FileOutput._hx_class = sys_io_FileOutput\nMath.NEGATIVE_INFINITY = float(\"-inf\")\nMath.POSITIVE_INFINITY = float(\"inf\")\nMath.NaN = float(\"nan\")\nMath.PI = python_lib_Math.pi\nCoopy.VERSION = \"1.4.2\"\npython_Boot.keywords = set([\"and\", \"del\", \"from\", \"not\", \"with\", \"as\", \"elif\", \"global\", \"or\", \"yield\", \"assert\", \"else\", \"if\", \"pass\", \"None\", \"break\", \"except\", \"import\", \"raise\", \"True\", \"class\", \"exec\", \"in\", \"return\", \"False\", \"continue\", \"finally\", \"is\", \"try\", \"def\", \"for\", \"lambda\", \"while\"])\npython_Boot.prefixLength = len(\"_hx_\")\nclass PythonCellView(View):\n    def __init__(self):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Math.NEGATIVE_INFINITY",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Math.NEGATIVE_INFINITY = float(\"-inf\")\nMath.POSITIVE_INFINITY = float(\"inf\")\nMath.NaN = float(\"nan\")\nMath.PI = python_lib_Math.pi\nCoopy.VERSION = \"1.4.2\"\npython_Boot.keywords = set([\"and\", \"del\", \"from\", \"not\", \"with\", \"as\", \"elif\", \"global\", \"or\", \"yield\", \"assert\", \"else\", \"if\", \"pass\", \"None\", \"break\", \"except\", \"import\", \"raise\", \"True\", \"class\", \"exec\", \"in\", \"return\", \"False\", \"continue\", \"finally\", \"is\", \"try\", \"def\", \"for\", \"lambda\", \"while\"])\npython_Boot.prefixLength = len(\"_hx_\")\nclass PythonCellView(View):\n    def __init__(self):\n        pass",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Math.POSITIVE_INFINITY",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Math.POSITIVE_INFINITY = float(\"inf\")\nMath.NaN = float(\"nan\")\nMath.PI = python_lib_Math.pi\nCoopy.VERSION = \"1.4.2\"\npython_Boot.keywords = set([\"and\", \"del\", \"from\", \"not\", \"with\", \"as\", \"elif\", \"global\", \"or\", \"yield\", \"assert\", \"else\", \"if\", \"pass\", \"None\", \"break\", \"except\", \"import\", \"raise\", \"True\", \"class\", \"exec\", \"in\", \"return\", \"False\", \"continue\", \"finally\", \"is\", \"try\", \"def\", \"for\", \"lambda\", \"while\"])\npython_Boot.prefixLength = len(\"_hx_\")\nclass PythonCellView(View):\n    def __init__(self):\n        pass\n    def toString(self,d):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Math.NaN",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Math.NaN = float(\"nan\")\nMath.PI = python_lib_Math.pi\nCoopy.VERSION = \"1.4.2\"\npython_Boot.keywords = set([\"and\", \"del\", \"from\", \"not\", \"with\", \"as\", \"elif\", \"global\", \"or\", \"yield\", \"assert\", \"else\", \"if\", \"pass\", \"None\", \"break\", \"except\", \"import\", \"raise\", \"True\", \"class\", \"exec\", \"in\", \"return\", \"False\", \"continue\", \"finally\", \"is\", \"try\", \"def\", \"for\", \"lambda\", \"while\"])\npython_Boot.prefixLength = len(\"_hx_\")\nclass PythonCellView(View):\n    def __init__(self):\n        pass\n    def toString(self,d):\n        return str(d) if (d!=None) else \"\"",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Math.PI",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Math.PI = python_lib_Math.pi\nCoopy.VERSION = \"1.4.2\"\npython_Boot.keywords = set([\"and\", \"del\", \"from\", \"not\", \"with\", \"as\", \"elif\", \"global\", \"or\", \"yield\", \"assert\", \"else\", \"if\", \"pass\", \"None\", \"break\", \"except\", \"import\", \"raise\", \"True\", \"class\", \"exec\", \"in\", \"return\", \"False\", \"continue\", \"finally\", \"is\", \"try\", \"def\", \"for\", \"lambda\", \"while\"])\npython_Boot.prefixLength = len(\"_hx_\")\nclass PythonCellView(View):\n    def __init__(self):\n        pass\n    def toString(self,d):\n        return str(d) if (d!=None) else \"\"\n    def equals(self,d1,d2):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "Coopy.VERSION",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "Coopy.VERSION = \"1.4.2\"\npython_Boot.keywords = set([\"and\", \"del\", \"from\", \"not\", \"with\", \"as\", \"elif\", \"global\", \"or\", \"yield\", \"assert\", \"else\", \"if\", \"pass\", \"None\", \"break\", \"except\", \"import\", \"raise\", \"True\", \"class\", \"exec\", \"in\", \"return\", \"False\", \"continue\", \"finally\", \"is\", \"try\", \"def\", \"for\", \"lambda\", \"while\"])\npython_Boot.prefixLength = len(\"_hx_\")\nclass PythonCellView(View):\n    def __init__(self):\n        pass\n    def toString(self,d):\n        return str(d) if (d!=None) else \"\"\n    def equals(self,d1,d2):\n        return str(d1) == str(d2)",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_Boot.keywords",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "python_Boot.keywords = set([\"and\", \"del\", \"from\", \"not\", \"with\", \"as\", \"elif\", \"global\", \"or\", \"yield\", \"assert\", \"else\", \"if\", \"pass\", \"None\", \"break\", \"except\", \"import\", \"raise\", \"True\", \"class\", \"exec\", \"in\", \"return\", \"False\", \"continue\", \"finally\", \"is\", \"try\", \"def\", \"for\", \"lambda\", \"while\"])\npython_Boot.prefixLength = len(\"_hx_\")\nclass PythonCellView(View):\n    def __init__(self):\n        pass\n    def toString(self,d):\n        return str(d) if (d!=None) else \"\"\n    def equals(self,d1,d2):\n        return str(d1) == str(d2)\n    def toDatum(self,d):",
+        "detail": ".venv.Scripts.daff",
+        "documentation": {}
+    },
+    {
+        "label": "python_Boot.prefixLength",
+        "kind": 5,
+        "importPath": ".venv.Scripts.daff",
+        "description": ".venv.Scripts.daff",
+        "peekOfCode": "python_Boot.prefixLength = len(\"_hx_\")\nclass PythonCellView(View):\n    def __init__(self):\n        pass\n    def toString(self,d):\n        return str(d) if (d!=None) else \"\"\n    def equals(self,d1,d2):\n        return str(d1) == str(d2)\n    def toDatum(self,d):\n        return d",
+        "detail": ".venv.Scripts.daff",
         "documentation": {}
     },
     {

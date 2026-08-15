@@ -1,309 +1,147 @@
-# 📊 CSV Data Analytics AI Assistant
+# CSV Data Analytics AI Assistant
 
-A Streamlit-powered web application that leverages OpenAI's GPT-4 to provide intelligent data analysis and visualization capabilities for CSV files.
+A Streamlit app for exploring CSV files with natural-language questions, automatic data summaries, and AI-generated analysis or visualizations.
 
-## Overview
+## What It Does
 
-This application allows users to:
-- Upload CSV files and explore their data
-- Ask natural language questions about their datasets
-- Get AI-powered insights and analysis
-- Generate visualizations automatically
-- View comprehensive data summaries
+- Upload a CSV file from the sidebar.
+- Preview the first rows of the dataset.
+- Review dataset dimensions, memory usage, null counts, and numeric summary statistics.
+- Ask questions about the data in a chat interface.
+- Generate pandas, Matplotlib, and Seaborn analysis code from the AI response.
+- Display generated charts directly in the Streamlit app.
 
-## 🛠️ Technology Stack
+## Tech Stack
 
-- **Streamlit**: Interactive web framework for data apps
-- **Pandas**: Data manipulation and analysis
-- **OpenAI API**: GPT-4 for intelligent responses
-- **Matplotlib & Seaborn**: Data visualization
-- **Python 3.8+**: Core programming language
+- [Streamlit](https://streamlit.io/) for the web app
+- [pandas](https://pandas.pydata.org/) for data loading and analysis
+- [OpenAI Python SDK](https://github.com/openai/openai-python) for AI responses
+- [Matplotlib](https://matplotlib.org/) and [Seaborn](https://seaborn.pydata.org/) for visualizations
 
-## 📁 Project Structure
+## Project Structure
 
-```
+```text
 .
-├── app.py                 # Main Streamlit application
-├── sample_data.csv        # Sample dataset for testing
-├── .streamlit/
-│   └── secrets.toml       # API keys and credentials (git-ignored)
-├── .gitignore             # Git ignore rules
-└── README.md              # This file
++-- app.py
++-- sample_data.csv
++-- .streamlit/
+|   +-- secrets.toml
++-- .gitignore
++-- README.md
 ```
+
+`sample_data.csv` contains 60 example e-commerce orders across customer regions, product categories, payment methods, quantities, unit prices, and total order amounts.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Python 3.8 or higher
-- OpenAI API key ([get one here](https://platform.openai.com/api-keys))
-- pip package manager
+- Python 3.10 or newer
+- An OpenAI API key
+- pip
 
 ### Installation
 
-1. **Clone the repository**
+1. Clone the repository:
+
    ```bash
    git clone <repository-url>
-   cd "Build a Data Analytics AI Assistant"
+   cd Streamlit-Data-Analytics-AI-Assistant-1
    ```
 
-2. **Create a virtual environment**
+2. Create and activate a virtual environment:
+
    ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   python -m venv .venv
+   .venv\Scripts\activate
    ```
 
-3. **Install dependencies**
+   On macOS or Linux:
+
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate
+   ```
+
+3. Install dependencies:
+
    ```bash
    pip install streamlit pandas openai matplotlib seaborn
    ```
 
-4. **Set up API credentials**
-   - Create `.streamlit/secrets.toml` if it doesn't exist
-   - Add your OpenAI API key:
-     ```toml
-     OpenAI_API_Key = "your-api-key-here"
-     ```
+4. Add your OpenAI API key to `.streamlit/secrets.toml`:
 
-5. **Run the application**
+   ```toml
+   OpenAI_API_Key = "your-api-key-here"
+   ```
+
+5. Run the app:
+
    ```bash
    streamlit run app.py
    ```
 
-The app will open in your default browser at `http://localhost:8501`
+6. Open the local Streamlit URL shown in your terminal, usually:
 
-## 📖 Features & Usage
+   ```text
+   http://localhost:8501
+   ```
 
-### 1. **File Upload** 🗂️
-- Located in the left sidebar
-- Supports CSV files
-- Displays success message with row/column count
-- Shows memory usage and data dimensions
+## Usage
 
-### 2. **Data Preview** 
-[**INSERT IMAGE HERE**: Screenshot showing the data preview section with the first 10 rows of the CSV displayed in a table format]
+1. Upload a CSV file in the sidebar.
+2. Expand **Preview Data** to inspect the first 10 rows.
+3. Expand **Data Summary** in the sidebar to review dataset metadata and numeric statistics.
+4. Ask questions in the chat box.
 
-- Expandable section showing first 10 rows
-- Helps verify data loaded correctly
+Example questions:
 
-### 3. **Data Summary Dashboard** 📊
-[**INSERT IMAGE HERE**: Screenshot of the Data Summary sidebar showing memory usage, statistical summary (Max, Min, Mean, Median), and null values info]
+- What is the average total amount?
+- Which product category has the highest revenue?
+- Show sales by customer region.
+- Create a bar chart of the top 10 products by total amount.
+- What are the null values in each column?
+- What is the correlation between quantity, unit price, and total amount?
 
-Located in the left sidebar, includes:
-- **Memory Usage**: Total RAM consumed by the dataset
-- **Data Dimensions**: Number of columns and rows
-- **Null Values**: Missing data per column
-- **Statistical Summary**: 
-  - Maximum values
-  - Minimum values
-  - Mean values
-  - Median values
+## How The App Works
 
-### 4. **Interactive Chat Interface** 
-[**INSERT IMAGE HERE**: Screenshot of the main chat interface showing example user questions and AI responses with generated visualizations]
+When a CSV is uploaded, `app.py` stores the dataframe and a compact data summary in Streamlit session state. For smaller datasets, the full dataframe is included in the prompt context. For datasets with more than 100 rows, the app sends a summarized context instead to reduce token usage.
 
-- Natural language question input
-- Real-time AI-powered responses
-- Chat history maintained in session state
-- Automatic code execution for visualizations
+The assistant response can include Python code blocks. When code is returned, the app extracts the generated code, executes it with access to `df`, `pd`, `plt`, `sns`, and `st`, then renders any generated Matplotlib figure with `st.pyplot`.
 
-### 5. **Intelligent Visualizations** 
-[**INSERT IMAGE HERE**: Examples of generated charts (bar chart, distribution plot, correlation heatmap, etc.)]
+## Configuration
 
-The AI can generate:
-- Bar charts
-- Distribution plots
-- Correlation heatmaps
-- Line charts
-- Box plots
-- And more based on your questions
+The OpenAI call is configured in `app.py`:
 
-## 🔧 How It Works
-
-### Data Processing Pipeline
-
-```
-User Input (CSV)
-    ↓
-Pandas reads CSV
-    ↓
-Data Summary Created
-    ↓
-User asks questions
-    ↓
-System Prompt + Data Context → GPT-4
-    ↓
-AI generates response + code
-    ↓
-Python code extracted and executed
-    ↓
-Visualizations displayed
-    ↓
-Response added to chat history
-```
-
-### Key Components
-
-#### Session State Management
 ```python
-st.session_state['messages']  # Chat history
-st.session_state['df']        # Loaded dataframe
-st.session_state['data_summary']  # Data statistics
-```
-
-#### System Prompt
-The AI operates under a carefully crafted system prompt that:
-- Focuses on accurate data analysis
-- Enforces proper code generation practices
-- Requires data validation
-- Ensures visualizations have titles and labels
-- Uses appropriate libraries (pandas, matplotlib, seaborn)
-
-#### Code Execution
-- Extracts Python code blocks from AI responses
-- Executes code in a controlled environment
-- Displays generated matplotlib figures
-- Handles errors gracefully with user-friendly messages
-
-## Example Questions
-
-Try asking:
-- "What is the average value of [column_name]?"
-- "How many rows are in the dataset?"
-- "Which column has the highest maximum value?"
-- "Show me the distribution of values in [column_name]"
-- "Create a bar chart of the top 10 values in [column_name]"
-- "What is the correlation between [column1] and [column2]?"
-- "What are the null values in each column?"
-- "What are the top selling products by revenue?"
-
-## ⚙️ Configuration
-
-### Page Settings
-Located at the top of `app.py`:
-```python
-st.set_page_config(
-    page_title="My CSV Assistant",
-    page_icon="📊",
-    layout="wide",           # Wide layout for more space
-    initial_sidebar_state="expanded"
+response = client.chat.completions.create(
+    model="gpt-5.4",
+    messages=[
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_input}
+    ],
+    temperature=0.1,
+    max_completion_tokens=500
 )
 ```
 
-### AI Model Parameters
-In the chat response generation:
-- **Model**: `gpt-4.1` (High accuracy)
-- **Temperature**: `0.1` (Focused, consistent responses)
-- **Max Tokens**: `500` (Concise answers)
-
-Adjust these in app.py for different behavior.
+If your OpenAI account does not have access to the configured model, update the `model` value in `app.py` to a model available for your account.
 
 ## Security Notes
 
- **Important**: 
-- Never commit `.streamlit/secrets.toml` to version control
-- Keep API keys confidential
-- Monitor your OpenAI API usage to control costs
-- The `.gitignore` file already protects secrets.toml
+- Do not commit `.streamlit/secrets.toml`.
+- Keep your OpenAI API key private.
+- Review API usage to avoid unexpected costs.
+- Be careful with untrusted prompts or files. The app executes Python code returned by the model, so only run it in an environment where you are comfortable testing generated code.
 
-## Error Handling
+## Troubleshooting
 
-The application handles:
-- Invalid CSV formats
-- Missing or malformed data
-- OpenAI API errors
-- Code execution errors
-- Network connectivity issues
-
-Errors are displayed in red boxes with helpful guidance.
-
-##  UI/UX Layout
-
-```
-┌─────────────────────────────────────────────┐
-│             Ask about your CSV              │
-├──────────────┬──────────────────────────────┤
-│   SIDEBAR    │         MAIN AREA            │
-│              │                              │
-│    Upload    │  Preview Data (expandable)   │
-│    CSV       │  [INSERT IMAGE SECTION 2]    │
-│              │                              │
-│    Data      │  Chat History                │
-│    Summary   │  [INSERT IMAGE SECTION 4]    │
-│  [INSERT IMG │                              │
-│   SECTION 3] │     Chat Input Box           │
-│              │                              │
-│              │  Generated Visualizations    │
-│              │  [INSERT IMAGE SECTION 5]    │
-└──────────────┴──────────────────────────────┘
-```
-
-## Sample Data
-
-The project includes `sample_data.csv` with e-commerce data:
-- **Records**: 60 orders
-- **Columns**: Order ID, Date, Region, Product Category, Product Name, Quantity, Unit Price, Total Amount, Payment Method
-- **Categories**: Electronics, Fitness, Home Essentials
-- **Regions**: Northeast, West, Midwest, South
-
-Perfect for testing visualizations and analysis features!
-
-## Performance Tips
-
-1. **For large datasets (>100 rows)**:
-   - App creates a summarized context instead of full data
-   - Reduces token usage and API costs
-   - Faster response times
-
-2. **Optimize API costs**:
-   - Adjust temperature to 0 for focused responses
-   - Reduce max_tokens if responses are too long
-   - Batch similar questions together
-
-3. **Better visualizations**:
-   - Ask specific questions about subsets of data
-   - Request explicit chart types (bar, scatter, heatmap, etc.)
-   - Always provide column names in your questions
-
-## Future Enhancements
-
-Potential features to add:
-- [ ] Data export/download functionality
-- [ ] Custom chart styling options
-- [ ] Caching for repeated queries
-- [ ] Support for multiple file formats (Excel, JSON, etc.)
-- [ ] Advanced filtering and data cleaning tools
-- [ ] Model selection (GPT-3.5, GPT-4, etc.)
-- [ ] Cost tracking dashboard
-- [ ] User authentication and usage analytics
+- **Missing API key**: Confirm `.streamlit/secrets.toml` exists and contains `OpenAI_API_Key`.
+- **CSV upload fails**: Check that the file is a valid CSV and uses a readable encoding.
+- **OpenAI request fails**: Confirm your API key, model access, billing status, and network connection.
+- **Generated chart fails**: Rephrase the question with exact column names from the uploaded CSV.
+- **Large file responses are vague**: Ask more specific questions or filter the CSV before uploading.
 
 ## License
 
-This project is open source and available for personal and educational use.
-
-## Contributing
-
-Contributions are welcome! Feel free to:
-- Report bugs
-- Suggest features
-- Submit pull requests
-- Improve documentation
-
-## 📞 Support
-
-For issues or questions:
-1. Check the troubleshooting section
-2. Review the example questions
-3. Verify your OpenAI API key is valid
-4. Check internet connectivity
-5. Be careful with the file size uploaded-> to avoid a data_summary 'shape' dtype error
-
-## 🙏 Acknowledgments
-
-- Built with [Streamlit](https://streamlit.io/)
-- Powered by [OpenAI's GPT-4](https://openai.com/gpt-4)
-- Data visualization with [Matplotlib](https://matplotlib.org/) and [Seaborn](https://seaborn.pydata.org/)
-
----
-
-**Happy analyzing! 🚀📊**
+This project is available for personal and educational use.
