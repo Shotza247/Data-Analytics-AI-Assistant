@@ -97,3 +97,20 @@
   - app.py compiles with .venv Python
   - sample_data.csv sidebar summary smoke test produced null and numeric summaries
 - Follow-up: none
+## 2026-08-16 10:15 - Temporary KMeans customer segmentation dependency
+
+- Status: fixed
+- Symptom: Error executing generated code (ModuleNotFoundError): No module named 'sklearn' while testing KMeans customer segmentation
+- Scope: Temporary data-science dependency for generated analysis code
+- Suspected cause: MVP1 requirements did not include scikit-learn; numpy was installed transitively but not explicit
+- Evidence:
+  - pip show found numpy 2.5.2 and no scikit-learn before install
+- Changes:
+  - requirements.txt: added numpy==2.5.2 and scikit-learn==1.9.0
+  - app.py: exposed np and KMeans to hidden generated code execution context
+  - app.py: set LOKY_MAX_CPU_COUNT=1 to avoid Windows core-count warning during KMeans tests
+- Verification:
+  - app.py compiles with .venv Python
+  - KMeans smoke test produced labels [0, 0, 1, 1]
+- Follow-up:
+  - Remove scikit-learn, numpy explicit pin, np/KMeans globals, and LOKY_MAX_CPU_COUNT when the temporary customer-segmentation test is finished
