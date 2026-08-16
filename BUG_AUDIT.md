@@ -113,4 +113,21 @@
   - app.py compiles with .venv Python
   - KMeans smoke test produced labels [0, 0, 1, 1]
 - Follow-up:
-  - Remove scikit-learn, numpy explicit pin, np/KMeans globals, and LOKY_MAX_CPU_COUNT when the temporary customer-segmentation test is finished
+  - Remove scikit-learn, KMeans globals, and LOKY_MAX_CPU_COUNT when the temporary customer-segmentation test is finished; keep numpy for future MVP1 utility
+## 2026-08-16 10:25 - Remove temporary KMeans test dependency
+
+- Status: fixed
+- Symptom: KMeans clustering test introduced scikit-learn-specific project dependencies that should not remain in MVP1
+- Scope: Temporary customer segmentation test cleanup
+- Suspected cause: KMeans clustering belongs to data science experimentation, not the current MVP1 data analytics assistant scope
+- Evidence:
+  - User requested removal of KMeans/scikit-learn additions while keeping numpy
+- Changes:
+  - requirements.txt: removed scikit-learn==1.9.0 and kept numpy==2.5.2
+  - app.py: removed sklearn KMeans import, KMeans execution global, and LOKY_MAX_CPU_COUNT setting
+  - .venv: uninstalled scikit-learn, scipy, joblib, and threadpoolctl; stopped project .venv Python processes that were locking pip temp directories and removed the leftovers
+- Verification:
+  - app.py compiles with .venv Python
+  - numpy imports successfully; sklearn and scipy are no longer importable
+- Follow-up:
+  - Keep numpy for future MVP1 analysis utilities; re-add data-science libraries only when MVP2 or a dedicated segmentation feature starts

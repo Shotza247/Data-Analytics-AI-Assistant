@@ -3,16 +3,13 @@ import pandas as pd
 import openai
 import io
 import matplotlib
-import os
 import re
 import numpy as np
 
-os.environ.setdefault("LOKY_MAX_CPU_COUNT", "1")
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
-from sklearn.cluster import KMeans
 
 st.set_page_config(
     page_title="My CSV Assistant",
@@ -215,7 +212,7 @@ if st.session_state["df"] is not None:
         Only present column definitions if the user explicitly asks.
         
         When generating code, follow this format:
-        - import statements are already done (pandas as pd, numpy as np, matplotlib.pyplot as plt, seaborn as sns, KMeans)
+        - import statements are already done (pandas as pd, numpy as np, matplotlib.pyplot as plt, seaborn as sns)
         - The dataframe is already loaded as df
         - Always use plt.show() to display plots
         - Ensure code is syntactically correct and can run without errors
@@ -258,7 +255,6 @@ if st.session_state["df"] is not None:
                             "np": np,
                             "plt": plt,
                             "sns": sns,
-                            "KMeans": KMeans,
                             "st": st
                             }
                         
