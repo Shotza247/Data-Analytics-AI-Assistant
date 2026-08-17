@@ -1,6 +1,7 @@
 # CSV Data Analytics AI Assistant
 
 A Streamlit app for exploring CSV files with natural-language questions, automatic data summaries, AI-generated analysis, retained table outputs, and retained visual outputs.
+- [Notion](https://app.notion.com/p/Data-Analysis-Assistant-3bedc859ce3d80b18e49ee2b80b6e99f?v=377dc859ce3d80c094c0000cfa1eba82&source=copy_link)
 
 ## MVP1 Status
 
