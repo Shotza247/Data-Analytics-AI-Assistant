@@ -22,6 +22,24 @@ st.set_page_config(
 client = openai.OpenAI(api_key=st.secrets["OpenAI_API_Key"])
 OPENAI_MODEL = st.secrets.get("OpenAI_Model", "gpt-4o")
 PYTHON_CODE_BLOCK_RE = re.compile(r"```(?:python|py)\s*\n?(.*?)```", re.DOTALL | re.IGNORECASE)
+TABLE_DISPLAY_ROW_LIMIT = 10
+LAST_ROWS_RE = re.compile(r"\b(last|bottom|tail|ending|end|most recent|latest)\b", re.IGNORECASE)
+ROW_LIMIT_RE = re.compile(
+    r"\b(?:top|first|head|last|bottom|tail|show)\s+(\d+|one|two|three|four|five|six|seven|eight|nine|ten)\b",
+    re.IGNORECASE,
+)
+NUMBER_WORDS = {
+    "one": 1,
+    "two": 2,
+    "three": 3,
+    "four": 4,
+    "five": 5,
+    "six": 6,
+    "seven": 7,
+    "eight": 8,
+    "nine": 9,
+    "ten": 10,
+}
 
 #Session State Initialization
 if 'messages' not in st.session_state:
@@ -40,12 +58,109 @@ if "data_summary" not in st.session_state:
     }
 
 
+def requested_table_limit(user_query):
+    match = ROW_LIMIT_RE.search(user_query or "")
+    if not match:
+        return TABLE_DISPLAY_ROW_LIMIT
+
+    raw_limit = match.group(1).lower()
+    requested_limit = int(raw_limit) if raw_limit.isdigit() else NUMBER_WORDS.get(raw_limit, TABLE_DISPLAY_ROW_LIMIT)
+    return max(1, min(requested_limit, TABLE_DISPLAY_ROW_LIMIT))
+
+
+def should_show_last_rows(user_query):
+    return bool(LAST_ROWS_RE.search(user_query or ""))
+
+
+def limit_table_for_display(table, user_query=None):
+    if not isinstance(table, pd.DataFrame) or table.empty:
+        return table, None
+
+    row_limit = requested_table_limit(user_query)
+    total_rows = len(table)
+    if total_rows <= row_limit:
+        return table, None
+
+    if should_show_last_rows(user_query):
+        limited_table = table.tail(row_limit)
+        direction = "last"
+    else:
+        limited_table = table.head(row_limit)
+        direction = "top"
+
+    note = f"Showing the {direction} {row_limit} rows from {total_rows} matching rows to keep the output focused."
+    return limited_table, note
+
+
+def display_generated_table(value, assistant_message, user_query, displayed_table_ids=None):
+    if isinstance(value, pd.DataFrame):
+        table = value
+    elif isinstance(value, list) and value and isinstance(value[0], dict):
+        table = pd.DataFrame(value)
+    else:
+        return False
+
+    if table.empty:
+        return False
+
+    limited_table, note = limit_table_for_display(table, user_query)
+    st.dataframe(limited_table, use_container_width=True)
+    assistant_message["tables"].append(limited_table)
+
+    if displayed_table_ids is not None:
+        displayed_table_ids.add(id(value))
+        displayed_table_ids.add(id(table))
+
+    if note and note not in assistant_message["notes"]:
+        st.info(note)
+        assistant_message["notes"].append(note)
+
+    return True
+
+
+class GeneratedCodeStreamlitProxy:
+    def __init__(self, assistant_message, user_query, displayed_table_ids):
+        self.assistant_message = assistant_message
+        self.user_query = user_query
+        self.displayed_table_ids = displayed_table_ids
+
+    def dataframe(self, data=None, *args, **kwargs):
+        if display_generated_table(data, self.assistant_message, self.user_query, self.displayed_table_ids):
+            return None
+        return st.dataframe(data, *args, **kwargs)
+
+    def table(self, data=None, *args, **kwargs):
+        if display_generated_table(data, self.assistant_message, self.user_query, self.displayed_table_ids):
+            return None
+        return st.table(data, *args, **kwargs)
+
+    def write(self, *args, **kwargs):
+        displayed_any_table = False
+        for arg in args:
+            displayed_any_table = display_generated_table(
+                arg,
+                self.assistant_message,
+                self.user_query,
+                self.displayed_table_ids,
+            ) or displayed_any_table
+        if not displayed_any_table:
+            return st.write(*args, **kwargs)
+        return None
+
+    def __getattr__(self, name):
+        return getattr(st, name)
+
+
 def render_saved_message(msg):
     with st.chat_message(msg["role"]):
         if msg.get("content"):
             st.markdown(msg["content"])
         for note in msg.get("notes", []):
             st.info(note)
+        for table in msg.get("tables", []):
+            if isinstance(table, pd.DataFrame):
+                limited_table, _ = limit_table_for_display(table)
+                st.dataframe(limited_table, use_container_width=True)
         for image in msg.get("images", []):
             st.image(image, use_column_width=True)
 
@@ -186,41 +301,97 @@ if st.session_state["df"] is not None:
             industry_context = "Auto-detect the most likely industry from the dataset columns, values, and user question."
         business_context = business_goal.strip() or "No explicit business goal or audience was provided. Infer the most useful stakeholder lens from the dataset and question."
             
-        system_prompt = f"""You are a helpful expert data analyst AI assistant. Use the provided dataset information to answer user questions accurately and concisely.
-        The user will ask questions about their CSV data. Use this dataset context {data_context} to provide precise answers.
-        Business context: Industry = {industry_context}. Business goal or audience = {business_context}
-        
-        The data is loaded in a pandas dataframe called df. You can refer to columns by their names.
-        
-        Guidelines:
-        1. Always refer to the dataset context when answering questions.
-        2. Answer in plain language for non-technical business stakeholders. Avoid jargon unless you briefly explain it.
-        3. Provide insight, not just numbers or charts. Explain what changed, what stands out, why it matters, and what decision or action it may support.
-        4. Align the interpretation with the stated or inferred industry and business goal. If the industry is inferred, mention the assumption briefly when it affects the interpretation.
-        5. When useful, structure the answer with short sections such as Key findings, Business meaning, Recommended next step, and Caveats.
-        6. If the question requires analysis, describe the result and business implication rather than the technical steps.
-        7. Write python code using pandas, matplotlib, or seaborn libraries to perform the analysis.
-        8. For visualizations, describe what the chart means and the key takeaway a non-technical stakeholder should notice.
-        When generating more than one chart, always use subplots within a single figure rather than separate figures, ensuring clarity, alignment, and consistent styling with clear titles, labels, and consistent formatting.
-        Always use matplotlib "plt.figure()" or seaborn but before plotting and include plt.tight_layout() before plt.show() to ensure proper layout.
-        9. Always validate data before operations (e.g., check for nulls, data types etc.).
-        10. If you cannot answer due to data limitations, politely inform the user why and suggest the next best question or data needed.
-        11. Keep the response primarily focused on the data, user question, business context, and decision relevance.
-        12. In the background, treat each column name as a business concept/term. 
-        Infer and validate its definition, business purpose, data type, and unit. 
-        Record uncertainties and assumptions internally. 
-        Only present column definitions if the user explicitly asks.
-        
-        When generating code, follow this format:
-        - import statements are already done (pandas as pd, numpy as np, matplotlib.pyplot as plt, seaborn as sns)
-        - The dataframe is already loaded as df
-        - Always use plt.show() to display plots
-        - Ensure code is syntactically correct and can run without errors
-        - For plots, use plt.figure(figsize=(6,4)) before plotting and plt.tight_layout() before plt.show() for a better display layout.
-        - Always add titles and labels to plots for clarity.
-        - Do not show Python code as part of the user-facing explanation. Present the analysis, results, and interpretation in plain language first.
-        - If code is needed to create charts, place it only in fenced python code blocks. The app will hide those code blocks and show only the results and charts.
-        """
+        system_prompt = f"""
+            You are a senior data analyst who turns raw data into clear, decision-ready
+            insight for non-technical business stakeholders. You have access to a pandas
+            dataframe called `df`.
+
+            # CONTEXT
+            Dataset: {data_context}
+            Industry: {industry_context}
+            Business goal / audience: {business_context}
+
+            If industry or goal were inferred rather than stated, mention the assumption
+            briefly, but only when it changes how a result should be read.
+
+            # WHAT THE USER SEES — this is the entire point, get this right
+            Every answer is written for someone who will make a decision from it, not run
+            the analysis themselves. Structure substantive answers as:
+
+            1. Key Finding — the one or two numbers/trends that matter, in plain language.
+            2. Chart — when a chart adds clarity beyond the numbers (see Chart Rules).
+            3. What it means — interpret the chart/number: what changed, how much,
+            compared to what, why it's likely happening, and why a stakeholder in this
+            industry should care. Never show a chart without saying what to look at
+            and what to conclude from it.
+            4. Recommended next step — a concrete action or a specific follow-up
+            question/analysis, tied to the stated business goal.
+            5. Caveats — only if something limits confidence (small sample, nulls,
+            outliers, seasonality, correlation vs. causation).
+
+            Skip sections that don't apply. A simple factual question ("what's the
+            average order value?") gets a direct answer, not the full template. Match
+            depth to the question.
+
+            No jargon without a one-line plain-English explanation. No code, library, or
+            function names in the user-facing text — describe results and implications
+            only.
+
+            # CHART RULES
+            Generate a chart whenever it reveals something a number alone can't (a trend,
+            a comparison, a distribution, an outlier). Don't chart single values or
+            trivial comparisons.
+            - One figure per response. If multiple charts are needed, use subplots
+            (plt.subplots) inside that single figure, sized and styled consistently —
+            never separate figures.
+            - Every chart needs a title that states the insight, not just the variable
+            (e.g. "Revenue dipped 18% in March" beats "Revenue by Month"), axis labels
+            with units (e.g. "Revenue ($ in thousands )", "Percentage (%)" ), and a legend
+            if there's more than one series placed at a clean and clear section of the chart not in front of other chart elements.
+            - Highlight what matters directly on the chart where practical: annotate the
+            peak, the outlier, or the inflection point rather than leaving the reader
+            to spot it.
+            - Use color with intent — one accent color for the point of interest, muted
+            tones elsewhere — instead of default palettes.
+            - figsize sized for readability (e.g. (10,6) for multi-panel), and always
+            plt.tight_layout() before plt.show().
+            - Put chart code only in fenced ```python code blocks — the app hides these
+            and shows only the rendered chart. Never describe or narrate the code
+            itself in the response text.
+
+            # TABLE / LIST RULES
+            When a user asks for a list, table, rows, or records, do not answer only in
+            prose. Produce a filtered pandas DataFrame and display it in an executable
+            Python code block using `st.dataframe(result_df, use_container_width=True)`.
+            - Keep only the relevant columns and sort by the most important metric.
+            - Show only the rows requested. Use `.head(10)` for top/first rows and
+            `.tail(10)` for last/bottom rows. Never display more than 10 rows.
+            - If the user asks for more than 10 rows or asks for all rows, show the most
+            relevant 10 rows and explain that the table is capped for readability.
+            - If a request is basically a find-records question, the table is the answer.
+            - Example pattern: `result_df = df[df["Income"] > 50000].sort_values("Income", ascending=False)[["ID", "Name", "Income", "Credit Score"]].head(10); st.dataframe(result_df, use_container_width=True)`
+
+            # ANALYTICAL STANDARDS — do this silently, don't narrate the process
+            - Before analyzing, check relevant columns for nulls, wrong dtypes, or other
+            data issues. If an issue would materially affect the answer, say so briefly
+            in Caveats and adjust the analysis (e.g. exclude nulls) rather than failing
+            silently.
+            - If the question can't be answered with the available data, say why in
+            plain language and suggest the next-best question or what data would be
+            needed — don't just error out.
+            - Treat every column name as a business concept: infer its likely
+            definition, purpose, data type, and unit, and track your confidence
+            internally. Only surface these definitions if the user explicitly asks
+            what a column means.
+            - Ground every interpretation in the stated industry and business goal — the
+            same trend can be good or bad news depending on context, so make the
+            business meaning explicit rather than assuming it's obvious.
+
+            # CODE ENVIRONMENT
+            pandas as pd, numpy as np, matplotlib.pyplot as plt, and seaborn as sns are
+            already imported. `df` is already loaded. Write correct, runnable code, and
+            always end plots with plt.show().
+            """
         
         #Generate response from OpenAI
         with st.chat_message("assistant"):
@@ -244,18 +415,20 @@ if st.session_state["df"] is not None:
                     reply = response.choices[0].message.content
                     display_reply = hide_python_code_blocks(reply)
                     message_placeholder.markdown(display_reply)
-                    assistant_message = {"role": "assistant", "content": display_reply, "images": [], "notes": []}
+                    assistant_message = {"role": "assistant", "content": display_reply, "images": [], "notes": [], "tables": []}
                     
                     #We need to execute any code blocks in the reply for visualizations
                     code_blocks = extract_python_code_blocks(reply)
                     if code_blocks:
+                        displayed_table_ids = set()
+                        generated_st = GeneratedCodeStreamlitProxy(assistant_message, user_input, displayed_table_ids)
                         exec_globals = {
                             "df": df,
                             "pd": pd, 
                             "np": np,
                             "plt": plt,
                             "sns": sns,
-                            "st": st
+                            "st": generated_st
                             }
                         
                         for code in code_blocks:
@@ -269,7 +442,13 @@ if st.session_state["df"] is not None:
                                         note = f"Note:{warning.message}"
                                         st.info(note)
                                         assistant_message["notes"].append(note)
-                                    
+
+                                for key, value in exec_globals.items():
+                                    if key in {"df", "pd", "np", "plt", "sns", "st"}:
+                                        continue
+                                    if id(value) in displayed_table_ids:
+                                        continue
+                                    display_generated_table(value, assistant_message, user_input, displayed_table_ids)
                                     
                                 #display any generated plots
                                 for fig_num in plt.get_fignums():
@@ -295,6 +474,8 @@ if st.session_state["df"] is not None:
                                     hint = "This often happens when trying to plot non-numeric data."
                                 elif "KeyError" in str(e):
                                     hint = "The specified column might not exist in the dataset."
+                                elif "palette dictionary is missing keys" in str(e):
+                                    hint = "This usually happens when a chart uses a palette dict with category values like 0/1 while the data is stored as strings. Use a simple color palette or convert the hue values consistently before plotting."
                                 else:
                                     hint = "Try rephrasing your question or check your data format."
                                 st.info(hint)

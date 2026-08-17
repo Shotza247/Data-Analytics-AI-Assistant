@@ -203,14 +203,6 @@
         "documentation": {}
     },
     {
-        "label": "KMeans",
-        "importPath": "sklearn.cluster",
-        "description": "sklearn.cluster",
-        "isExtraImport": true,
-        "detail": "sklearn.cluster",
-        "documentation": {}
-    },
-    {
         "label": "_hx_AnonObject",
         "kind": 6,
         "importPath": ".venv.Scripts.daff",
@@ -2254,11 +2246,56 @@
         "documentation": {}
     },
     {
+        "label": "GeneratedCodeStreamlitProxy",
+        "kind": 6,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "class GeneratedCodeStreamlitProxy:\n    def __init__(self, assistant_message, user_query, displayed_table_ids):\n        self.assistant_message = assistant_message\n        self.user_query = user_query\n        self.displayed_table_ids = displayed_table_ids\n    def dataframe(self, data=None, *args, **kwargs):\n        if display_generated_table(data, self.assistant_message, self.user_query, self.displayed_table_ids):\n            return None\n        return st.dataframe(data, *args, **kwargs)\n    def table(self, data=None, *args, **kwargs):",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "requested_table_limit",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def requested_table_limit(user_query):\n    match = ROW_LIMIT_RE.search(user_query or \"\")\n    if not match:\n        return TABLE_DISPLAY_ROW_LIMIT\n    raw_limit = match.group(1).lower()\n    requested_limit = int(raw_limit) if raw_limit.isdigit() else NUMBER_WORDS.get(raw_limit, TABLE_DISPLAY_ROW_LIMIT)\n    return max(1, min(requested_limit, TABLE_DISPLAY_ROW_LIMIT))\ndef should_show_last_rows(user_query):\n    return bool(LAST_ROWS_RE.search(user_query or \"\"))\ndef limit_table_for_display(table, user_query=None):",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "should_show_last_rows",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def should_show_last_rows(user_query):\n    return bool(LAST_ROWS_RE.search(user_query or \"\"))\ndef limit_table_for_display(table, user_query=None):\n    if not isinstance(table, pd.DataFrame) or table.empty:\n        return table, None\n    row_limit = requested_table_limit(user_query)\n    total_rows = len(table)\n    if total_rows <= row_limit:\n        return table, None\n    if should_show_last_rows(user_query):",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "limit_table_for_display",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def limit_table_for_display(table, user_query=None):\n    if not isinstance(table, pd.DataFrame) or table.empty:\n        return table, None\n    row_limit = requested_table_limit(user_query)\n    total_rows = len(table)\n    if total_rows <= row_limit:\n        return table, None\n    if should_show_last_rows(user_query):\n        limited_table = table.tail(row_limit)\n        direction = \"last\"",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "display_generated_table",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def display_generated_table(value, assistant_message, user_query, displayed_table_ids=None):\n    if isinstance(value, pd.DataFrame):\n        table = value\n    elif isinstance(value, list) and value and isinstance(value[0], dict):\n        table = pd.DataFrame(value)\n    else:\n        return False\n    if table.empty:\n        return False\n    limited_table, note = limit_table_for_display(table, user_query)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
         "label": "render_saved_message",
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def render_saved_message(msg):\n    with st.chat_message(msg[\"role\"]):\n        if msg.get(\"content\"):\n            st.markdown(msg[\"content\"])\n        for note in msg.get(\"notes\", []):\n            st.info(note)\n        for image in msg.get(\"images\", []):\n            st.image(image, use_column_width=True)\ndef extract_python_code_blocks(text):\n    return [block.strip() for block in PYTHON_CODE_BLOCK_RE.findall(text)]",
+        "peekOfCode": "def render_saved_message(msg):\n    with st.chat_message(msg[\"role\"]):\n        if msg.get(\"content\"):\n            st.markdown(msg[\"content\"])\n        for note in msg.get(\"notes\", []):\n            st.info(note)\n        for table in msg.get(\"tables\", []):\n            if isinstance(table, pd.DataFrame):\n                limited_table, _ = limit_table_for_display(table)\n                st.dataframe(limited_table, use_container_width=True)",
         "detail": "app",
         "documentation": {}
     },
@@ -2285,7 +2322,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "client = openai.OpenAI(api_key=st.secrets[\"OpenAI_API_Key\"])\nOPENAI_MODEL = st.secrets.get(\"OpenAI_Model\", \"gpt-4o\")\nPYTHON_CODE_BLOCK_RE = re.compile(r\"```(?:python|py)\\s*\\n?(.*?)```\", re.DOTALL | re.IGNORECASE)\n#Session State Initialization\nif 'messages' not in st.session_state:\n    st.session_state['messages'] = []\nif \"df\" not in st.session_state:\n    st.session_state[\"df\"] = None\nif \"data_summary\" not in st.session_state:\n    st.session_state.data_summary = {",
+        "peekOfCode": "client = openai.OpenAI(api_key=st.secrets[\"OpenAI_API_Key\"])\nOPENAI_MODEL = st.secrets.get(\"OpenAI_Model\", \"gpt-4o\")\nPYTHON_CODE_BLOCK_RE = re.compile(r\"```(?:python|py)\\s*\\n?(.*?)```\", re.DOTALL | re.IGNORECASE)\nTABLE_DISPLAY_ROW_LIMIT = 10\nLAST_ROWS_RE = re.compile(r\"\\b(last|bottom|tail|ending|end|most recent|latest)\\b\", re.IGNORECASE)\nROW_LIMIT_RE = re.compile(\n    r\"\\b(?:top|first|head|last|bottom|tail|show)\\s+(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\b\",\n    re.IGNORECASE,\n)\nNUMBER_WORDS = {",
         "detail": "app",
         "documentation": {}
     },
@@ -2294,7 +2331,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "OPENAI_MODEL = st.secrets.get(\"OpenAI_Model\", \"gpt-4o\")\nPYTHON_CODE_BLOCK_RE = re.compile(r\"```(?:python|py)\\s*\\n?(.*?)```\", re.DOTALL | re.IGNORECASE)\n#Session State Initialization\nif 'messages' not in st.session_state:\n    st.session_state['messages'] = []\nif \"df\" not in st.session_state:\n    st.session_state[\"df\"] = None\nif \"data_summary\" not in st.session_state:\n    st.session_state.data_summary = {\n        \"shape\": None,",
+        "peekOfCode": "OPENAI_MODEL = st.secrets.get(\"OpenAI_Model\", \"gpt-4o\")\nPYTHON_CODE_BLOCK_RE = re.compile(r\"```(?:python|py)\\s*\\n?(.*?)```\", re.DOTALL | re.IGNORECASE)\nTABLE_DISPLAY_ROW_LIMIT = 10\nLAST_ROWS_RE = re.compile(r\"\\b(last|bottom|tail|ending|end|most recent|latest)\\b\", re.IGNORECASE)\nROW_LIMIT_RE = re.compile(\n    r\"\\b(?:top|first|head|last|bottom|tail|show)\\s+(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\b\",\n    re.IGNORECASE,\n)\nNUMBER_WORDS = {\n    \"one\": 1,",
         "detail": "app",
         "documentation": {}
     },
@@ -2303,7 +2340,43 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "PYTHON_CODE_BLOCK_RE = re.compile(r\"```(?:python|py)\\s*\\n?(.*?)```\", re.DOTALL | re.IGNORECASE)\n#Session State Initialization\nif 'messages' not in st.session_state:\n    st.session_state['messages'] = []\nif \"df\" not in st.session_state:\n    st.session_state[\"df\"] = None\nif \"data_summary\" not in st.session_state:\n    st.session_state.data_summary = {\n        \"shape\": None,\n        \"columns\": None,",
+        "peekOfCode": "PYTHON_CODE_BLOCK_RE = re.compile(r\"```(?:python|py)\\s*\\n?(.*?)```\", re.DOTALL | re.IGNORECASE)\nTABLE_DISPLAY_ROW_LIMIT = 10\nLAST_ROWS_RE = re.compile(r\"\\b(last|bottom|tail|ending|end|most recent|latest)\\b\", re.IGNORECASE)\nROW_LIMIT_RE = re.compile(\n    r\"\\b(?:top|first|head|last|bottom|tail|show)\\s+(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\b\",\n    re.IGNORECASE,\n)\nNUMBER_WORDS = {\n    \"one\": 1,\n    \"two\": 2,",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "TABLE_DISPLAY_ROW_LIMIT",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "TABLE_DISPLAY_ROW_LIMIT = 10\nLAST_ROWS_RE = re.compile(r\"\\b(last|bottom|tail|ending|end|most recent|latest)\\b\", re.IGNORECASE)\nROW_LIMIT_RE = re.compile(\n    r\"\\b(?:top|first|head|last|bottom|tail|show)\\s+(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\b\",\n    re.IGNORECASE,\n)\nNUMBER_WORDS = {\n    \"one\": 1,\n    \"two\": 2,\n    \"three\": 3,",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "LAST_ROWS_RE",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "LAST_ROWS_RE = re.compile(r\"\\b(last|bottom|tail|ending|end|most recent|latest)\\b\", re.IGNORECASE)\nROW_LIMIT_RE = re.compile(\n    r\"\\b(?:top|first|head|last|bottom|tail|show)\\s+(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\b\",\n    re.IGNORECASE,\n)\nNUMBER_WORDS = {\n    \"one\": 1,\n    \"two\": 2,\n    \"three\": 3,\n    \"four\": 4,",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "ROW_LIMIT_RE",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "ROW_LIMIT_RE = re.compile(\n    r\"\\b(?:top|first|head|last|bottom|tail|show)\\s+(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\b\",\n    re.IGNORECASE,\n)\nNUMBER_WORDS = {\n    \"one\": 1,\n    \"two\": 2,\n    \"three\": 3,\n    \"four\": 4,\n    \"five\": 5,",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "NUMBER_WORDS",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "NUMBER_WORDS = {\n    \"one\": 1,\n    \"two\": 2,\n    \"three\": 3,\n    \"four\": 4,\n    \"five\": 5,\n    \"six\": 6,\n    \"seven\": 7,\n    \"eight\": 8,\n    \"nine\": 9,",
         "detail": "app",
         "documentation": {}
     }
