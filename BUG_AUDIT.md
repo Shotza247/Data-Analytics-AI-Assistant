@@ -131,3 +131,38 @@
   - numpy imports successfully; sklearn and scipy are no longer importable
 - Follow-up:
   - Keep numpy for future MVP1 analysis utilities; re-add data-science libraries only when MVP2 or a dedicated segmentation feature starts
+## 2026-08-17 10:34 - Render requested list and table outputs
+
+- Status: fixed
+- Symptom: List-style requests returned analysis text but did not show the requested rows or pandas table in the app
+- Scope: Streamlit generated-code execution and assistant prompt for row/list/table requests
+- Suspected cause: The app only rendered Matplotlib figures, not pandas tables, and the prompt did not tell the model to emit a DataFrame/table for list-style requests
+- Evidence:
+  - app.py now replays saved assistant tables with st.dataframe
+  - app.py prompt now instructs the model to produce a filtered pandas DataFrame for list, table, row, and record requests
+- Changes:
+  - app.py: render and persist generated pandas DataFrames/tables in assistant messages
+  - app.py: prompt now tells the model to use st.dataframe(result_df, use_container_width=True) for list-style requests
+  - README.md: documented retained table outputs, row/list request behavior, and table troubleshooting guidance
+- Verification:
+  - README.md and BUG_AUDIT.md updated without changing code in this documentation pass
+- Follow-up:
+  - Monitor real CSV prompts to make sure list-style questions return tables and not prose-only summaries
+## 2026-08-17 10:42 - Cap generated table displays
+
+- Status: fixed
+- Symptom: Generated list/table requests could display too many rows, including the full uploaded dataframe, making the chat output hard to use
+- Scope: Streamlit generated table rendering and assistant table/list prompt
+- Suspected cause: The generated-code table scan included every pandas DataFrame in exec_globals, including the source df, and generated st.dataframe calls could render unbounded tables
+- Evidence:
+  - app.py had a post-exec loop over exec_globals that rendered any DataFrame
+- Changes:
+  - app.py: added a 10-row table display limiter that respects top/first vs last/bottom wording
+  - app.py: added a Streamlit proxy for generated code so st.dataframe, st.table, and table-like st.write outputs are bounded before display
+  - app.py: post-exec table scan now skips the original df and already displayed tables
+  - README.md: documented the generated table display cap
+- Verification:
+  - app.py compiles with .venv Python
+  - smoke test confirmed top 10, last 10, top five, and top 500 requests are sliced/capped correctly
+- Follow-up:
+  - Monitor real prompts for cases like random samples or explicitly requested row ranges, which may need additional intent parsing later

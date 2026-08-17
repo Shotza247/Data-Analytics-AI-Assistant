@@ -1,10 +1,10 @@
 # CSV Data Analytics AI Assistant
 
-A Streamlit app for exploring CSV files with natural-language questions, automatic data summaries, AI-generated analysis, and retained visual outputs.
+A Streamlit app for exploring CSV files with natural-language questions, automatic data summaries, AI-generated analysis, retained table outputs, and retained visual outputs.
 
 ## MVP1 Status
 
-This repository currently represents **MVP1** of the CSV Data Analytics AI Assistant. MVP1 focuses on a single-user Streamlit workflow for uploading one CSV, asking natural-language questions, receiving stakeholder-friendly business insights/results, and viewing generated charts without exposing the Python code used behind the scenes.
+This repository currently represents **MVP1** of the CSV Data Analytics AI Assistant. MVP1 focuses on a single-user Streamlit workflow for uploading one CSV, asking natural-language questions, receiving stakeholder-friendly business insights/results, viewing requested rows/tables, and viewing generated charts without exposing the Python code used behind the scenes.
 
 ## What It Does
 
@@ -14,8 +14,9 @@ This repository currently represents **MVP1** of the CSV Data Analytics AI Assis
 - Add business context, such as industry and audience, to make insights more relevant.
 - Ask questions about the data in a chat interface.
 - Receive data analysis, result summaries, chart interpretation, business meaning, and recommended next steps in plain language.
+- Display requested rows, records, filtered results, and table-style answers as Streamlit dataframes instead of prose-only responses, capped to the requested top/last rows with a maximum of 10 displayed rows.
 - Generate charts directly in the Streamlit app without showing the underlying Python code.
-- Retain assistant replies, notes, and generated chart images in the session chat history.
+- Retain assistant replies, notes, generated tables, and generated chart images in the session chat history.
 
 ## Tech Stack
 
@@ -109,17 +110,18 @@ Example questions:
 - Show sales by customer region.
 - Create a bar chart of the top 10 products by total amount.
 - What are the null values in each column?
+- Show the top 20 records where total amount is above 500.
 - What is the correlation between quantity, unit price, and total amount?
 
 ## How The App Works
 
 When a CSV is uploaded, `app.py` stores the dataframe and a compact data summary in Streamlit session state. For smaller datasets, the full dataframe is included in the prompt context. For datasets with more than 100 rows, the app sends a summarized context instead to reduce token usage.
 
-The assistant can return hidden Python code blocks for chart generation. The app extracts and executes those hidden blocks with access to `df`, `pd`, `plt`, `sns`, and `st`, then renders and saves generated Matplotlib figures as chat images. The user-facing chat shows business-oriented analysis, results, notes, and charts, not the Python code.
+The assistant can return hidden Python code blocks for chart and table generation. The app extracts and executes those hidden blocks with access to `df`, `pd`, `np`, `plt`, `sns`, and `st`. For visual requests, it renders and saves generated Matplotlib figures as chat images. For list-style, row, record, or filtered-result requests, it renders pandas DataFrames with `st.dataframe(...)` and stores them in the chat history. Generated tables are capped to the requested top/last rows, with a maximum of 10 rows displayed, so large datasets do not flood the interface. The user-facing chat shows business-oriented analysis, results, notes, tables, and charts, not the Python code.
 
 The prompt includes optional business context from the sidebar so chart explanations can be framed for the relevant industry, audience, and business goal instead of only describing visual patterns.
 
-Assistant text, warning notes, and generated chart images are saved in Streamlit session state so they remain visible when the app reruns during the same session.
+Assistant text, warning notes, generated tables, and generated chart images are saved in Streamlit session state so they remain visible when the app reruns during the same session.
 
 ## Configuration
 
@@ -152,6 +154,7 @@ If your OpenAI project does not have access to the configured model, update `Ope
 - **CSV upload fails**: Check that the file is a valid CSV and uses a readable encoding.
 - **OpenAI request fails**: Confirm your API key, model access, billing status, and network connection.
 - **Generated chart fails**: Rephrase the question with exact column names from the uploaded CSV.
+- **Requested rows or lists do not appear**: Ask for a table, rows, records, or a filtered dataframe and include the relevant column names. The app displays at most 10 rows for generated result tables.
 - **Large file responses are vague**: Ask more specific questions or filter the CSV before uploading.
 
 ## License
