@@ -18,6 +18,15 @@ This repository currently represents **MVP1** of the CSV Data Analytics AI Assis
 - Generate charts directly in the Streamlit app without showing the underlying Python code.
 - Retain assistant replies, notes, generated tables, and generated chart images in the session chat history.
 
+## Showcase
+
+Add screenshots to `docs/showcase/` and replace the image filenames below with the final files.
+
+| App UI | Graphs And Insights |
+| --- | --- |
+| <img src="./Sample_UI_Images/Insights_BackedBy_YourData.png" alt="Data Analysis Assistant interface showing CSV upload, sidebar summary, and chat workflow" width="100%"> | <img src="./Sample_UI_Images/DTI_Ratio_Vs_Mortgage_Approval.png" alt="Generated analysis output showing business insights, tables, and charts" width="100%"> |
+| The assistant turns a natural-language mortgage-risk question into a stakeholder-ready response. It explains the key finding, why the result matters, recommended next steps, and caveats, while also showing a capped table of matching applicants so the user can inspect examples without being overwhelmed by the full dataset. | The scatter plot compares debt-to-income ratio against credit score by mortgage approval status. From an analysis perspective, it helps identify approved applicants above the high-DTI threshold and suggests that approval decisions may be influenced by compensating factors such as stronger credit scores, property value, or other borrower characteristics. |
+
 ## Tech Stack
 
 - [Streamlit](https://streamlit.io/) for the web app

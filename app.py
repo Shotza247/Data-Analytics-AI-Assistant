@@ -175,8 +175,8 @@ def hide_python_code_blocks(text):
     return cleaned or "Here are the results from the analysis."
 
 
-st.title("📊Ask about your CSV 🚀")
-st.markdown('Upload your CSV file and ask questions about its content.')
+st.title("📊Derive Insights about your private CSV data")
+st.markdown('Upload your CSV file and gain insight into faster and accurate decision-making.')
 
 with st.sidebar: #the 'with' creates a context where everything inside appears inside the side bar
     st.header("Upload your CSV file")

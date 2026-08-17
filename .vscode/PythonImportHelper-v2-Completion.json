@@ -2304,7 +2304,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def extract_python_code_blocks(text):\n    return [block.strip() for block in PYTHON_CODE_BLOCK_RE.findall(text)]\ndef hide_python_code_blocks(text):\n    cleaned = PYTHON_CODE_BLOCK_RE.sub(\"\\n\\n\", text)\n    cleaned = re.sub(r\"\\n{3,}\", \"\\n\\n\", cleaned).strip()\n    return cleaned or \"Here are the results from the analysis.\"\nst.title(\"📊Ask about your CSV 🚀\")\nst.markdown('Upload your CSV file and ask questions about its content.')\nwith st.sidebar: #the 'with' creates a context where everything inside appears inside the side bar\n    st.header(\"Upload your CSV file\")",
+        "peekOfCode": "def extract_python_code_blocks(text):\n    return [block.strip() for block in PYTHON_CODE_BLOCK_RE.findall(text)]\ndef hide_python_code_blocks(text):\n    cleaned = PYTHON_CODE_BLOCK_RE.sub(\"\\n\\n\", text)\n    cleaned = re.sub(r\"\\n{3,}\", \"\\n\\n\", cleaned).strip()\n    return cleaned or \"Here are the results from the analysis.\"\nst.title(\"📊Derive Insights about your private CSV data\")\nst.markdown('Upload your CSV file and gain insight into faster and accurate decision-making.')\nwith st.sidebar: #the 'with' creates a context where everything inside appears inside the side bar\n    st.header(\"Upload your CSV file\")",
         "detail": "app",
         "documentation": {}
     },
@@ -2313,7 +2313,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def hide_python_code_blocks(text):\n    cleaned = PYTHON_CODE_BLOCK_RE.sub(\"\\n\\n\", text)\n    cleaned = re.sub(r\"\\n{3,}\", \"\\n\\n\", cleaned).strip()\n    return cleaned or \"Here are the results from the analysis.\"\nst.title(\"📊Ask about your CSV 🚀\")\nst.markdown('Upload your CSV file and ask questions about its content.')\nwith st.sidebar: #the 'with' creates a context where everything inside appears inside the side bar\n    st.header(\"Upload your CSV file\")\n    uploaded_file = st.sidebar.file_uploader(\"Choose a CSV file\", type=\"csv\")\n    st.divider()",
+        "peekOfCode": "def hide_python_code_blocks(text):\n    cleaned = PYTHON_CODE_BLOCK_RE.sub(\"\\n\\n\", text)\n    cleaned = re.sub(r\"\\n{3,}\", \"\\n\\n\", cleaned).strip()\n    return cleaned or \"Here are the results from the analysis.\"\nst.title(\"📊Derive Insights about your private CSV data\")\nst.markdown('Upload your CSV file and gain insight into faster and accurate decision-making.')\nwith st.sidebar: #the 'with' creates a context where everything inside appears inside the side bar\n    st.header(\"Upload your CSV file\")\n    uploaded_file = st.sidebar.file_uploader(\"Choose a CSV file\", type=\"csv\")\n    st.divider()",
         "detail": "app",
         "documentation": {}
     },
