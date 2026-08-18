@@ -166,3 +166,20 @@
   - smoke test confirmed top 10, last 10, top five, and top 500 requests are sliced/capped correctly
 - Follow-up:
   - Monitor real prompts for cases like random samples or explicitly requested row ranges, which may need additional intent parsing later
+## 2026-08-18 13:22 - Remove Streamlit secrets from Git history
+
+- Status: fixed
+- Symptom: GitHub push rejected because repository rules detected committed secrets in .streamlit/secrets.toml
+- Scope: Git repository history and Streamlit local configuration
+- Suspected cause: .streamlit/secrets.toml had been committed before .gitignore protection was effective
+- Evidence:
+  - git log showed historical commits touching .streamlit/secrets.toml before cleanup
+  - git check-ignore confirms local .streamlit paths are ignored
+- Changes:
+  - git history: removed .streamlit/secrets.toml from reachable commits with filter-branch
+  - .gitignore: changed Streamlit rule to ignore the entire .streamlit/ folder
+- Verification:
+  - git log --all -- .streamlit/secrets.toml returns no entries after rewrite and garbage collection
+  - git ls-files .streamlit returns no tracked files
+- Follow-up:
+  - Force-push rewritten main to GitHub and rotate any previously exposed API keys
