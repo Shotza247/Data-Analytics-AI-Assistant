@@ -23,6 +23,11 @@ client = openai.OpenAI(api_key=st.secrets["OpenAI_API_Key"])
 OPENAI_MODEL = st.secrets.get("OpenAI_Model", "gpt-4o")
 PYTHON_CODE_BLOCK_RE = re.compile(r"```(?:python|py)\s*\n?(.*?)```", re.DOTALL | re.IGNORECASE)
 TABLE_DISPLAY_ROW_LIMIT = 10
+MAX_FULL_DATASET_ROWS = 1000
+MAX_RESPONSE_TOKENS = 500
+MAX_CONTEXT_CATEGORICAL_COLUMNS = 8
+MAX_CONTEXT_CATEGORY_VALUES = 5
+MAX_CONTEXT_CORRELATION_PAIRS = 8
 LAST_ROWS_RE = re.compile(r"\b(last|bottom|tail|ending|end|most recent|latest)\b", re.IGNORECASE)
 ROW_LIMIT_RE = re.compile(
     r"\b(?:top|first|head|last|bottom|tail|show)\s+(\d+|one|two|three|four|five|six|seven|eight|nine|ten)\b",
@@ -70,6 +75,76 @@ def requested_table_limit(user_query):
 
 def should_show_last_rows(user_query):
     return bool(LAST_ROWS_RE.search(user_query or ""))
+
+
+def build_data_context(df):
+    context_sections = [
+        f"Dataset shape: {df.shape[0]} rows x {df.shape[1]} columns",
+        f"Column names: {', '.join(df.columns.astype(str))}",
+        f"Data types: {df.dtypes.astype(str).to_dict()}",
+    ]
+
+    if len(df) <= MAX_FULL_DATASET_ROWS:
+        context_sections.append(f"Full dataset:\n{df.to_string(index=False)}")
+    else:
+        context_sections.append(
+            f"First 10 rows for structure only:\n{df.head(10).to_string(index=False)}"
+        )
+
+    missing_summary = (
+        df.isnull()
+        .sum()
+        .sort_values(ascending=False)
+    )
+    missing_summary = missing_summary[missing_summary > 0].head(10)
+    if missing_summary.empty:
+        context_sections.append("Missing values: none detected")
+    else:
+        context_sections.append(f"Columns with missing values:\n{missing_summary.to_string()}")
+
+    numeric_df = df.select_dtypes(include="number")
+    if not numeric_df.empty:
+        numeric_summary = numeric_df.describe().T[["min", "max", "mean", "50%"]].rename(
+            columns={"min": "Min", "max": "Max", "mean": "Mean", "50%": "Median"}
+        )
+        context_sections.append(
+            f"Numeric summary:\n{numeric_summary.round(2).to_string()}"
+        )
+
+        if len(numeric_df.columns) >= 2:
+            corr = numeric_df.corr(numeric_only=True).abs()
+            corr_pairs = (
+                corr.where(np.triu(np.ones(corr.shape), k=1).astype(bool))
+                .stack()
+                .sort_values(ascending=False)
+                .head(MAX_CONTEXT_CORRELATION_PAIRS)
+            )
+            if not corr_pairs.empty:
+                pair_lines = [
+                    f"{left} vs {right}: {value:.2f}"
+                    for (left, right), value in corr_pairs.items()
+                ]
+                context_sections.append(
+                    "Strongest numeric correlations:\n" + "\n".join(pair_lines)
+                )
+
+    categorical_df = df.select_dtypes(include=["object", "category", "bool"])
+    categorical_sections = []
+    for column in categorical_df.columns[:MAX_CONTEXT_CATEGORICAL_COLUMNS]:
+        value_counts = (
+            categorical_df[column]
+            .astype("string")
+            .fillna("<missing>")
+            .value_counts()
+            .head(MAX_CONTEXT_CATEGORY_VALUES)
+        )
+        categorical_sections.append(f"{column}: {value_counts.to_dict()}")
+    if categorical_sections:
+        context_sections.append(
+            "Top categorical values:\n" + "\n".join(categorical_sections)
+        )
+
+    return "\n\n".join(context_sections)
 
 
 def limit_table_for_display(table, user_query=None):
@@ -283,18 +358,7 @@ if st.session_state["df"] is not None:
             
         df = st.session_state.df
         
-        if len(df) > 100:
-            data_context = f"""
-            Dataset shape: {st.session_state.data_summary['shape']}
-            Column names: {', '.join(st.session_state.data_summary['columns'])}
-            Data types: {st.session_state.data_summary['dtypes']} 
-            Sample data: {st.session_state.data_summary['sample_data']}
-            Summary statistics: {st.session_state.data_summary['summary_stats']}
-            """
-        else:
-            data_context = f"""
-            Full dataset: {df.to_string()}
-            """
+        data_context = build_data_context(df)
 
         industry_context = selected_industry
         if selected_industry == "Auto-detect from data":
@@ -376,6 +440,9 @@ if st.session_state["df"] is not None:
             data issues. If an issue would materially affect the answer, say so briefly
             in Caveats and adjust the analysis (e.g. exclude nulls) rather than failing
             silently.
+            - For exact comparisons, rankings, grouped totals, filtered rows, or charts,
+            use pandas code against the full `df`. Do not rely only on the sample rows in
+            the prompt for the final answer.
             - If the question can't be answered with the available data, say why in
             plain language and suggest the next-best question or what data would be
             needed — don't just error out.
@@ -410,7 +477,7 @@ if st.session_state["df"] is not None:
                             *chat_history
                         ],
                         temperature=0.1, #0 more focused answers, 1->2 more creative/random
-                        max_tokens=500
+                        max_tokens=MAX_RESPONSE_TOKENS
                     )
                     reply = response.choices[0].message.content
                     display_reply = hide_python_code_blocks(reply)

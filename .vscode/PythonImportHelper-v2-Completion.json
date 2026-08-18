@@ -2259,7 +2259,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def requested_table_limit(user_query):\n    match = ROW_LIMIT_RE.search(user_query or \"\")\n    if not match:\n        return TABLE_DISPLAY_ROW_LIMIT\n    raw_limit = match.group(1).lower()\n    requested_limit = int(raw_limit) if raw_limit.isdigit() else NUMBER_WORDS.get(raw_limit, TABLE_DISPLAY_ROW_LIMIT)\n    return max(1, min(requested_limit, TABLE_DISPLAY_ROW_LIMIT))\ndef should_show_last_rows(user_query):\n    return bool(LAST_ROWS_RE.search(user_query or \"\"))\ndef limit_table_for_display(table, user_query=None):",
+        "peekOfCode": "def requested_table_limit(user_query):\n    match = ROW_LIMIT_RE.search(user_query or \"\")\n    if not match:\n        return TABLE_DISPLAY_ROW_LIMIT\n    raw_limit = match.group(1).lower()\n    requested_limit = int(raw_limit) if raw_limit.isdigit() else NUMBER_WORDS.get(raw_limit, TABLE_DISPLAY_ROW_LIMIT)\n    return max(1, min(requested_limit, TABLE_DISPLAY_ROW_LIMIT))\ndef should_show_last_rows(user_query):\n    return bool(LAST_ROWS_RE.search(user_query or \"\"))\ndef build_data_context(df):",
         "detail": "app",
         "documentation": {}
     },
@@ -2268,7 +2268,16 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def should_show_last_rows(user_query):\n    return bool(LAST_ROWS_RE.search(user_query or \"\"))\ndef limit_table_for_display(table, user_query=None):\n    if not isinstance(table, pd.DataFrame) or table.empty:\n        return table, None\n    row_limit = requested_table_limit(user_query)\n    total_rows = len(table)\n    if total_rows <= row_limit:\n        return table, None\n    if should_show_last_rows(user_query):",
+        "peekOfCode": "def should_show_last_rows(user_query):\n    return bool(LAST_ROWS_RE.search(user_query or \"\"))\ndef build_data_context(df):\n    context_sections = [\n        f\"Dataset shape: {df.shape[0]} rows x {df.shape[1]} columns\",\n        f\"Column names: {', '.join(df.columns.astype(str))}\",\n        f\"Data types: {df.dtypes.astype(str).to_dict()}\",\n    ]\n    if len(df) <= MAX_FULL_DATASET_ROWS:\n        context_sections.append(f\"Full dataset:\\n{df.to_string(index=False)}\")",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "build_data_context",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def build_data_context(df):\n    context_sections = [\n        f\"Dataset shape: {df.shape[0]} rows x {df.shape[1]} columns\",\n        f\"Column names: {', '.join(df.columns.astype(str))}\",\n        f\"Data types: {df.dtypes.astype(str).to_dict()}\",\n    ]\n    if len(df) <= MAX_FULL_DATASET_ROWS:\n        context_sections.append(f\"Full dataset:\\n{df.to_string(index=False)}\")\n    else:\n        context_sections.append(",
         "detail": "app",
         "documentation": {}
     },
@@ -2322,7 +2331,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "client = openai.OpenAI(api_key=st.secrets[\"OpenAI_API_Key\"])\nOPENAI_MODEL = st.secrets.get(\"OpenAI_Model\", \"gpt-4o\")\nPYTHON_CODE_BLOCK_RE = re.compile(r\"```(?:python|py)\\s*\\n?(.*?)```\", re.DOTALL | re.IGNORECASE)\nTABLE_DISPLAY_ROW_LIMIT = 10\nLAST_ROWS_RE = re.compile(r\"\\b(last|bottom|tail|ending|end|most recent|latest)\\b\", re.IGNORECASE)\nROW_LIMIT_RE = re.compile(\n    r\"\\b(?:top|first|head|last|bottom|tail|show)\\s+(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\b\",\n    re.IGNORECASE,\n)\nNUMBER_WORDS = {",
+        "peekOfCode": "client = openai.OpenAI(api_key=st.secrets[\"OpenAI_API_Key\"])\nOPENAI_MODEL = st.secrets.get(\"OpenAI_Model\", \"gpt-4o\")\nPYTHON_CODE_BLOCK_RE = re.compile(r\"```(?:python|py)\\s*\\n?(.*?)```\", re.DOTALL | re.IGNORECASE)\nTABLE_DISPLAY_ROW_LIMIT = 10\nMAX_FULL_DATASET_ROWS = 1000\nMAX_RESPONSE_TOKENS = 500\nMAX_CONTEXT_CATEGORICAL_COLUMNS = 8\nMAX_CONTEXT_CATEGORY_VALUES = 5\nMAX_CONTEXT_CORRELATION_PAIRS = 8\nLAST_ROWS_RE = re.compile(r\"\\b(last|bottom|tail|ending|end|most recent|latest)\\b\", re.IGNORECASE)",
         "detail": "app",
         "documentation": {}
     },
@@ -2331,7 +2340,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "OPENAI_MODEL = st.secrets.get(\"OpenAI_Model\", \"gpt-4o\")\nPYTHON_CODE_BLOCK_RE = re.compile(r\"```(?:python|py)\\s*\\n?(.*?)```\", re.DOTALL | re.IGNORECASE)\nTABLE_DISPLAY_ROW_LIMIT = 10\nLAST_ROWS_RE = re.compile(r\"\\b(last|bottom|tail|ending|end|most recent|latest)\\b\", re.IGNORECASE)\nROW_LIMIT_RE = re.compile(\n    r\"\\b(?:top|first|head|last|bottom|tail|show)\\s+(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\b\",\n    re.IGNORECASE,\n)\nNUMBER_WORDS = {\n    \"one\": 1,",
+        "peekOfCode": "OPENAI_MODEL = st.secrets.get(\"OpenAI_Model\", \"gpt-4o\")\nPYTHON_CODE_BLOCK_RE = re.compile(r\"```(?:python|py)\\s*\\n?(.*?)```\", re.DOTALL | re.IGNORECASE)\nTABLE_DISPLAY_ROW_LIMIT = 10\nMAX_FULL_DATASET_ROWS = 1000\nMAX_RESPONSE_TOKENS = 500\nMAX_CONTEXT_CATEGORICAL_COLUMNS = 8\nMAX_CONTEXT_CATEGORY_VALUES = 5\nMAX_CONTEXT_CORRELATION_PAIRS = 8\nLAST_ROWS_RE = re.compile(r\"\\b(last|bottom|tail|ending|end|most recent|latest)\\b\", re.IGNORECASE)\nROW_LIMIT_RE = re.compile(",
         "detail": "app",
         "documentation": {}
     },
@@ -2340,7 +2349,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "PYTHON_CODE_BLOCK_RE = re.compile(r\"```(?:python|py)\\s*\\n?(.*?)```\", re.DOTALL | re.IGNORECASE)\nTABLE_DISPLAY_ROW_LIMIT = 10\nLAST_ROWS_RE = re.compile(r\"\\b(last|bottom|tail|ending|end|most recent|latest)\\b\", re.IGNORECASE)\nROW_LIMIT_RE = re.compile(\n    r\"\\b(?:top|first|head|last|bottom|tail|show)\\s+(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\b\",\n    re.IGNORECASE,\n)\nNUMBER_WORDS = {\n    \"one\": 1,\n    \"two\": 2,",
+        "peekOfCode": "PYTHON_CODE_BLOCK_RE = re.compile(r\"```(?:python|py)\\s*\\n?(.*?)```\", re.DOTALL | re.IGNORECASE)\nTABLE_DISPLAY_ROW_LIMIT = 10\nMAX_FULL_DATASET_ROWS = 1000\nMAX_RESPONSE_TOKENS = 500\nMAX_CONTEXT_CATEGORICAL_COLUMNS = 8\nMAX_CONTEXT_CATEGORY_VALUES = 5\nMAX_CONTEXT_CORRELATION_PAIRS = 8\nLAST_ROWS_RE = re.compile(r\"\\b(last|bottom|tail|ending|end|most recent|latest)\\b\", re.IGNORECASE)\nROW_LIMIT_RE = re.compile(\n    r\"\\b(?:top|first|head|last|bottom|tail|show)\\s+(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\b\",",
         "detail": "app",
         "documentation": {}
     },
@@ -2349,7 +2358,52 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "TABLE_DISPLAY_ROW_LIMIT = 10\nLAST_ROWS_RE = re.compile(r\"\\b(last|bottom|tail|ending|end|most recent|latest)\\b\", re.IGNORECASE)\nROW_LIMIT_RE = re.compile(\n    r\"\\b(?:top|first|head|last|bottom|tail|show)\\s+(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\b\",\n    re.IGNORECASE,\n)\nNUMBER_WORDS = {\n    \"one\": 1,\n    \"two\": 2,\n    \"three\": 3,",
+        "peekOfCode": "TABLE_DISPLAY_ROW_LIMIT = 10\nMAX_FULL_DATASET_ROWS = 1000\nMAX_RESPONSE_TOKENS = 500\nMAX_CONTEXT_CATEGORICAL_COLUMNS = 8\nMAX_CONTEXT_CATEGORY_VALUES = 5\nMAX_CONTEXT_CORRELATION_PAIRS = 8\nLAST_ROWS_RE = re.compile(r\"\\b(last|bottom|tail|ending|end|most recent|latest)\\b\", re.IGNORECASE)\nROW_LIMIT_RE = re.compile(\n    r\"\\b(?:top|first|head|last|bottom|tail|show)\\s+(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\b\",\n    re.IGNORECASE,",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "MAX_FULL_DATASET_ROWS",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "MAX_FULL_DATASET_ROWS = 1000\nMAX_RESPONSE_TOKENS = 500\nMAX_CONTEXT_CATEGORICAL_COLUMNS = 8\nMAX_CONTEXT_CATEGORY_VALUES = 5\nMAX_CONTEXT_CORRELATION_PAIRS = 8\nLAST_ROWS_RE = re.compile(r\"\\b(last|bottom|tail|ending|end|most recent|latest)\\b\", re.IGNORECASE)\nROW_LIMIT_RE = re.compile(\n    r\"\\b(?:top|first|head|last|bottom|tail|show)\\s+(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\b\",\n    re.IGNORECASE,\n)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "MAX_RESPONSE_TOKENS",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "MAX_RESPONSE_TOKENS = 500\nMAX_CONTEXT_CATEGORICAL_COLUMNS = 8\nMAX_CONTEXT_CATEGORY_VALUES = 5\nMAX_CONTEXT_CORRELATION_PAIRS = 8\nLAST_ROWS_RE = re.compile(r\"\\b(last|bottom|tail|ending|end|most recent|latest)\\b\", re.IGNORECASE)\nROW_LIMIT_RE = re.compile(\n    r\"\\b(?:top|first|head|last|bottom|tail|show)\\s+(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\b\",\n    re.IGNORECASE,\n)\nNUMBER_WORDS = {",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "MAX_CONTEXT_CATEGORICAL_COLUMNS",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "MAX_CONTEXT_CATEGORICAL_COLUMNS = 8\nMAX_CONTEXT_CATEGORY_VALUES = 5\nMAX_CONTEXT_CORRELATION_PAIRS = 8\nLAST_ROWS_RE = re.compile(r\"\\b(last|bottom|tail|ending|end|most recent|latest)\\b\", re.IGNORECASE)\nROW_LIMIT_RE = re.compile(\n    r\"\\b(?:top|first|head|last|bottom|tail|show)\\s+(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\b\",\n    re.IGNORECASE,\n)\nNUMBER_WORDS = {\n    \"one\": 1,",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "MAX_CONTEXT_CATEGORY_VALUES",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "MAX_CONTEXT_CATEGORY_VALUES = 5\nMAX_CONTEXT_CORRELATION_PAIRS = 8\nLAST_ROWS_RE = re.compile(r\"\\b(last|bottom|tail|ending|end|most recent|latest)\\b\", re.IGNORECASE)\nROW_LIMIT_RE = re.compile(\n    r\"\\b(?:top|first|head|last|bottom|tail|show)\\s+(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\b\",\n    re.IGNORECASE,\n)\nNUMBER_WORDS = {\n    \"one\": 1,\n    \"two\": 2,",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "MAX_CONTEXT_CORRELATION_PAIRS",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "MAX_CONTEXT_CORRELATION_PAIRS = 8\nLAST_ROWS_RE = re.compile(r\"\\b(last|bottom|tail|ending|end|most recent|latest)\\b\", re.IGNORECASE)\nROW_LIMIT_RE = re.compile(\n    r\"\\b(?:top|first|head|last|bottom|tail|show)\\s+(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\b\",\n    re.IGNORECASE,\n)\nNUMBER_WORDS = {\n    \"one\": 1,\n    \"two\": 2,\n    \"three\": 3,",
         "detail": "app",
         "documentation": {}
     },

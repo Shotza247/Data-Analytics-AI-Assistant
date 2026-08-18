@@ -183,3 +183,21 @@
   - git ls-files .streamlit returns no tracked files
 - Follow-up:
   - Force-push rewritten main to GitHub and rotate any previously exposed API keys
+## 2026-08-18 15:06 - Improve CSV insight grounding
+
+- Status: fixed
+- Symptom: Uploaded CSVs could produce weak or shallow insights, raising concern that the LLM was not interpreting the data correctly
+- Scope: Streamlit OpenAI prompt context and response generation
+- Suspected cause: API key and gpt-4o model access worked; the app gave large CSVs only a thin dataset snapshot and limited responses to 500 output tokens
+- Evidence:
+  - Minimal gpt-4o API request returned OK
+  - app.py used basic shape/sample/describe context for datasets above 100 rows
+- Changes:
+  - app.py: added build_data_context with richer dataset profile including missingness, numeric summaries, correlations, and categorical value patterns
+  - app.py: prompt now tells the model to compute exact comparisons, rankings, filtered rows, and charts against the full df
+  - app.py: increased response budget from 500 to 1200 tokens
+- Verification:
+  - app.py compiles with .venv Python
+  - local secrets check confirms OpenAI_API_Key exists and app falls back to gpt-4o
+- Follow-up:
+  - If insights are still weak, add a second-pass execution workflow so pandas-computed results are sent back to the model for final interpretation
