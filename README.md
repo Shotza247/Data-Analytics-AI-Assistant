@@ -1,7 +1,7 @@
-# CSV Data Analytics AI Assistant
+# 📊 AI Data Analytics Assistant | Streamlit + OpenAI
 
-A Streamlit app for exploring CSV files with natural-language questions, automatic data summaries, AI-generated analysis, retained table outputs, and retained visual outputs.
-- [Notion](https://app.notion.com/p/Data-Analysis-Assistant-3bedc859ce3d80b18e49ee2b80b6e99f?v=377dc859ce3d80c094c0000cfa1eba82&source=copy_link)
+Developed an end-to-end AI-powered analytics solution that transforms raw CSV data into actionable business insights through natural-language interaction. The application leverages OpenAI models to generate stakeholder-ready analyses, dynamic visualizations, filtered datasets, and data quality assessments, making advanced analytics accessible without requiring SQL or Python expertise.
+
 
 ## MVP1 Status
 
@@ -20,7 +20,7 @@ This repository currently represents **MVP1** of the CSV Data Analytics AI Assis
 - Retain assistant replies, notes, generated tables, and generated chart images in the session chat history.
 
 ## Showcase
-
+- [Notion](https://app.notion.com/p/Data-Analysis-Assistant-3bedc859ce3d80b18e49ee2b80b6e99f?v=377dc859ce3d80c094c0000cfa1eba82&source=copy_link)
 Add screenshots to `docs/showcase/` and replace the image filenames below with the final files.
 
 | App UI | Graphs And Insights |
