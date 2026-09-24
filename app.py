@@ -34,15 +34,22 @@ st.markdown(
 
     [data-testid="stAppViewContainer"] .main [data-testid="stChatInput"] {
         position: fixed;
-        right: 3rem;
+        right: max(3rem, calc((100vw - 21rem - 76rem) / 2));
         bottom: 1rem;
-        left: 24rem;
+        left: calc(21rem + max(3rem, calc((100vw - 21rem - 76rem) / 2)));
         z-index: 1000;
         padding: 0.75rem;
         background-color: #ffffff !important;
         border: 1px solid #c7cbd1;
         border-radius: 8px;
         box-shadow: 0 4px 18px rgba(15, 23, 42, 0.18);
+    }
+
+    [data-testid="stAppViewContainer"]:has(
+        [data-testid="stSidebar"][aria-expanded="false"]
+    ) .main [data-testid="stChatInput"] {
+        right: max(3rem, calc((100vw - 76rem) / 2));
+        left: max(3rem, calc((100vw - 76rem) / 2));
     }
 
     [data-testid="stAppViewContainer"] .main [data-testid="stChatInput"] > div,
