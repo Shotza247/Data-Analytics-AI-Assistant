@@ -10,12 +10,12 @@ This repository currently represents **MVP1** of the CSV Data Analytics AI Assis
 
 ## MVP2 In Progress
 
-The `codex/mvp2-business-context` branch now begins MVP2 with provider and usage controls. OpenAI is available through either the app-owned key or a session-only user key, with request, output-token, upload-row, and context-row limits. Hugging Face and Claude remain planned provider adapters.
+MVP2 development now includes business-context guidance, provider and usage controls, and a privacy-protection layer. OpenAI is available through either the app-owned key or a session-only user key, with request, output-token, upload-row, and context-row limits. Hugging Face and Claude remain planned provider adapters.
 
 ## What It Does
 
 - Upload a CSV file from the sidebar.
-- Preview the first rows of the dataset.
+- Preview the first rows of the dataset without clutter from detected PII/PSI columns.
 - Review dataset dimensions, memory usage, data quality, and numeric summary statistics in a stacked sidebar layout.
 - Add business context, such as industry and audience, to make insights more relevant.
 - Ask questions about the data in a chat interface.
@@ -25,6 +25,7 @@ The `codex/mvp2-business-context` branch now begins MVP2 with provider and usage
 - Retain assistant replies, notes, generated tables, and generated chart images in the session chat history.
 - Control API usage with per-session request limits, response-token caps, CSV/context row limits, and token/cost estimates.
 - Use the app's OpenAI key or provide a personal OpenAI key that remains in Streamlit session state and is not written to disk.
+- Detect likely PII and sensitive information in uploaded CSV columns, mask it before AI analysis, and alert the user about which columns were protected.
 
 ## Showcase
 - [Notion](https://app.notion.com/p/Data-Analysis-Assistant-3bedc859ce3d80b18e49ee2b80b6e99f?v=377dc859ce3d80c094c0000cfa1eba82&source=copy_link)
@@ -47,9 +48,11 @@ Add screenshots to `docs/showcase/` and replace the image filenames below with t
 ```text
 .
 +-- app.py
++-- privacy.py
 +-- sample_data.csv
 +-- tests/
 |   +-- test_mvp2_controls.py
+|   +-- test_privacy.py
 +-- .streamlit/
 |   +-- secrets.toml
 +-- .gitignore
@@ -134,7 +137,9 @@ Example questions:
 
 ## How The App Works
 
-When a CSV is uploaded, `app.py` stores the dataframe and a compact data summary in Streamlit session state. For datasets with 100 rows or fewer, the full dataframe is included in the prompt context. Larger datasets use a compact structural sample and summaries to reduce token usage. Uploaded data is capped at 50,000 rows for the MVP2 workflow.
+When a CSV is uploaded, the app scans column names and sampled values for likely personally identifiable information (PII) and sensitive personal information (PSI). Detected values are replaced with deterministic, session-scoped tokens before the dataframe is stored, summarized, or sent to the AI. The privacy alert names the protected columns without displaying their original values and confirms that the remaining non-sensitive columns retain their analytical values. Protected columns are hidden from the data preview to reduce clutter but can still be used for anonymous counts and grouping.
+
+`app.py` stores only the privacy-protected dataframe and a compact data summary in Streamlit session state. For datasets with 100 rows or fewer, the full protected dataframe is included in the prompt context. Larger datasets use a compact structural sample and summaries to reduce token usage. Uploaded data is capped at 50,000 rows for the MVP2 workflow.
 
 The assistant can return hidden Python code blocks for chart and table generation. The app extracts and executes those hidden blocks with access to `df`, `pd`, `np`, `plt`, `sns`, and `st`. For visual requests, it renders and saves generated Matplotlib figures as chat images. For list-style, row, record, or filtered-result requests, it renders pandas DataFrames with `st.dataframe(...)` and stores them in the chat history. Generated tables are capped to the requested top/last rows, with a maximum of 10 rows displayed, so large datasets do not flood the interface. The user-facing chat shows business-oriented analysis, results, notes, tables, and charts, not the Python code.
 
@@ -168,6 +173,8 @@ If your OpenAI project does not have access to the configured model, update `Ope
 
 - Do not commit `.streamlit/secrets.toml`.
 - Keep your OpenAI API key private.
+- Review the privacy alert after every upload. PII/PSI detection is heuristic and should support, not replace, an organization's privacy and compliance review.
+- Original values from detected sensitive columns are discarded after masking and are not sent to the AI. Non-sensitive columns remain available for normal analysis.
 - Review API usage to avoid unexpected costs.
 - Treat the in-app token and cost figures as estimates, and enforce account-level budgets in the provider dashboard as the final spending control.
 - Be careful with untrusted prompts or files. The app executes hidden Python code returned by the model for analysis and visualizations, so only run it in an environment where you are comfortable testing generated code.

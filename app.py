@@ -11,6 +11,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
 
+from privacy import (
+    create_masking_salt,
+    detect_sensitive_columns,
+    mask_sensitive_data,
+    mask_sensitive_text,
+)
+
 st.set_page_config(
     page_title="My CSV Assistant",
     page_icon="📊",
@@ -73,6 +80,12 @@ if "input_tokens_used" not in st.session_state:
 
 if "output_tokens_used" not in st.session_state:
     st.session_state.output_tokens_used = 0
+
+if "privacy_salt" not in st.session_state:
+    st.session_state.privacy_salt = create_masking_salt()
+
+if "privacy_findings" not in st.session_state:
+    st.session_state.privacy_findings = {}
 
 
 class OpenAIProvider:
@@ -363,14 +376,22 @@ with st.sidebar: #the 'with' creates a context where everything inside appears i
     
 if uploaded_file is not None: # move entire code inside the with block up
     try:
-        df = pd.read_csv(uploaded_file, nrows=MAX_UPLOAD_ROWS + 1)
-        upload_was_limited = len(df) > MAX_UPLOAD_ROWS
+        raw_df = pd.read_csv(uploaded_file, nrows=MAX_UPLOAD_ROWS + 1)
+        upload_was_limited = len(raw_df) > MAX_UPLOAD_ROWS
         if upload_was_limited:
-            df = df.head(MAX_UPLOAD_ROWS).copy()
+            raw_df = raw_df.head(MAX_UPLOAD_ROWS).copy()
             st.warning(
                 f"This file exceeds the {MAX_UPLOAD_ROWS:,}-row MVP2 limit. "
                 f"Only the first {MAX_UPLOAD_ROWS:,} rows were loaded."
             )
+        privacy_findings = detect_sensitive_columns(raw_df)
+        df = mask_sensitive_data(
+            raw_df,
+            privacy_findings,
+            st.session_state.privacy_salt,
+        )
+        del raw_df
+        st.session_state.privacy_findings = privacy_findings
         st.session_state["df"] = df
         st.session_state.data_summary = {
         "shape": df.shape,
@@ -380,12 +401,76 @@ if uploaded_file is not None: # move entire code inside the with block up
         "summary_stats": df.describe().to_dict()
         }
         st.success(f"{uploaded_file.name} uploaded and data loaded successfully! {df.shape[0]} Rows x {df.shape[1]} Columns")
+        if privacy_findings:
+            pii_columns = [
+                column
+                for column, details in privacy_findings.items()
+                if details["category"] == "PII"
+            ]
+            psi_columns = [
+                column
+                for column, details in privacy_findings.items()
+                if details["category"] == "PSI"
+            ]
+            analysis_columns = [
+                str(column) for column in df.columns if str(column) not in privacy_findings
+            ]
+            privacy_message = [
+                "Personal or sensitive information was detected and masked before "
+                "the data was made available to the AI."
+            ]
+            if pii_columns:
+                privacy_message.append(
+                    f"Personal information (PII): {', '.join(pii_columns)}."
+                )
+            if psi_columns:
+                privacy_message.append(
+                    f"Sensitive information (PSI): {', '.join(psi_columns)}."
+                )
+            privacy_message.append(
+                f"The remaining {len(analysis_columns)} non-sensitive column(s) retain "
+                "their original analytical values and can be used normally. Protected "
+                "columns can still support anonymous counts and grouping."
+            )
+            st.warning("\n\n".join(privacy_message))
+        else:
+            st.info(
+                "Privacy scan complete: no likely PII or PSI columns were detected. "
+                "All columns remain available for analysis."
+            )
         
         with st.expander("Preview Data"):
             st.subheader("Data Preview" + ":" + uploaded_file.name)
-            st.dataframe(df.head(10))
+            preview_df = df.drop(columns=list(privacy_findings), errors="ignore")
+            if privacy_findings:
+                st.caption(
+                    f"{len(privacy_findings)} protected PII/PSI column(s) are hidden "
+                    "from this preview to reduce clutter."
+                )
+            if preview_df.empty:
+                st.info("All uploaded columns were classified as protected.")
+            else:
+                st.dataframe(preview_df.head(10), use_container_width=True)
         
         with st.sidebar:
+            with st.expander("Privacy Protection", expanded=bool(privacy_findings)):
+                if privacy_findings:
+                    privacy_rows = [
+                        {
+                            "Column": column,
+                            "Type": details["category"],
+                            "Detected by": details["reason"],
+                        }
+                        for column, details in privacy_findings.items()
+                    ]
+                    st.dataframe(pd.DataFrame(privacy_rows), use_container_width=True, hide_index=True)
+                    st.caption(
+                        "Masked tokens preserve repeated-value groupings but not the original values. "
+                        "Analysis of protected columns is limited to anonymized counts and patterns."
+                    )
+                else:
+                    st.caption("No likely PII or PSI columns were detected.")
+
             with st.expander("Data Summary", expanded=True):
                 st.subheader("Dataset Overview")
                 st.metric("Memory Usage", f"{df.memory_usage(deep=True).sum() / (1024 * 1024):.2f} MB")
@@ -446,14 +531,25 @@ if st.session_state["df"] is not None:
     
     
     if user_input:
-        st.session_state.messages.append({"role": "user", "content": user_input})
+        protected_user_input = mask_sensitive_text(
+            user_input,
+            st.session_state.privacy_salt,
+        )
+        st.session_state.messages.append({"role": "user", "content": protected_user_input})
         
         with st.chat_message("user"):
-            st.markdown(user_input)
+            st.markdown(protected_user_input)
             
         df = st.session_state.df
         
         data_context = build_data_context(df)
+        privacy_context = (
+            ", ".join(
+                f"{column} ({details['category']})"
+                for column, details in st.session_state.privacy_findings.items()
+            )
+            or "No likely PII or PSI columns were detected."
+        )
 
         industry_context = selected_industry
         if selected_industry == "Auto-detect from data":
@@ -469,6 +565,12 @@ if st.session_state["df"] is not None:
             Dataset: {data_context}
             Industry: {industry_context}
             Business goal / audience: {business_context}
+            Privacy-protected columns: {privacy_context}
+
+            Values in privacy-protected columns have already been replaced with
+            irreversible, session-scoped tokens. Never attempt to identify, reconstruct,
+            or request the original values. Treat tokenized values only as anonymous
+            group labels and clearly state when masking limits an interpretation.
 
             If industry or goal were inferred rather than stated, mention the assumption
             briefly, but only when it changes how a result should be read.
@@ -615,7 +717,7 @@ if st.session_state["df"] is not None:
                     code_blocks = extract_python_code_blocks(reply)
                     if code_blocks:
                         displayed_table_ids = set()
-                        generated_st = GeneratedCodeStreamlitProxy(assistant_message, user_input, displayed_table_ids)
+                        generated_st = GeneratedCodeStreamlitProxy(assistant_message, protected_user_input, displayed_table_ids)
                         exec_globals = {
                             "df": df,
                             "pd": pd, 
@@ -642,7 +744,7 @@ if st.session_state["df"] is not None:
                                         continue
                                     if id(value) in displayed_table_ids:
                                         continue
-                                    display_generated_table(value, assistant_message, user_input, displayed_table_ids)
+                                    display_generated_table(value, assistant_message, protected_user_input, displayed_table_ids)
                                     
                                 #display any generated plots
                                 for fig_num in plt.get_fignums():
