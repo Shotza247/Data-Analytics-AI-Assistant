@@ -3,6 +3,7 @@
 Developed an end-to-end AI-powered analytics solution that transforms raw CSV data into actionable business insights through natural-language interaction. The application leverages OpenAI models to generate stakeholder-ready analyses, dynamic visualizations, filtered datasets, and data quality assessments, making advanced analytics accessible without requiring SQL or Python expertise.
 
 - [GitHub Repository](https://github.com/Shotza247/Data-Analytics-AI-Assistant)
+- [Mermaid Idea Digrams](https://mermaid.ai/app/projects/8db0f199-c162-4402-91a8-260688637404/diagrams/9dac37a4-7600-4f7d-adb9-30b525224fe9/share/invite/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudElEIjoiOWRhYzM3YTQtNzYwMC00ZjdkLWFkYjktMzBiNTI1MjI0ZmU5IiwiYWNjZXNzIjoiVmlldyIsInB1cnBvc2UiOiJzaGFyZS1pbnZpdGUiLCJpYXQiOjE3OTAyNjg2MDAsImV4cCI6MTc5Mjg2MDYwMH0.Av27ixyr3Mc4fYug-xJz65GzdOVnEofPeb7nS4evt9A?entryPoint=share-modal)
 
 ## MVP1 Status
 
