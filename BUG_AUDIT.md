@@ -201,3 +201,24 @@
   - local secrets check confirms OpenAI_API_Key exists and app falls back to gpt-4o
 - Follow-up:
   - If insights are still weak, add a second-pass execution workflow so pandas-computed results are sent back to the model for final interpretation
+
+## 2026-09-18 18:18 - Verify MVP2 provider and usage controls
+
+- Status: fixed
+- Symptom: The updated Streamlit app could not complete a browser smoke test on this machine
+- Scope: Local `.venv` runtime startup; provider and usage controls in `app.py`
+- Suspected cause: Windows Application Control blocked pandas' native `np_datetime` DLL before application code executed
+- Evidence:
+  - `streamlit run app.py --server.headless true --server.port 8502`: failed while importing pandas with `ImportError: DLL load failed while importing np_datetime: An Application Control policy has blocked this file`
+  - OpenAI SDK 1.40.6 exposes the `max_tokens` parameter used by the provider adapter
+- Changes:
+  - `app.py`: added OpenAI provider adapter, app/user API-key selection, per-session request count, output-token cap, CSV/context row caps, and token/cost estimates
+  - `README.md`: documented the MVP2 controls, limits, BYOK behavior, and future Hugging Face/Claude adapters
+- Verification:
+  - `.venv\Scripts\python.exe -m py_compile app.py`: passed
+  - `git diff --check`: passed; only the repository's existing LF-to-CRLF warning was reported
+  - Browser smoke test: blocked by local Windows Application Control before Streamlit could render the app
+- Follow-up:
+  - 2026-09-23 retest: pandas 2.2.2 and numpy 2.5.2 imported successfully; the Streamlit app rendered at `http://localhost:8502`, so the prior Application Control block is no longer reproducible
+  - `tests/test_mvp2_controls.py`: automated smoke test confirms the selected industry and business goal reach the system prompt, a provider response renders, and request/token usage is recorded without calling the live API
+  - The environment also has unrelated dbt/protobuf dependency conflicts reported by `pip check`; do not change them as part of this feature
