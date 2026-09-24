@@ -32,6 +32,10 @@ Data masking is the first implemented MVP3 privacy enhancement. The app detects 
 - Use the app's OpenAI key or provide a personal OpenAI key that remains in Streamlit session state and is not written to disk.
 - Detect likely PII and sensitive information in uploaded CSV columns, mask it before AI analysis, and alert the user about which columns were protected.
 
+## Development Workflow
+
+Upcoming enhancements will be planned, prioritized, and tracked in the repository's GitHub Project before implementation. Project items should identify the target milestone, expected user outcome, acceptance criteria, and relevant issue so product decisions and code changes remain synchronized.
+
 ## Showcase
 - [Notion](https://app.notion.com/p/Data-Analysis-Assistant-3bedc859ce3d80b18e49ee2b80b6e99f?v=377dc859ce3d80c094c0000cfa1eba82&source=copy_link)
 Add screenshots to `docs/showcase/` and replace the image filenames below with the final files.
@@ -125,10 +129,9 @@ Add screenshots to `docs/showcase/` and replace the image filenames below with t
 ## Usage
 
 1. Upload a CSV file in the sidebar.
-2. Expand **Preview Data** to inspect the first 10 rows.
-3. Open the sidebar's **Insights** tab to add optional business context.
-4. Open **Data Summary** to review dataset overview, privacy findings, data quality, and numeric statistics.
-5. Ask questions in the chat box.
+2. Open the main **Data Summary** tab to inspect the first 10 rows of non-sensitive columns and review privacy findings, data quality, and numeric statistics.
+3. Open the main **Insights** tab to add optional business context.
+4. Ask questions using the chat input beneath the business context controls.
 
 Example questions:
 
@@ -148,7 +151,7 @@ When a CSV is uploaded, the app scans column names and sampled values for likely
 
 The assistant can return hidden Python code blocks for chart and table generation. The app extracts and executes those hidden blocks with access to `df`, `pd`, `np`, `plt`, `sns`, and `st`. For visual requests, it renders and saves generated Matplotlib figures as chat images. For list-style, row, record, or filtered-result requests, it renders pandas DataFrames with `st.dataframe(...)` and stores them in the chat history. Generated tables are capped to the requested top/last rows, with a maximum of 10 rows displayed, so large datasets do not flood the interface. The user-facing chat shows business-oriented analysis, results, notes, tables, and charts, not the Python code.
 
-The prompt includes optional business context from the sidebar so chart explanations can be framed for the relevant industry, audience, and business goal instead of only describing visual patterns.
+The main view separates dataset inspection from analysis. **Data Summary** contains the privacy-safe preview and dataset diagnostics. **Insights** contains optional business context followed by the conversation, so chart explanations can be framed for the relevant industry, audience, and business goal instead of only describing visual patterns.
 
 Assistant text, warning notes, generated tables, and generated chart images are saved in Streamlit session state so they remain visible when the app reruns during the same session.
 

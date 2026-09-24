@@ -43,7 +43,7 @@ class MVP2ControlsSmokeTest(unittest.TestCase):
 
             app.session_state["df"] = pd.read_csv("sample_data.csv")
             app.radio[0].set_value("Use my own key")
-            app.selectbox[1].set_value("Financial Services")
+            app.selectbox(key="industry_select").set_value("Financial Services")
             app.text_area[0].set_value(
                 "Explain revenue and customer-risk drivers for an executive lending team"
             )
