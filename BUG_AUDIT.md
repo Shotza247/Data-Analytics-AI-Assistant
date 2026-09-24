@@ -222,3 +222,22 @@
   - 2026-09-23 retest: pandas 2.2.2 and numpy 2.5.2 imported successfully; the Streamlit app rendered at `http://localhost:8502`, so the prior Application Control block is no longer reproducible
   - `tests/test_mvp2_controls.py`: automated smoke test confirms the selected industry and business goal reach the system prompt, a provider response renders, and request/token usage is recorded without calling the live API
   - The environment also has unrelated dbt/protobuf dependency conflicts reported by `pip check`; do not change them as part of this feature
+
+## 2026-09-24 10:00 - OpenAI connection error during local query
+
+- Status: fixed
+- Symptom: The app displayed `OpenAI API Error: Connection error` and incorrectly suggested checking the API key and usage limits
+- Scope: Local Streamlit server network access and OpenAI exception handling
+- Suspected cause: The Streamlit server on port 8502 was launched inside a restricted Codex network sandbox, so the SDK request was blocked before reaching OpenAI
+- Evidence:
+  - Restricted `.venv` HTTPS probe: `WinError 10013`, socket access forbidden
+  - Normal-network HTTPS probe reached `api.openai.com` and returned the expected unauthenticated `401`, confirming DNS, TLS, and outbound connectivity work on the machine
+  - Official OpenAI documentation identifies `APIConnectionError` as a network, proxy, SSL, or firewall issue rather than an authentication or credit error
+- Changes:
+  - `app.py`: handle connection, authentication, rate-limit, and permission errors separately with accurate recovery guidance
+- Verification:
+  - Streamlit health endpoint at `http://localhost:8502/_stcore/health`: `ok`
+  - OpenAI Models API authenticated successfully and confirmed the configured `gpt-4o` model is visible
+  - Minimal request to the same Chat Completions endpoint used by the app succeeded with 11 total tokens
+- Follow-up:
+  - Keep API-backed local servers outside restricted execution sandboxes; use a normal browser for the network-enabled server because the Codex in-app browser cannot reach that host process

@@ -680,9 +680,24 @@ if st.session_state["df"] is not None:
                                 plt.close("all")
                     
                     st.session_state.messages.append(assistant_message)
+                except openai.APIConnectionError as e:
+                    st.error("OpenAI API connection failed before the request reached OpenAI.")
+                    st.info(
+                        "Check the network connection, proxy, SSL certificates, or firewall rules, "
+                        "then try again. Your API key and usage limits were not validated by this failed request."
+                    )
+                except openai.AuthenticationError as e:
+                    st.error(f"OpenAI authentication failed: {e}")
+                    st.info("Check that the selected API key is active and belongs to the intended OpenAI project.")
+                except openai.RateLimitError as e:
+                    st.error(f"OpenAI usage or rate limit reached: {e}")
+                    st.info("Wait before retrying, or review the project's rate limits, credits, and spend limits.")
+                except openai.PermissionDeniedError as e:
+                    st.error(f"OpenAI permission error: {e}")
+                    st.info("Confirm that this API key and project have access to the configured model.")
                 except openai.OpenAIError as e:
                     st.error(f"OpenAI API Error: {e}")
-                    st.info("Please check your OpenAI API key and usage limits, and try again.")
+                    st.info("Review the error details and try again.")
                 except Exception as e:
                     st.error(f"Error generating response: {e}")
                     #st.info("Please check your OpenAI API key and usage limits.")
