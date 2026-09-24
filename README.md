@@ -20,9 +20,9 @@ Data masking is the first implemented MVP3 privacy enhancement. The app detects 
 
 - Upload a CSV file from the sidebar.
 - Preview the first rows of the dataset without clutter from detected PII/PSI columns.
-- Review dataset dimensions, memory usage, data quality, numeric statistics, and privacy findings in the sidebar's **Data Summary** tab.
+- Review dataset dimensions, memory usage, data quality, numeric statistics, and privacy findings in the main **Data Summary** tab.
 - Add business context, such as industry and audience, to make insights more relevant.
-- Use the sidebar's **Insights** tab to configure the industry and audience context applied to AI interpretations.
+- Use the main **Insights** tab to configure business context and chat with the assistant.
 - Ask questions about the data in a chat interface.
 - Receive data analysis, result summaries, chart interpretation, business meaning, and recommended next steps in plain language.
 - Display requested rows, records, filtered results, and table-style answers as Streamlit dataframes instead of prose-only responses, capped to the requested top/last rows with a maximum of 10 displayed rows.
@@ -151,7 +151,7 @@ When a CSV is uploaded, the app scans column names and sampled values for likely
 
 The assistant can return hidden Python code blocks for chart and table generation. The app extracts and executes those hidden blocks with access to `df`, `pd`, `np`, `plt`, `sns`, and `st`. For visual requests, it renders and saves generated Matplotlib figures as chat images. For list-style, row, record, or filtered-result requests, it renders pandas DataFrames with `st.dataframe(...)` and stores them in the chat history. Generated tables are capped to the requested top/last rows, with a maximum of 10 rows displayed, so large datasets do not flood the interface. The user-facing chat shows business-oriented analysis, results, notes, tables, and charts, not the Python code.
 
-The main view separates dataset inspection from analysis. **Data Summary** contains the privacy-safe preview and dataset diagnostics. **Insights** places optional business context in a collapsible section, keeps responses in the central conversation area, and places the chat input beneath them. This preserves response space while still allowing chart explanations to be framed for the relevant industry, audience, and business goal.
+The main view separates dataset inspection from analysis. **Data Summary** contains the privacy-safe preview and dataset diagnostics. **Insights** places optional business context in a collapsible section, keeps responses in the central scrollable conversation area, and pins the chat input to the lower edge of the interface. This keeps the composer accessible regardless of response or chart size while still allowing chart explanations to be framed for the relevant industry, audience, and business goal.
 
 Assistant text, warning notes, generated tables, and generated chart images are saved in Streamlit session state so they remain visible when the app reruns during the same session.
 

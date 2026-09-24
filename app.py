@@ -25,6 +25,36 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+st.markdown(
+    """
+    <style>
+    [data-testid="stAppViewContainer"] .main .block-container {
+        padding-bottom: 7rem;
+    }
+
+    [data-testid="stAppViewContainer"] .main [data-testid="stChatInput"] {
+        position: fixed;
+        right: 3rem;
+        bottom: 1rem;
+        left: 24rem;
+        z-index: 1000;
+        padding: 0.5rem;
+        background: var(--background-color);
+        border-top: 1px solid rgba(128, 128, 128, 0.25);
+    }
+
+    @media (max-width: 768px) {
+        [data-testid="stAppViewContainer"] .main [data-testid="stChatInput"] {
+            right: 1rem;
+            left: 1rem;
+            bottom: 0.75rem;
+        }
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 OPENAI_MODEL = st.secrets.get("OpenAI_Model", "gpt-4o")
 PYTHON_CODE_BLOCK_RE = re.compile(r"```(?:python|py)\s*\n?(.*?)```", re.DOTALL | re.IGNORECASE)
 TABLE_DISPLAY_ROW_LIMIT = 10
