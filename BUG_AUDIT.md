@@ -241,3 +241,22 @@
   - Minimal request to the same Chat Completions endpoint used by the app succeeded with 11 total tokens
 - Follow-up:
   - Keep API-backed local servers outside restricted execution sandboxes; use a normal browser for the network-enabled server because the Codex in-app browser cannot reach that host process
+
+## 2026-09-24 - Verify privacy and main-workspace UI foundation
+
+- Status: passed
+- Goal: Establish the documented UI baseline for privacy-aware analysis before planning subsequent work in the GitHub Project
+- Scope: `app.py`, `privacy.py`, `README.md`, and focused privacy/MVP2 tests
+- Changes:
+  - Added deterministic session-scoped masking for detected PII and SPI values before preview, storage, prompt context, or generated analysis
+  - Added a persistent red privacy alert above the sidebar uploader and a short-lived successful-upload toast
+  - Moved preview and diagnostics into the main **Data Summary** tab
+  - Moved collapsible business context, conversation history, generated results, and chat input into the main **Insights** tab
+  - Fixed the solid chat composer to the bottom and made it recenter when the sidebar opens or closes
+  - Documented GitHub Projects as the planning and prioritization workflow for upcoming enhancements
+- Verification:
+  - `.venv\Scripts\python.exe -m unittest tests.test_privacy tests.test_mvp2_controls -v`: 4 tests passed
+  - `.venv\Scripts\python.exe -m py_compile app.py privacy.py`: passed
+  - Streamlit health endpoint at `http://localhost:8502/_stcore/health`: `ok`
+- Follow-up:
+  - Create or refine GitHub Project items before starting the next feature iteration

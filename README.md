@@ -20,6 +20,7 @@ Data masking is the first implemented MVP3 privacy enhancement. The app detects 
 ## What It Does
 
 - Upload a CSV file from the sidebar.
+- Receive a short-lived toast when a newly selected CSV loads successfully.
 - Preview the first rows of the dataset without clutter from detected PII/PSI columns.
 - Review dataset dimensions, memory usage, data quality, numeric statistics, and privacy findings in the main **Data Summary** tab.
 - Add business context, such as industry and audience, to make insights more relevant.
@@ -31,7 +32,7 @@ Data masking is the first implemented MVP3 privacy enhancement. The app detects 
 - Retain assistant replies, notes, generated tables, and generated chart images in the session chat history.
 - Control API usage with per-session request limits, response-token caps, CSV/context row limits, and token/cost estimates.
 - Use the app's OpenAI key or provide a personal OpenAI key that remains in Streamlit session state and is not written to disk.
-- Detect likely PII and sensitive information in uploaded CSV columns, mask it before AI analysis, and alert the user about which columns were protected.
+- Detect likely PII and sensitive personal information in uploaded CSV columns, mask it before AI analysis, and show a persistent red sidebar alert naming the protected columns.
 
 ## Development Workflow
 
@@ -134,6 +135,20 @@ Add screenshots to `docs/showcase/` and replace the image filenames below with t
 3. Open the main **Insights** tab and expand **Business Context** when you need to set an industry, audience, or goal.
 4. Review responses in the conversation area and continue with the chat input anchored beneath them.
 
+## Interface Layout
+
+### Sidebar
+
+The sidebar is reserved for global controls. After an upload it shows the privacy alert above the file uploader, followed by the uploader, provider selection, API-key mode, response-token control, and session usage. The alert lists only protected column names and categories; it never displays original sensitive values.
+
+### Data Summary
+
+The **Data Summary** tab contains the first 10 preview rows, excluding detected PII/SPI columns. It also provides the privacy-protection breakdown, dataset dimensions, memory usage, missing-value analysis, and numeric statistics.
+
+### Insights
+
+The **Insights** tab contains a collapsed **Business Context** section for industry and audience or goal settings. Conversation history, generated tables, charts, and stakeholder-ready interpretations appear below it. The solid chat composer stays fixed at the bottom, centers within the available workspace when the sidebar opens or closes, and leaves enough page padding to avoid covering results.
+
 Example questions:
 
 - What is the average total amount?
@@ -146,7 +161,7 @@ Example questions:
 
 ## How The App Works
 
-When a CSV is uploaded, the app scans column names and sampled values for likely personally identifiable information (PII) and sensitive personal information (PSI). Detected values are replaced with deterministic, session-scoped tokens before the dataframe is stored, summarized, or sent to the AI. The privacy alert names the protected columns without displaying their original values and confirms that the remaining non-sensitive columns retain their analytical values. Protected columns are hidden from the data preview to reduce clutter but can still be used for anonymous counts and grouping.
+When a CSV is uploaded, the app scans column names and sampled values for likely personally identifiable information (PII) and sensitive personal information (SPI/PSI). Detected values are replaced with deterministic, session-scoped tokens before the dataframe is stored, summarized, or sent to the AI. A short-lived toast confirms a successful new upload. The persistent red sidebar alert names the protected columns without displaying their original values and confirms that the remaining non-sensitive columns retain their analytical values. Protected columns are hidden from the data preview to reduce clutter but can still be used for anonymous counts and grouping.
 
 `app.py` stores only the privacy-protected dataframe and a compact data summary in Streamlit session state. For datasets with 100 rows or fewer, the full protected dataframe is included in the prompt context. Larger datasets use a compact structural sample and summaries to reduce token usage. Uploaded data is capped at 50,000 rows for the MVP2 workflow.
 
@@ -182,7 +197,7 @@ If your OpenAI project does not have access to the configured model, update `Ope
 
 - Do not commit `.streamlit/secrets.toml`.
 - Keep your OpenAI API key private.
-- Review the privacy alert after every upload. PII/PSI detection is heuristic and should support, not replace, an organization's privacy and compliance review.
+- Review the privacy alert after every upload. PII/SPI detection is heuristic and should support, not replace, an organization's privacy and compliance review.
 - Original values from detected sensitive columns are discarded after masking and are not sent to the AI. Non-sensitive columns remain available for normal analysis.
 - Review API usage to avoid unexpected costs.
 - Treat the in-app token and cost figures as estimates, and enforce account-level budgets in the provider dashboard as the final spending control.
