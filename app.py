@@ -38,9 +38,22 @@ st.markdown(
         bottom: 1rem;
         left: 24rem;
         z-index: 1000;
-        padding: 0.5rem;
-        background: var(--background-color);
-        border-top: 1px solid rgba(128, 128, 128, 0.25);
+        padding: 0.75rem;
+        background-color: #ffffff !important;
+        border: 1px solid #c7cbd1;
+        border-radius: 8px;
+        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.18);
+    }
+
+    [data-testid="stAppViewContainer"] .main [data-testid="stChatInput"] > div,
+    [data-testid="stAppViewContainer"] .main [data-testid="stChatInput"] textarea {
+        background-color: #ffffff !important;
+        color: #111827 !important;
+    }
+
+    [data-testid="stAppViewContainer"] .main [data-testid="stChatInput"] textarea::placeholder {
+        color: #5f6773 !important;
+        opacity: 1;
     }
 
     @media (max-width: 768px) {
