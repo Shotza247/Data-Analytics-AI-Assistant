@@ -352,27 +352,38 @@ with st.sidebar: #the 'with' creates a context where everything inside appears i
     )
 
     st.divider()
-    st.subheader("Business Context")
-    selected_industry = st.selectbox(
-        "Industry",
-        [
-            "Auto-detect from data",
-            "Retail / E-commerce",
-            "Financial Services",
-            "Healthcare",
-            "Education",
-            "Manufacturing",
-            "SaaS / Technology",
-            "Logistics / Supply Chain",
-            "Marketing / Advertising",
-            "Other",
-        ],
-    )
-    business_goal = st.text_area(
-        "Business goal or audience",
-        placeholder="Example: Explain revenue drivers for store managers",
-        height=90,
-    )
+    data_summary_tab, insights_tab = st.tabs(["Data Summary", "Insights"])
+
+    with data_summary_tab:
+        data_summary_container = st.container()
+        if uploaded_file is None:
+            st.caption("Upload a CSV to view its quality, statistics, and privacy summary.")
+
+    with insights_tab:
+        st.subheader("Business Context")
+        selected_industry = st.selectbox(
+            "Industry",
+            [
+                "Auto-detect from data",
+                "Retail / E-commerce",
+                "Financial Services",
+                "Healthcare",
+                "Education",
+                "Manufacturing",
+                "SaaS / Technology",
+                "Logistics / Supply Chain",
+                "Marketing / Advertising",
+                "Other",
+            ],
+        )
+        business_goal = st.text_area(
+            "Business goal or audience",
+            placeholder="Example: Explain revenue drivers for store managers",
+            height=90,
+        )
+        st.caption(
+            "This context guides the business interpretation shown in the main chat."
+        )
     
 if uploaded_file is not None: # move entire code inside the with block up
     try:
@@ -452,7 +463,7 @@ if uploaded_file is not None: # move entire code inside the with block up
             else:
                 st.dataframe(preview_df.head(10), use_container_width=True)
         
-        with st.sidebar:
+        with data_summary_container:
             with st.expander("Privacy Protection", expanded=bool(privacy_findings)):
                 if privacy_findings:
                     privacy_rows = [
@@ -471,33 +482,32 @@ if uploaded_file is not None: # move entire code inside the with block up
                 else:
                     st.caption("No likely PII or PSI columns were detected.")
 
-            with st.expander("Data Summary", expanded=True):
-                st.subheader("Dataset Overview")
-                st.metric("Memory Usage", f"{df.memory_usage(deep=True).sum() / (1024 * 1024):.2f} MB")
-                st.metric("Rows", len(df))
-                st.metric("Columns", len(df.columns))
+            st.subheader("Dataset Overview")
+            st.metric("Memory Usage", f"{df.memory_usage(deep=True).sum() / (1024 * 1024):.2f} MB")
+            st.metric("Rows", len(df))
+            st.metric("Columns", len(df.columns))
 
-                st.divider()
-                st.subheader("Data Quality")
-                null_summary = (
-                    df.isnull()
-                    .sum()
-                    .reset_index()
-                    .rename(columns={"index": "Column", 0: "Missing Values"})
+            st.divider()
+            st.subheader("Data Quality")
+            null_summary = (
+                df.isnull()
+                .sum()
+                .reset_index()
+                .rename(columns={"index": "Column", 0: "Missing Values"})
+            )
+            null_summary["Missing %"] = 0 if len(df) == 0 else (null_summary["Missing Values"] / len(df) * 100).round(2)
+            st.dataframe(null_summary, use_container_width=True, hide_index=True)
+
+            st.divider()
+            st.subheader("Numeric Statistics")
+            numeric_df = df.select_dtypes(include="number")
+            if numeric_df.empty:
+                st.caption("No numeric columns found.")
+            else:
+                numeric_summary = numeric_df.describe().T[["min", "max", "mean", "50%"]].rename(
+                    columns={"min": "Min", "max": "Max", "mean": "Mean", "50%": "Median"}
                 )
-                null_summary["Missing %"] = 0 if len(df) == 0 else (null_summary["Missing Values"] / len(df) * 100).round(2)
-                st.dataframe(null_summary, use_container_width=True, hide_index=True)
-
-                st.divider()
-                st.subheader("Numeric Statistics")
-                numeric_df = df.select_dtypes(include="number")
-                if numeric_df.empty:
-                    st.caption("No numeric columns found.")
-                else:
-                    numeric_summary = numeric_df.describe().T[["min", "max", "mean", "50%"]].rename(
-                        columns={"min": "Min", "max": "Max", "mean": "Mean", "50%": "Median"}
-                    )
-                    st.dataframe(numeric_summary.round(2), use_container_width=True)
+                st.dataframe(numeric_summary.round(2), use_container_width=True)
                     
                 
             #st.markdown("Count Columns: " + str(len(df.columns)))

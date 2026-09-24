@@ -10,14 +10,19 @@ This repository currently represents **MVP1** of the CSV Data Analytics AI Assis
 
 ## MVP2 In Progress
 
-MVP2 development now includes business-context guidance, provider and usage controls, and a privacy-protection layer. OpenAI is available through either the app-owned key or a session-only user key, with request, output-token, upload-row, and context-row limits. Hugging Face and Claude remain planned provider adapters.
+MVP2 development includes business-context guidance and provider and usage controls. OpenAI is available through either the app-owned key or a session-only user key, with request, output-token, upload-row, and context-row limits. Hugging Face and Claude remain planned provider adapters.
+
+## MVP3 Foundation
+
+Data masking is the first implemented MVP3 privacy enhancement. The app detects likely personally identifiable information (PII) and sensitive personal information (SPI/PSI), masks values before AI access, alerts the user about protected columns, and hides those columns from the preview. Masked identifiers remain available only for privacy-preserving operations such as anonymous counts, grouping, and duplicate-pattern analysis. Future MVP3 work can add configurable policies, role-based access, audit events, and organization-specific detection rules.
 
 ## What It Does
 
 - Upload a CSV file from the sidebar.
 - Preview the first rows of the dataset without clutter from detected PII/PSI columns.
-- Review dataset dimensions, memory usage, data quality, and numeric summary statistics in a stacked sidebar layout.
+- Review dataset dimensions, memory usage, data quality, numeric statistics, and privacy findings in the sidebar's **Data Summary** tab.
 - Add business context, such as industry and audience, to make insights more relevant.
+- Use the sidebar's **Insights** tab to configure the industry and audience context applied to AI interpretations.
 - Ask questions about the data in a chat interface.
 - Receive data analysis, result summaries, chart interpretation, business meaning, and recommended next steps in plain language.
 - Display requested rows, records, filtered results, and table-style answers as Streamlit dataframes instead of prose-only responses, capped to the requested top/last rows with a maximum of 10 displayed rows.
@@ -121,8 +126,8 @@ Add screenshots to `docs/showcase/` and replace the image filenames below with t
 
 1. Upload a CSV file in the sidebar.
 2. Expand **Preview Data** to inspect the first 10 rows.
-3. Add optional **Business Context** in the sidebar.
-4. Expand **Data Summary** in the sidebar to review dataset overview, data quality, and numeric statistics.
+3. Open the sidebar's **Insights** tab to add optional business context.
+4. Open **Data Summary** to review dataset overview, privacy findings, data quality, and numeric statistics.
 5. Ask questions in the chat box.
 
 Example questions:
