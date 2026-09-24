@@ -1,9 +1,8 @@
-# AI Data Analytics Assistant | Streamlit + OpenAI
+# 📊 AI Data Analytics Assistant | Streamlit + OpenAI
 
-An end-to-end AI-powered analytics application that transforms raw CSV data into actionable business insights through natural-language interaction. It uses OpenAI models to generate stakeholder-ready analysis, dynamic visualizations, filtered datasets, and data-quality assessments without requiring users to write SQL or Python.
+Developed an end-to-end AI-powered analytics solution that transforms raw CSV data into actionable business insights through natural-language interaction. The application leverages OpenAI models to generate stakeholder-ready analyses, dynamic visualizations, filtered datasets, and data quality assessments, making advanced analytics accessible without requiring SQL or Python expertise.
 
 - [GitHub Repository](https://github.com/Shotza247/Data-Analytics-AI-Assistant)
-- [Notion](https://app.notion.com/p/Data-Analysis-Assistant-3bedc859ce3d80b18e49ee2b80b6e99f?v=377dc859ce3d80c094c0000cfa1eba82&source=copy_link)
 
 ## MVP1 Status
 
@@ -28,7 +27,7 @@ The `codex/mvp2-business-context` branch now begins MVP2 with provider and usage
 - Use the app's OpenAI key or provide a personal OpenAI key that remains in Streamlit session state and is not written to disk.
 
 ## Showcase
-
+- [Notion](https://app.notion.com/p/Data-Analysis-Assistant-3bedc859ce3d80b18e49ee2b80b6e99f?v=377dc859ce3d80c094c0000cfa1eba82&source=copy_link)
 Add screenshots to `docs/showcase/` and replace the image filenames below with the final files.
 
 | App UI | Graphs And Insights |
