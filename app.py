@@ -18,16 +18,19 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-#We will inistialize the OpenAI client using the API key
-client = openai.OpenAI(api_key=st.secrets["OpenAI_API_Key"])
 OPENAI_MODEL = st.secrets.get("OpenAI_Model", "gpt-4o")
 PYTHON_CODE_BLOCK_RE = re.compile(r"```(?:python|py)\s*\n?(.*?)```", re.DOTALL | re.IGNORECASE)
 TABLE_DISPLAY_ROW_LIMIT = 10
-MAX_FULL_DATASET_ROWS = 1000
+MAX_UPLOAD_ROWS = 50000
+MAX_CONTEXT_ROWS = 100
 MAX_RESPONSE_TOKENS = 500
+MAX_REQUESTS_PER_SESSION = 10
 MAX_CONTEXT_CATEGORICAL_COLUMNS = 8
 MAX_CONTEXT_CATEGORY_VALUES = 5
 MAX_CONTEXT_CORRELATION_PAIRS = 8
+MODEL_PRICING_PER_MILLION_TOKENS = {
+    "gpt-4o": {"input": 2.50, "output": 10.00},
+}
 LAST_ROWS_RE = re.compile(r"\b(last|bottom|tail|ending|end|most recent|latest)\b", re.IGNORECASE)
 ROW_LIMIT_RE = re.compile(
     r"\b(?:top|first|head|last|bottom|tail|show)\s+(\d+|one|two|three|four|five|six|seven|eight|nine|ten)\b",
@@ -62,6 +65,54 @@ if "data_summary" not in st.session_state:
         "summary_stats": None
     }
 
+if "request_count" not in st.session_state:
+    st.session_state.request_count = 0
+
+if "input_tokens_used" not in st.session_state:
+    st.session_state.input_tokens_used = 0
+
+if "output_tokens_used" not in st.session_state:
+    st.session_state.output_tokens_used = 0
+
+
+class OpenAIProvider:
+    name = "OpenAI"
+
+    def __init__(self, api_key, model):
+        self.client = openai.OpenAI(api_key=api_key)
+        self.model = model
+
+    def generate(self, messages, max_output_tokens):
+        return self.client.chat.completions.create(
+            model=self.model,
+            messages=messages,
+            temperature=0.1,
+            max_tokens=max_output_tokens,
+        )
+
+
+def estimate_tokens(text):
+    """Return a deliberately simple pre-request estimate for warning purposes."""
+    return max(1, (len(text or "") + 3) // 4)
+
+
+def estimate_cost(model, input_tokens, output_tokens):
+    pricing = MODEL_PRICING_PER_MILLION_TOKENS.get(model)
+    if not pricing:
+        return None
+    return (
+        input_tokens * pricing["input"]
+        + output_tokens * pricing["output"]
+    ) / 1_000_000
+
+
+def record_response_usage(response):
+    usage = getattr(response, "usage", None)
+    if not usage:
+        return
+    st.session_state.input_tokens_used += getattr(usage, "prompt_tokens", 0) or 0
+    st.session_state.output_tokens_used += getattr(usage, "completion_tokens", 0) or 0
+
 
 def requested_table_limit(user_query):
     match = ROW_LIMIT_RE.search(user_query or "")
@@ -84,7 +135,7 @@ def build_data_context(df):
         f"Data types: {df.dtypes.astype(str).to_dict()}",
     ]
 
-    if len(df) <= MAX_FULL_DATASET_ROWS:
+    if len(df) <= MAX_CONTEXT_ROWS:
         context_sections.append(f"Full dataset:\n{df.to_string(index=False)}")
     else:
         context_sections.append(
@@ -257,6 +308,37 @@ with st.sidebar: #the 'with' creates a context where everything inside appears i
     st.header("Upload your CSV file")
     uploaded_file = st.sidebar.file_uploader("Choose a CSV file", type="csv")
     st.divider()
+    st.subheader("AI Provider")
+    provider_name = st.selectbox("Provider", ["OpenAI"])
+    credential_source = st.radio(
+        "API key",
+        ["Use app key", "Use my own key"],
+        help="Your own key is kept only in this browser session and is not written to disk.",
+    )
+    user_api_key = ""
+    if credential_source == "Use my own key":
+        user_api_key = st.text_input(
+            "OpenAI API key",
+            type="password",
+            placeholder="sk-...",
+        )
+
+    selected_output_tokens = st.slider(
+        "Maximum response tokens",
+        min_value=100,
+        max_value=MAX_RESPONSE_TOKENS,
+        value=MAX_RESPONSE_TOKENS,
+        step=50,
+        help="This is a hard output cap for each request.",
+    )
+    remaining_requests = max(0, MAX_REQUESTS_PER_SESSION - st.session_state.request_count)
+    st.progress(st.session_state.request_count / MAX_REQUESTS_PER_SESSION)
+    st.caption(
+        f"{remaining_requests} of {MAX_REQUESTS_PER_SESSION} requests remaining · "
+        f"{st.session_state.input_tokens_used + st.session_state.output_tokens_used:,} tokens used"
+    )
+
+    st.divider()
     st.subheader("Business Context")
     selected_industry = st.selectbox(
         "Industry",
@@ -281,7 +363,14 @@ with st.sidebar: #the 'with' creates a context where everything inside appears i
     
 if uploaded_file is not None: # move entire code inside the with block up
     try:
-        df = pd.read_csv(uploaded_file)
+        df = pd.read_csv(uploaded_file, nrows=MAX_UPLOAD_ROWS + 1)
+        upload_was_limited = len(df) > MAX_UPLOAD_ROWS
+        if upload_was_limited:
+            df = df.head(MAX_UPLOAD_ROWS).copy()
+            st.warning(
+                f"This file exceeds the {MAX_UPLOAD_ROWS:,}-row MVP2 limit. "
+                f"Only the first {MAX_UPLOAD_ROWS:,} rows were loaded."
+            )
         st.session_state["df"] = df
         st.session_state.data_summary = {
         "shape": df.shape,
@@ -347,7 +436,13 @@ if st.session_state["df"] is not None:
         render_saved_message(msg)
             
     #chat input box
-    user_input = st.chat_input("Ask me anything about your CSV data...")
+    request_limit_reached = st.session_state.request_count >= MAX_REQUESTS_PER_SESSION
+    if request_limit_reached:
+        st.warning("This session has reached its request limit.")
+    user_input = st.chat_input(
+        "Ask me anything about your CSV data...",
+        disabled=request_limit_reached,
+    )
     
     
     if user_input:
@@ -465,20 +560,52 @@ if st.session_state["df"] is not None:
             message_placeholder = st.empty()
             with st.spinner("Analyzing data and generating response..."):
                 try:
+                    if provider_name != "OpenAI":
+                        raise ValueError(f"Provider '{provider_name}' is not supported yet.")
+
+                    if credential_source == "Use my own key":
+                        api_key = user_api_key.strip()
+                    else:
+                        api_key = st.secrets.get("OpenAI_API_Key", "").strip()
+
+                    if not api_key:
+                        raise ValueError(
+                            "No OpenAI API key is available. Add the app key to Streamlit secrets "
+                            "or choose 'Use my own key'."
+                        )
+
                     chat_history = [
                         {"role": msg["role"], "content": msg["content"]}
                         for msg in st.session_state.messages
                         if msg.get("content")
                     ]
-                    response = client.chat.completions.create(
-                        model=OPENAI_MODEL,
-                        messages=[
-                            {"role": "system", "content": system_prompt},
-                            *chat_history
-                        ],
-                        temperature=0.1, #0 more focused answers, 1->2 more creative/random
-                        max_tokens=MAX_RESPONSE_TOKENS
+                    request_messages = [
+                        {"role": "system", "content": system_prompt},
+                        *chat_history,
+                    ]
+                    estimated_input_tokens = estimate_tokens(
+                        "\n".join(message["content"] for message in request_messages)
                     )
+                    estimated_max_cost = estimate_cost(
+                        OPENAI_MODEL,
+                        estimated_input_tokens,
+                        selected_output_tokens,
+                    )
+                    estimate_text = (
+                        f"Estimated request size: about {estimated_input_tokens:,} input tokens "
+                        f"and up to {selected_output_tokens:,} output tokens"
+                    )
+                    if estimated_max_cost is not None:
+                        estimate_text += f" (up to approximately ${estimated_max_cost:.4f})"
+                    st.caption(estimate_text + ". Actual usage may differ.")
+
+                    provider = OpenAIProvider(api_key=api_key, model=OPENAI_MODEL)
+                    response = provider.generate(
+                        messages=request_messages,
+                        max_output_tokens=selected_output_tokens,
+                    )
+                    st.session_state.request_count += 1
+                    record_response_usage(response)
                     reply = response.choices[0].message.content
                     display_reply = hide_python_code_blocks(reply)
                     message_placeholder.markdown(display_reply)

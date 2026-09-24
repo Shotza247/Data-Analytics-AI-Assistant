@@ -2,10 +2,15 @@
 
 Developed an end-to-end AI-powered analytics solution that transforms raw CSV data into actionable business insights through natural-language interaction. The application leverages OpenAI models to generate stakeholder-ready analyses, dynamic visualizations, filtered datasets, and data quality assessments, making advanced analytics accessible without requiring SQL or Python expertise.
 
+- [GitHub Repository](https://github.com/Shotza247/Data-Analytics-AI-Assistant)
 
 ## MVP1 Status
 
 This repository currently represents **MVP1** of the CSV Data Analytics AI Assistant. MVP1 focuses on a single-user Streamlit workflow for uploading one CSV, asking natural-language questions, receiving stakeholder-friendly business insights/results, viewing requested rows/tables, and viewing generated charts without exposing the Python code used behind the scenes.
+
+## MVP2 In Progress
+
+The `codex/mvp2-business-context` branch now begins MVP2 with provider and usage controls. OpenAI is available through either the app-owned key or a session-only user key, with request, output-token, upload-row, and context-row limits. Hugging Face and Claude remain planned provider adapters.
 
 ## What It Does
 
@@ -18,6 +23,8 @@ This repository currently represents **MVP1** of the CSV Data Analytics AI Assis
 - Display requested rows, records, filtered results, and table-style answers as Streamlit dataframes instead of prose-only responses, capped to the requested top/last rows with a maximum of 10 displayed rows.
 - Generate charts directly in the Streamlit app without showing the underlying Python code.
 - Retain assistant replies, notes, generated tables, and generated chart images in the session chat history.
+- Control API usage with per-session request limits, response-token caps, CSV/context row limits, and token/cost estimates.
+- Use the app's OpenAI key or provide a personal OpenAI key that remains in Streamlit session state and is not written to disk.
 
 ## Showcase
 - [Notion](https://app.notion.com/p/Data-Analysis-Assistant-3bedc859ce3d80b18e49ee2b80b6e99f?v=377dc859ce3d80c094c0000cfa1eba82&source=copy_link)
@@ -41,6 +48,8 @@ Add screenshots to `docs/showcase/` and replace the image filenames below with t
 .
 +-- app.py
 +-- sample_data.csv
++-- tests/
+|   +-- test_mvp2_controls.py
 +-- .streamlit/
 |   +-- secrets.toml
 +-- .gitignore
@@ -62,8 +71,8 @@ Add screenshots to `docs/showcase/` and replace the image filenames below with t
 1. Clone the repository:
 
    ```bash
-   git clone <repository-url>
-   cd Streamlit-Data-Analytics-AI-Assistant-1
+   git clone https://github.com/Shotza247/Data-Analytics-AI-Assistant.git
+   cd Data-Analytics-AI-Assistant
    ```
 
 2. Create and activate a virtual environment:
@@ -125,7 +134,7 @@ Example questions:
 
 ## How The App Works
 
-When a CSV is uploaded, `app.py` stores the dataframe and a compact data summary in Streamlit session state. For smaller datasets, the full dataframe is included in the prompt context. For datasets with more than 100 rows, the app sends a summarized context instead to reduce token usage.
+When a CSV is uploaded, `app.py` stores the dataframe and a compact data summary in Streamlit session state. For datasets with 100 rows or fewer, the full dataframe is included in the prompt context. Larger datasets use a compact structural sample and summaries to reduce token usage. Uploaded data is capped at 50,000 rows for the MVP2 workflow.
 
 The assistant can return hidden Python code blocks for chart and table generation. The app extracts and executes those hidden blocks with access to `df`, `pd`, `np`, `plt`, `sns`, and `st`. For visual requests, it renders and saves generated Matplotlib figures as chat images. For list-style, row, record, or filtered-result requests, it renders pandas DataFrames with `st.dataframe(...)` and stores them in the chat history. Generated tables are capped to the requested top/last rows, with a maximum of 10 rows displayed, so large datasets do not flood the interface. The user-facing chat shows business-oriented analysis, results, notes, tables, and charts, not the Python code.
 
@@ -145,9 +154,13 @@ response = client.chat.completions.create(
         {"role": "user", "content": user_input}
     ],
     temperature=0.1,
-    max_tokens=500
+    max_tokens=selected_output_tokens
 )
 ```
+
+The sidebar exposes the active MVP2 usage controls: a maximum of 10 successful requests per session, a response-token cap of 500, a 50,000-row upload cap, a 100-row full-context cap, and a pre-request token/cost estimate. The displayed cost is an estimate based on the configured model and may differ from provider billing.
+
+Users can choose **Use app key** or **Use my own key**. A user-owned key is held only in Streamlit session state for the active browser session. OpenAI is the first implemented provider; the provider class keeps Hugging Face and Claude integrations as future adapters without requiring LangChain.
 
 If your OpenAI project does not have access to the configured model, update `OpenAI_Model` in `.streamlit/secrets.toml` to a model available for your project.
 
@@ -156,6 +169,7 @@ If your OpenAI project does not have access to the configured model, update `Ope
 - Do not commit `.streamlit/secrets.toml`.
 - Keep your OpenAI API key private.
 - Review API usage to avoid unexpected costs.
+- Treat the in-app token and cost figures as estimates, and enforce account-level budgets in the provider dashboard as the final spending control.
 - Be careful with untrusted prompts or files. The app executes hidden Python code returned by the model for analysis and visualizations, so only run it in an environment where you are comfortable testing generated code.
 
 ## Troubleshooting
