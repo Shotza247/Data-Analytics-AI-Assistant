@@ -359,31 +359,31 @@ with st.sidebar: #the 'with' creates a context where everything inside appears i
 data_summary_tab, insights_tab = st.tabs(["Data Summary", "Insights"])
 
 with insights_tab:
-    st.subheader("Business Context")
-    selected_industry = st.selectbox(
-        "Industry",
-        [
-            "Auto-detect from data",
-            "Retail / E-commerce",
-            "Financial Services",
-            "Healthcare",
-            "Education",
-            "Manufacturing",
-            "SaaS / Technology",
-            "Logistics / Supply Chain",
-            "Marketing / Advertising",
-            "Other",
-        ],
-        key="industry_select",
-    )
-    business_goal = st.text_area(
-        "Business goal or audience",
-        placeholder="Example: Explain revenue drivers for store managers",
-        height=90,
-    )
-    st.caption(
-        "This context guides the business interpretation shown below."
-    )
+    with st.expander("Business Context", expanded=False):
+        selected_industry = st.selectbox(
+            "Industry",
+            [
+                "Auto-detect from data",
+                "Retail / E-commerce",
+                "Financial Services",
+                "Healthcare",
+                "Education",
+                "Manufacturing",
+                "SaaS / Technology",
+                "Logistics / Supply Chain",
+                "Marketing / Advertising",
+                "Other",
+            ],
+            key="industry_select",
+        )
+        business_goal = st.text_area(
+            "Business goal or audience",
+            placeholder="Example: Explain revenue drivers for store managers",
+            height=90,
+        )
+        st.caption(
+            "This context guides the business interpretation shown below."
+        )
     
 if uploaded_file is not None: # move entire code inside the with block up
     try:
@@ -799,6 +799,7 @@ with insights_tab:
                                     plt.close("all")
                     
                         st.session_state.messages.append(assistant_message)
+                        st.rerun()
                     except openai.APIConnectionError as e:
                         st.error("OpenAI API connection failed before the request reached OpenAI.")
                         st.info(
