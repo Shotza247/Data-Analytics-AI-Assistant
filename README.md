@@ -3,15 +3,16 @@
 Developed an end-to-end AI-powered analytics solution that transforms raw CSV data into actionable business insights through natural-language interaction. The application leverages OpenAI models to generate stakeholder-ready analyses, dynamic visualizations, filtered datasets, and data quality assessments, making advanced analytics accessible without requiring SQL or Python expertise.
 
 - [GitHub Repository](https://github.com/Shotza247/Data-Analytics-AI-Assistant)
-- [Mermaid Idea Digrams](https://mermaid.ai/app/projects/8db0f199-c162-4402-91a8-260688637404/diagrams/9dac37a4-7600-4f7d-adb9-30b525224fe9/share/invite/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudElEIjoiOWRhYzM3YTQtNzYwMC00ZjdkLWFkYjktMzBiNTI1MjI0ZmU5IiwiYWNjZXNzIjoiVmlldyIsInB1cnBvc2UiOiJzaGFyZS1pbnZpdGUiLCJpYXQiOjE3OTAyNjg2MDAsImV4cCI6MTc5Mjg2MDYwMH0.Av27ixyr3Mc4fYug-xJz65GzdOVnEofPeb7nS4evt9A?entryPoint=share-modal)
+- [Shared Mermaid Workspace](https://mermaid.ai/app/projects/8db0f199-c162-4402-91a8-260688637404/diagrams/9dac37a4-7600-4f7d-adb9-30b525224fe9/share/invite/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudElEIjoiOWRhYzM3YTQtNzYwMC00ZjdkLWFkYjktMzBiNTI1MjI0ZmU5IiwiYWNjZXNzIjoiVmlldyIsInB1cnBvc2UiOiJzaGFyZS1pbnZpdGUiLCJpYXQiOjE3OTAyNjg2MDAsImV4cCI6MTc5Mjg2MDYwMH0.Av27ixyr3Mc4fYug-xJz65GzdOVnEofPeb7nS4evt9A?entryPoint=share-modal)
+- [Versioned MVP2 Architecture Diagrams](docs/mvp2-architecture.md)
 
 ## MVP1 Status
 
 This repository currently represents **MVP1** of the CSV Data Analytics AI Assistant. MVP1 focuses on a single-user Streamlit workflow for uploading one CSV, asking natural-language questions, receiving stakeholder-friendly business insights/results, viewing requested rows/tables, and viewing generated charts without exposing the Python code used behind the scenes.
 
-## MVP2 In Progress
+## MVP2 Closeout
 
-MVP2 development includes business-context guidance and provider and usage controls. OpenAI is available through either the app-owned key or a session-only user key, with request, output-token, upload-row, and context-row limits. Hugging Face and Claude remain planned provider adapters.
+MVP2 includes business-context guidance, usage controls, two-pass grounded interpretation, and approval-gated PDF reports for non-technical stakeholders. Conversation outputs remain only in Streamlit session state; persistent memory and external caching are not required. Hugging Face and Claude remain planned provider adapters. PPTX export is the remaining additional acceptance criterion.
 
 ## MVP3 Foundation
 
@@ -33,10 +34,14 @@ Data masking is the first implemented MVP3 privacy enhancement. The app detects 
 - Control API usage with per-session request limits, response-token caps, CSV/context row limits, and token/cost estimates.
 - Use the app's OpenAI key or provide a personal OpenAI key that remains in Streamlit session state and is not written to disk.
 - Detect likely PII and sensitive personal information in uploaded CSV columns, mask it before AI analysis, and show a persistent red sidebar alert naming the protected columns.
+- Ask for explicit approval before sending sanitized session outputs to the PDF report service.
+- Download a stakeholder-ready PDF containing questions, grounded interpretations, charts, capped result tables, caveats, and a session-usage summary.
 
 ## Development Workflow
 
 Upcoming enhancements will be planned, prioritized, and tracked in the repository's GitHub Project before implementation. Project items should identify the target milestone, expected user outcome, acceptance criteria, and relevant issue so product decisions and code changes remain synchronized.
+
+The versioned Mermaid source for the current MVP2 workflow is maintained in [docs/mvp2-architecture.md](docs/mvp2-architecture.md). The shared Mermaid workspace remains available for collaborative editing, while the repository copy preserves the reviewed architecture alongside the code.
 
 ## Showcase
 - [Notion](https://app.notion.com/p/Data-Analysis-Assistant-3bedc859ce3d80b18e49ee2b80b6e99f?v=377dc859ce3d80c094c0000cfa1eba82&source=copy_link)
@@ -53,16 +58,22 @@ Add screenshots to `docs/showcase/` and replace the image filenames below with t
 - [pandas](https://pandas.pydata.org/) for data loading and analysis
 - [OpenAI Python SDK](https://github.com/openai/openai-python) for AI responses
 - [Matplotlib](https://matplotlib.org/) and [Seaborn](https://seaborn.pydata.org/) for visualizations
+- [fpdf2](https://py-pdf.github.io/fpdf2/) for PDF generation
+- [Model Context Protocol](https://modelcontextprotocol.io/) Streamable HTTP for the deployable report tool
 
 ## Project Structure
 
 ```text
 .
 +-- app.py
++-- pdf_builder.py
++-- pdf_mcp_server.py
++-- pdf_tool_client.py
 +-- privacy.py
 +-- sample_data.csv
 +-- tests/
 |   +-- test_mvp2_controls.py
+|   +-- test_pdf_builder.py
 |   +-- test_privacy.py
 +-- .streamlit/
 |   +-- secrets.toml
@@ -114,15 +125,24 @@ Add screenshots to `docs/showcase/` and replace the image filenames below with t
    ```toml
    OpenAI_API_Key = "your-api-key-here"
    OpenAI_Model = "gpt-4o"
+   PDF_MCP_URL = "http://localhost:8000/mcp"
    ```
 
-5. Run the app:
+5. Start the PDF tool service in a separate terminal:
+
+   ```bash
+   python pdf_mcp_server.py
+   ```
+
+   Local development uses `http://localhost:8000/mcp`. For online processing, deploy the service behind HTTPS and set `PDF_MCP_URL` to its `https://.../mcp` endpoint.
+
+6. Run the app:
 
    ```bash
    streamlit run app.py
    ```
 
-6. Open the local Streamlit URL shown in your terminal, usually:
+7. Open the local Streamlit URL shown in your terminal, usually:
 
    ```text
    http://localhost:8501
@@ -134,6 +154,7 @@ Add screenshots to `docs/showcase/` and replace the image filenames below with t
 2. Open the main **Data Summary** tab to inspect the first 10 rows of non-sensitive columns and review privacy findings, data quality, and numeric statistics.
 3. Open the main **Insights** tab and expand **Business Context** when you need to set an industry, audience, or goal.
 4. Review responses in the conversation area and continue with the chat input anchored beneath them.
+5. Ask for a PDF report, review the disclosure, and approve the export before the report service is called.
 
 ## Interface Layout
 
@@ -169,7 +190,13 @@ The assistant can return hidden Python code blocks for chart and table generatio
 
 The main view separates dataset inspection from analysis. **Data Summary** contains the privacy-safe preview and dataset diagnostics. **Insights** places optional business context in a collapsible section, keeps responses in the central scrollable conversation area, and pins the chat input to the lower edge of the interface on a solid, high-contrast surface. The composer centers itself within the available workspace as the sidebar opens or closes, keeping it visible regardless of response, chart, or viewport size while still allowing chart explanations to be framed for the relevant industry, audience, and business goal.
 
-Assistant text, warning notes, generated tables, and generated chart images are saved in Streamlit session state so they remain visible when the app reruns during the same session.
+Assistant text, warning notes, generated tables, and generated chart images are saved in Streamlit session state so they remain visible when the app reruns during the same session. MVP2 does not persist chat memory or analysis data outside that session.
+
+### Grounded Interpretation And PDF Export
+
+After hidden analysis code runs, the app performs a second interpretation pass using only executed tables, scalar results, and chart metadata. It produces a concise explanation that answers the question, connects the evidence to the selected industry and business goal, and recommends a practical optimization direction without exposing code.
+
+When a user asks for a PDF, the model calls a typed `request_pdf_report` function with a title and business focus. The app displays an approval prompt before contacting the PDF MCP service. Approval sends only session questions, grounded interpretations, generated chart images, capped result tables, caveats, business context, aggregate session usage, and privacy-scan metadata. The report opens with structured **Report Overview**, **Privacy Protection**, and **Session Usage** sections. Privacy metadata includes dataset dimensions, protected and analytical column counts, detected PII/SPI column names, categories, and detection methods, but never original sensitive values. The usage section reports requests used and remaining, input and output tokens, total tokens, and an estimated cumulative token cost for the configured model. The uploaded CSV is never sent to the PDF service, and protected columns are removed from analysis result tables. The service returns the PDF over MCP Streamable HTTP for download in Streamlit.
 
 ## Configuration
 
@@ -187,7 +214,9 @@ response = client.chat.completions.create(
 )
 ```
 
-The sidebar exposes the active MVP2 usage controls: a maximum of 10 successful requests per session, a response-token cap of 500, a 50,000-row upload cap, a 100-row full-context cap, and a pre-request token/cost estimate. The displayed cost is an estimate based on the configured model and may differ from provider billing.
+The sidebar exposes the active MVP2 usage controls: requests used and remaining from a maximum of 10 successful requests per session, separate input and output token totals, combined tokens, cumulative estimated cost, a response-token cap of 500, a 50,000-row upload cap, a 100-row full-context cap, and a pre-request token/cost estimate. Displayed costs are estimates based on the configured model and may differ from provider billing.
+
+The exported PDF takes a session usage snapshot at approval time. Request usage reflects user-triggered analysis requests. Input and output token totals include every OpenAI response recorded by the app, including the grounded interpretation pass. The cumulative cost remains an estimate and is shown only when pricing is configured for the selected model.
 
 Users can choose **Use app key** or **Use my own key**. A user-owned key is held only in Streamlit session state for the active browser session. OpenAI is the first implemented provider; the provider class keeps Hugging Face and Claude integrations as future adapters without requiring LangChain.
 
@@ -199,6 +228,8 @@ If your OpenAI project does not have access to the configured model, update `Ope
 - Keep your OpenAI API key private.
 - Review the privacy alert after every upload. PII/SPI detection is heuristic and should support, not replace, an organization's privacy and compliance review.
 - Original values from detected sensitive columns are discarded after masking and are not sent to the AI. Non-sensitive columns remain available for normal analysis.
+- PDF export is opt-in. Review the approval disclosure before sending sanitized outputs to the configured report endpoint.
+- Protect a deployed MCP endpoint with HTTPS, authentication, request-size limits, and service monitoring. Do not expose the local development endpoint publicly.
 - Review API usage to avoid unexpected costs.
 - Treat the in-app token and cost figures as estimates, and enforce account-level budgets in the provider dashboard as the final spending control.
 - Be careful with untrusted prompts or files. The app executes hidden Python code returned by the model for analysis and visualizations, so only run it in an environment where you are comfortable testing generated code.
@@ -207,10 +238,12 @@ If your OpenAI project does not have access to the configured model, update `Ope
 
 - **Missing API key**: Confirm `.streamlit/secrets.toml` exists and contains `OpenAI_API_Key`.
 - **CSV upload fails**: Check that the file is a valid CSV and uses a readable encoding.
-- **OpenAI request fails**: Confirm your API key, model access, billing status, and network connection.
+- **OpenAI connection fails before reaching OpenAI**: The Streamlit host cannot open outbound HTTPS connections. Stop that server and launch `streamlit run app.py` from a normal network-enabled terminal. An unauthenticated request to `https://api.openai.com/v1/models` should return HTTP `401`; that response confirms DNS, TLS, and routing work without exposing an API key.
+- **OpenAI authentication, permission, or rate-limit error**: Confirm the selected API key, project model access, billing status, credits, and provider limits. These checks apply only after a request reaches OpenAI.
 - **Generated chart fails**: Rephrase the question with exact column names from the uploaded CSV.
 - **Requested rows or lists do not appear**: Ask for a table, rows, records, or a filtered dataframe and include the relevant column names. The app displays at most 10 rows for generated result tables.
 - **Large file responses are vague**: Ask more specific questions or filter the CSV before uploading.
+- **PDF report service fails**: Start `pdf_mcp_server.py`, confirm `PDF_MCP_URL` ends with `/mcp`, and verify that a deployed HTTPS endpoint is reachable from the Streamlit host.
 
 ## License
 

@@ -260,3 +260,61 @@
   - Streamlit health endpoint at `http://localhost:8502/_stcore/health`: `ok`
 - Follow-up:
   - Create or refine GitHub Project items before starting the next feature iteration
+
+## 2026-09-25 07:50 - MCP PDF export integration
+
+- Status: fixed
+- Symptom: The new report service initially returned no document data, and the reloaded Windows Streamlit process failed with `ModuleNotFoundError: No module named 'pywintypes'`.
+- Scope: PDF MCP server/client contract, Windows dependencies, Streamlit report-export workflow
+- Suspected cause: MCP wraps a generic dictionary tool result under `structured_content.result`; the Windows MCP import path also requires `pywin32`.
+- Evidence:
+  - A direct Streamable HTTP call reached `build_business_analysis_pdf` but the client did not find top-level `pdf_base64`.
+  - The existing Streamlit process showed the missing `pywintypes` import from the MCP Windows transport module.
+- Changes:
+  - `pdf_tool_client.py`: unwrap structured MCP results and retain a JSON text-content fallback.
+  - `requirements.txt`: add `fpdf2`, MCP v2, and the Windows-only `pywin32` dependency.
+  - `app.py`: add approval-gated PDF tool requests, sanitized report payloads, downloads, and a second interpretation pass grounded in executed results.
+  - `pdf_builder.py` and `pdf_mcp_server.py`: add typed report generation and a Streamable HTTP MCP endpoint.
+- Verification:
+  - Direct MCP round trip returned a valid `%PDF` document.
+  - Rendered report inspection confirmed readable stakeholder prose, chart, table, caveat, and pagination.
+  - Fresh Streamlit server rendered successfully at `http://localhost:8503`.
+  - `.venv\Scripts\python.exe -m unittest discover -s tests -v`: 6 tests passed.
+- Follow-up:
+  - Deploy the MCP service behind authenticated HTTPS and set `PDF_MCP_URL` to its `/mcp` endpoint. PPTX remains an additional MVP2 acceptance criterion.
+
+## 2026-09-25 08:10 - Restore OpenAI connectivity on the MCP-enabled app
+
+- Status: fixed
+- Symptom: The app reported that the OpenAI request failed before reaching OpenAI.
+- Scope: Local Streamlit process on port 8503 and OpenAI error guidance
+- Suspected cause: The Streamlit process was launched in a restricted execution environment that denied outbound socket access.
+- Evidence:
+  - Restricted HTTPS probe failed with `WinError 10013` before receiving an HTTP response.
+  - The network-enabled probe reached `https://api.openai.com/v1/models` and returned HTTP 401 without credentials, confirming DNS, TLS, routing, and firewall access.
+- Changes:
+  - Restarted Streamlit on port 8503 in a network-enabled process.
+  - `app.py`: connection-error guidance now calls out restricted host processes and normal-terminal restart recovery.
+  - `README.md`: separated connection failures from authentication, permission, billing, and rate-limit failures.
+- Verification:
+  - Streamlit is available at `http://localhost:8503`.
+  - OpenAI endpoint connectivity succeeds from the server's network environment.
+- Follow-up:
+  - Keep the API-backed Streamlit server in a process with outbound HTTPS access. No API key was printed or stored during verification.
+
+## 2026-09-25 08:35 - Add report usage and cost accounting
+
+- Status: fixed
+- Symptom: PDF reports did not include the session request allowance, token split, or cumulative estimated token cost needed for MVP2 usage transparency.
+- Scope: Approved PDF report payload and stakeholder report output
+- Suspected cause: Session usage was displayed in Streamlit but was not included in the report contract.
+- Changes:
+  - `app.py`: show and snapshot requests used/remaining, input/output/total tokens, model, and cumulative estimated cost when export is approved.
+  - `app.py`: include privacy-scan metadata matching the Data Summary privacy panel without transmitting sensitive values.
+  - `pdf_builder.py`: render structured Report Overview, Privacy Protection, and Session Usage sections at the top and distinguish cost estimates from provider billing.
+  - `README.md`: document report usage accounting and its interpretation.
+- Verification:
+  - PDF builder tests pass with a complete usage summary.
+  - The renderer test captures request counts, token totals, configured model, estimated USD cost, and the provider-billing disclaimer.
+- Follow-up:
+  - PPTX export remains the only excluded MVP2 acceptance criterion.
