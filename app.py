@@ -1,7 +1,10 @@
 import streamlit as st
 import pandas as pd
 import openai
+import asyncio
+import base64
 import io
+import json
 import matplotlib
 import re
 import numpy as np
@@ -24,6 +27,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+from pdf_tool_client import request_pdf_report
 
 st.markdown(
     """
@@ -76,6 +80,7 @@ st.markdown(
 )
 
 OPENAI_MODEL = st.secrets.get("OpenAI_Model", "gpt-4o")
+PDF_MCP_URL = st.secrets.get("PDF_MCP_URL", "http://localhost:8000/mcp")
 PYTHON_CODE_BLOCK_RE = re.compile(r"```(?:python|py)\s*\n?(.*?)```", re.DOTALL | re.IGNORECASE)
 TABLE_DISPLAY_ROW_LIMIT = 10
 MAX_UPLOAD_ROWS = 50000
@@ -87,6 +92,31 @@ MAX_CONTEXT_CATEGORY_VALUES = 5
 MAX_CONTEXT_CORRELATION_PAIRS = 8
 MODEL_PRICING_PER_MILLION_TOKENS = {
     "gpt-4o": {"input": 2.50, "output": 10.00},
+}
+PDF_EXPORT_TOOL = {
+    "type": "function",
+    "function": {
+        "name": "request_pdf_report",
+        "description": (
+            "Request a stakeholder-ready PDF export only when the user explicitly asks "
+            "to create, export, or download a PDF report of the current analysis."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "description": "Concise business report title.",
+                },
+                "focus": {
+                    "type": "string",
+                    "description": "The business decision or optimization focus for the report.",
+                },
+            },
+            "required": ["title", "focus"],
+            "additionalProperties": False,
+        },
+    },
 }
 LAST_ROWS_RE = re.compile(r"\b(last|bottom|tail|ending|end|most recent|latest)\b", re.IGNORECASE)
 ROW_LIMIT_RE = re.compile(
@@ -140,6 +170,12 @@ if "privacy_findings" not in st.session_state:
 if "uploaded_file_signature" not in st.session_state:
     st.session_state.uploaded_file_signature = None
 
+if "pending_pdf_export" not in st.session_state:
+    st.session_state.pending_pdf_export = None
+
+if "pdf_export" not in st.session_state:
+    st.session_state.pdf_export = None
+
 
 class OpenAIProvider:
     name = "OpenAI"
@@ -148,12 +184,18 @@ class OpenAIProvider:
         self.client = openai.OpenAI(api_key=api_key)
         self.model = model
 
-    def generate(self, messages, max_output_tokens):
+    def generate(self, messages, max_output_tokens, tools=None):
+        request = {
+            "model": self.model,
+            "messages": messages,
+            "temperature": 0.1,
+            "max_tokens": max_output_tokens,
+        }
+        if tools:
+            request["tools"] = tools
+            request["tool_choice"] = "auto"
         return self.client.chat.completions.create(
-            model=self.model,
-            messages=messages,
-            temperature=0.1,
-            max_tokens=max_output_tokens,
+            **request,
         )
 
 
@@ -178,6 +220,87 @@ def record_response_usage(response):
         return
     st.session_state.input_tokens_used += getattr(usage, "prompt_tokens", 0) or 0
     st.session_state.output_tokens_used += getattr(usage, "completion_tokens", 0) or 0
+
+
+def build_report_payload(
+    messages,
+    title,
+    focus,
+    industry,
+    business_goal,
+    privacy_findings,
+    usage_summary,
+    privacy_summary,
+):
+    protected_columns = set(privacy_findings)
+    analyses = []
+    pending_question = None
+    for message in messages:
+        if message.get("role") == "user":
+            pending_question = message.get("content", "")
+            continue
+        if message.get("role") != "assistant" or not pending_question:
+            continue
+
+        tables = []
+        for dataframe in message.get("tables", []):
+            if not isinstance(dataframe, pd.DataFrame):
+                continue
+            report_df = dataframe.drop(
+                columns=[column for column in dataframe.columns if str(column) in protected_columns],
+                errors="ignore",
+            ).head(TABLE_DISPLAY_ROW_LIMIT)
+            if report_df.empty:
+                continue
+            tables.append(
+                {
+                    "columns": [str(column) for column in report_df.columns],
+                    "rows": report_df.fillna("").astype(str).values.tolist(),
+                }
+            )
+
+        analyses.append(
+            {
+                "question": pending_question,
+                "interpretation": message.get("report_interpretation")
+                or message.get("content", ""),
+                "images": [
+                    base64.b64encode(image).decode("ascii")
+                    for image in message.get("images", [])
+                ],
+                "tables": tables,
+                "notes": message.get("notes", []),
+            }
+        )
+        pending_question = None
+
+    return {
+        "title": title or "Business Analysis Report",
+        "focus": focus,
+        "industry": industry,
+        "business_goal": business_goal,
+        "usage_summary": usage_summary,
+        "privacy_summary": privacy_summary,
+        "analyses": analyses,
+    }
+
+
+def build_execution_evidence(exec_globals, assistant_message, chart_metadata):
+    sections = []
+    for table in assistant_message.get("tables", []):
+        if isinstance(table, pd.DataFrame) and not table.empty:
+            sections.append(table.head(TABLE_DISPLAY_ROW_LIMIT).to_string(index=False))
+
+    for name, value in exec_globals.items():
+        if name in {"df", "pd", "np", "plt", "sns", "st"}:
+            continue
+        if isinstance(value, pd.Series):
+            sections.append(f"{name}:\n{value.head(TABLE_DISPLAY_ROW_LIMIT).to_string()}")
+        elif isinstance(value, (str, int, float, bool, np.number)):
+            sections.append(f"{name}: {value}")
+
+    sections.extend(chart_metadata)
+    return "\n\n".join(sections)[:12000]
 
 
 def requested_table_limit(user_query):
@@ -399,11 +522,24 @@ with st.sidebar: #the 'with' creates a context where everything inside appears i
         help="This is a hard output cap for each request.",
     )
     remaining_requests = max(0, MAX_REQUESTS_PER_SESSION - st.session_state.request_count)
+    total_tokens_used = st.session_state.input_tokens_used + st.session_state.output_tokens_used
+    estimated_session_cost = estimate_cost(
+        OPENAI_MODEL,
+        st.session_state.input_tokens_used,
+        st.session_state.output_tokens_used,
+    )
     st.progress(st.session_state.request_count / MAX_REQUESTS_PER_SESSION)
     st.caption(
-        f"{remaining_requests} of {MAX_REQUESTS_PER_SESSION} requests remaining · "
-        f"{st.session_state.input_tokens_used + st.session_state.output_tokens_used:,} tokens used"
+        f"{st.session_state.request_count} of {MAX_REQUESTS_PER_SESSION} requests used · "
+        f"{remaining_requests} remaining"
     )
+    st.caption(
+        f"{st.session_state.input_tokens_used:,} input tokens · "
+        f"{st.session_state.output_tokens_used:,} output tokens · "
+        f"{total_tokens_used:,} total"
+    )
+    if estimated_session_cost is not None:
+        st.caption(f"Estimated session token cost: ${estimated_session_cost:.6f}")
 
 
 data_summary_tab, insights_tab = st.tabs(["Data Summary", "Insights"])
@@ -586,6 +722,100 @@ with insights_tab:
     if st.session_state["df"] is not None:
         for msg in st.session_state['messages']:
             render_saved_message(msg)
+
+        if st.session_state.pending_pdf_export:
+            pending_export = st.session_state.pending_pdf_export
+            st.warning(
+                "PDF export requires your approval. The report service will receive only "
+                "the questions, stakeholder interpretations, generated charts, capped result "
+                "tables, and business context from this session. It will not receive the uploaded CSV."
+            )
+            st.caption(
+                f"Report: {pending_export['title']} | Focus: {pending_export['focus']} | "
+                f"Service: {PDF_MCP_URL}"
+            )
+            approve_column, cancel_column = st.columns(2)
+            if approve_column.button("Approve PDF export", type="primary"):
+                report_payload = build_report_payload(
+                    st.session_state.messages,
+                    pending_export["title"],
+                    pending_export["focus"],
+                    selected_industry,
+                    business_goal.strip(),
+                    st.session_state.privacy_findings,
+                    {
+                        "model": OPENAI_MODEL,
+                        "request_limit": MAX_REQUESTS_PER_SESSION,
+                        "requests_used": st.session_state.request_count,
+                        "requests_remaining": max(
+                            0,
+                            MAX_REQUESTS_PER_SESSION - st.session_state.request_count,
+                        ),
+                        "input_tokens": st.session_state.input_tokens_used,
+                        "output_tokens": st.session_state.output_tokens_used,
+                        "total_tokens": (
+                            st.session_state.input_tokens_used
+                            + st.session_state.output_tokens_used
+                        ),
+                        "estimated_cost_usd": estimate_cost(
+                            OPENAI_MODEL,
+                            st.session_state.input_tokens_used,
+                            st.session_state.output_tokens_used,
+                        ),
+                    },
+                    {
+                        "rows": len(st.session_state.df),
+                        "columns": len(st.session_state.df.columns),
+                        "memory_mb": round(
+                            st.session_state.df.memory_usage(deep=True).sum()
+                            / (1024 * 1024),
+                            2,
+                        ),
+                        "protected_columns": len(st.session_state.privacy_findings),
+                        "analysis_columns": (
+                            len(st.session_state.df.columns)
+                            - len(st.session_state.privacy_findings)
+                        ),
+                        "findings": [
+                            {
+                                "column": str(column),
+                                "type": (
+                                    "SPI"
+                                    if details["category"] == "PSI"
+                                    else details["category"]
+                                ),
+                                "detected_by": details["reason"],
+                            }
+                            for column, details in st.session_state.privacy_findings.items()
+                        ],
+                    },
+                )
+                try:
+                    with st.spinner("Building the stakeholder report..."):
+                        st.session_state.pdf_export = asyncio.run(
+                            request_pdf_report(PDF_MCP_URL, report_payload)
+                        )
+                    st.session_state.pending_pdf_export = None
+                    st.rerun()
+                except Exception as error:
+                    st.error(f"PDF report service error: {error}")
+                    st.info(
+                        "Confirm the Streamable HTTP PDF service is running and PDF_MCP_URL "
+                        "points to its /mcp endpoint."
+                    )
+            if cancel_column.button("Cancel export"):
+                st.session_state.pending_pdf_export = None
+                st.rerun()
+
+        if st.session_state.pdf_export:
+            pdf_export = st.session_state.pdf_export
+            st.download_button(
+                "Download PDF report",
+                data=pdf_export["pdf_bytes"],
+                file_name=pdf_export["filename"],
+                mime=pdf_export["mime_type"],
+                type="primary",
+            )
             
         #chat input box
         request_limit_reached = st.session_state.request_count >= MAX_REQUESTS_PER_SESSION
@@ -722,6 +952,12 @@ with insights_tab:
                 pandas as pd, numpy as np, matplotlib.pyplot as plt, and seaborn as sns are
                 already imported. `df` is already loaded. Write correct, runnable code, and
                 always end plots with plt.show().
+
+                # PDF EXPORT TOOL
+                If the user explicitly asks to create, export, or download a PDF report,
+                call request_pdf_report with a concise title and business focus. Do not
+                claim the report was generated. The application will ask the user for
+                approval before sending sanitized session outputs to the report service.
                 """
         
             #Generate response from OpenAI
@@ -772,10 +1008,45 @@ with insights_tab:
                         response = provider.generate(
                             messages=request_messages,
                             max_output_tokens=selected_output_tokens,
+                            tools=[PDF_EXPORT_TOOL],
                         )
                         st.session_state.request_count += 1
                         record_response_usage(response)
-                        reply = response.choices[0].message.content
+                        response_message = response.choices[0].message
+                        tool_calls = getattr(response_message, "tool_calls", None) or []
+                        if tool_calls:
+                            pdf_call = next(
+                                (
+                                    tool_call
+                                    for tool_call in tool_calls
+                                    if tool_call.function.name == "request_pdf_report"
+                                ),
+                                None,
+                            )
+                            if pdf_call:
+                                arguments = json.loads(pdf_call.function.arguments)
+                                st.session_state.pending_pdf_export = {
+                                    "title": arguments.get("title", "Business Analysis Report"),
+                                    "focus": arguments.get(
+                                        "focus",
+                                        business_goal.strip() or "Business optimization and decision support",
+                                    ),
+                                }
+                                st.session_state.messages.append(
+                                    {
+                                        "role": "assistant",
+                                        "content": (
+                                            "The PDF report is ready for your approval. Review the "
+                                            "export details before the report service is called."
+                                        ),
+                                        "images": [],
+                                        "notes": [],
+                                        "tables": [],
+                                    }
+                                )
+                                st.rerun()
+
+                        reply = response_message.content or "I could not produce an analysis response."
                         display_reply = hide_python_code_blocks(reply)
                         message_placeholder.markdown(display_reply)
                         assistant_message = {"role": "assistant", "content": display_reply, "images": [], "notes": [], "tables": []}
@@ -784,6 +1055,7 @@ with insights_tab:
                         code_blocks = extract_python_code_blocks(reply)
                         if code_blocks:
                             displayed_table_ids = set()
+                            chart_metadata = []
                             generated_st = GeneratedCodeStreamlitProxy(assistant_message, protected_user_input, displayed_table_ids)
                             exec_globals = {
                                 "df": df,
@@ -817,6 +1089,13 @@ with insights_tab:
                                     for fig_num in plt.get_fignums():
                                         fig = plt.figure(fig_num)
                                         if fig.get_axes():
+                                            for axis in fig.get_axes():
+                                                chart_metadata.append(
+                                                    "Chart metadata: "
+                                                    f"title={axis.get_title()!r}, "
+                                                    f"x_axis={axis.get_xlabel()!r}, "
+                                                    f"y_axis={axis.get_ylabel()!r}"
+                                                )
                                             image_buffer = io.BytesIO()
                                             fig.savefig(image_buffer, format="png", bbox_inches="tight")
                                             image_buffer.seek(0)
@@ -847,14 +1126,61 @@ with insights_tab:
                                     st.info("There was an error executing the hidden analysis code.")
                                 finally:
                                     plt.close("all")
+
+                            execution_evidence = build_execution_evidence(
+                                exec_globals,
+                                assistant_message,
+                                chart_metadata,
+                            )
+                            if execution_evidence:
+                                interpretation_response = provider.generate(
+                                    messages=[
+                                        {
+                                            "role": "system",
+                                            "content": (
+                                                "You are writing the final interpretation for a business "
+                                                "analysis report. Use only the executed evidence supplied. "
+                                                "Write two or three direct paragraphs for non-technical "
+                                                "stakeholders: answer the question, explain the chart or "
+                                                "result in industry context, then recommend a concrete "
+                                                "business optimization or solution direction. State a short "
+                                                "caveat when the evidence does not support causation or a "
+                                                "confident conclusion. Do not mention code or libraries."
+                                            ),
+                                        },
+                                        {
+                                            "role": "user",
+                                            "content": (
+                                                f"Question: {protected_user_input}\n"
+                                                f"Industry: {industry_context}\n"
+                                                f"Business goal: {business_context}\n\n"
+                                                f"Executed evidence:\n{execution_evidence}"
+                                            ),
+                                        },
+                                    ],
+                                    max_output_tokens=selected_output_tokens,
+                                )
+                                record_response_usage(interpretation_response)
+                                grounded_interpretation = (
+                                    interpretation_response.choices[0].message.content or display_reply
+                                )
+                                assistant_message["content"] = grounded_interpretation
+                                assistant_message["report_interpretation"] = grounded_interpretation
+                                message_placeholder.markdown(grounded_interpretation)
+                            else:
+                                assistant_message["report_interpretation"] = display_reply
+                        else:
+                            assistant_message["report_interpretation"] = display_reply
                     
                         st.session_state.messages.append(assistant_message)
                         st.rerun()
                     except openai.APIConnectionError as e:
                         st.error("OpenAI API connection failed before the request reached OpenAI.")
                         st.info(
-                            "Check the network connection, proxy, SSL certificates, or firewall rules, "
-                            "then try again. Your API key and usage limits were not validated by this failed request."
+                            "If this app is running locally, restart Streamlit from a normal terminal "
+                            "with outbound HTTPS access. Otherwise, check the host's proxy, SSL "
+                            "certificates, DNS, and firewall rules. Your API key and usage limits "
+                            "were not validated by this failed request."
                         )
                     except openai.AuthenticationError as e:
                         st.error(f"OpenAI authentication failed: {e}")
