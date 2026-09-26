@@ -1,5 +1,9 @@
 # 📊 AI Data Analytics Assistant | Streamlit + OpenAI
 
+
+<img width="2164" height="727" alt="ChatGPT Image Sep 26, 2026, 11_46_20 AM" src="https://github.com/user-attachments/assets/ce14b073-6c0e-4c1c-8849-a4463da729e3" />
+
+
 Developed an end-to-end AI-powered analytics solution that transforms raw CSV data into actionable business insights through natural-language interaction. The application leverages OpenAI models to generate stakeholder-ready analyses, dynamic visualizations, filtered datasets, and data quality assessments, making advanced analytics accessible without requiring SQL or Python expertise.
 
 - [GitHub Repository](https://github.com/Shotza247/Data-Analytics-AI-Assistant)
