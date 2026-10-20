@@ -1,7 +1,7 @@
 # 📊 AI Data Analytics Assistant | Streamlit + OpenAI
 
 
-<img width="2164" height="727" alt="ChatGPT Image Sep 26, 2026, 11_46_20 AM" src="https://github.com/user-attachments/assets/ce14b073-6c0e-4c1c-8849-a4463da729e3" />
+![AI Data Analytics Assistant architecture: upload and protect, ask questions, analyze and ground, approve export, deliver PDF](docs/showcase/architecture-banner.svg)
 
 
 Developed an end-to-end AI-powered analytics solution that transforms raw CSV data into actionable business insights through natural-language interaction. The application leverages OpenAI models to generate stakeholder-ready analyses, dynamic visualizations, filtered datasets, and data quality assessments, making advanced analytics accessible without requiring SQL or Python expertise.
@@ -10,9 +10,125 @@ Developed an end-to-end AI-powered analytics solution that transforms raw CSV da
 - [Shared Mermaid Workspace](https://mermaid.ai/app/projects/8db0f199-c162-4402-91a8-260688637404/diagrams/9dac37a4-7600-4f7d-adb9-30b525224fe9/share/invite/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudElEIjoiOWRhYzM3YTQtNzYwMC00ZjdkLWFkYjktMzBiNTI1MjI0ZmU5IiwiYWNjZXNzIjoiVmlldyIsInB1cnBvc2UiOiJzaGFyZS1pbnZpdGUiLCJpYXQiOjE3OTAyNjg2MDAsImV4cCI6MTc5Mjg2MDYwMH0.Av27ixyr3Mc4fYug-xJz65GzdOVnEofPeb7nS4evt9A?entryPoint=share-modal)
 - [Versioned MVP2 Architecture Diagrams](docs/mvp2-architecture.md)
 
-## MVP1 Status
+## Architecture At A Glance
 
-This repository currently represents **MVP1** of the CSV Data Analytics AI Assistant. MVP1 focuses on a single-user Streamlit workflow for uploading one CSV, asking natural-language questions, receiving stakeholder-friendly business insights/results, viewing requested rows/tables, and viewing generated charts without exposing the Python code used behind the scenes.
+The assistant is a privacy-first agentic analytics system built on the **OpenAI API and Python SDK**. The model plans the analysis, a controlled execution step produces evidence, and a second grounded pass turns that evidence into stakeholder-ready insight. Sensitive data is masked before the model ever sees it, and external tools are only called with user approval.
+
+### 1. Key Components
+
+```mermaid
+flowchart LR
+    User([Business user])
+
+    subgraph UI["Streamlit app - app.py"]
+        Upload["CSV upload"]
+        Chat["Insights chat and<br/>Data Summary"]
+        Controls["Usage controls<br/>request and token caps,<br/>cost estimate"]
+        Upload ~~~ Chat
+        Chat ~~~ Controls
+    end
+
+    subgraph Privacy["Privacy layer - privacy.py"]
+        Detect["PII / PSI detection"]
+        Mask["Salted HMAC masking"]
+        Detect --> Mask
+    end
+
+    subgraph Agent["Agentic analysis - OpenAI SDK"]
+        Provider["OpenAIProvider<br/>Chat Completions"]
+        Exec["Hidden code execution<br/>pandas, matplotlib, seaborn"]
+        Ground["Grounded interpretation<br/>second LLM pass"]
+        Tool["Function tool<br/>request_pdf_report"]
+        Provider --> Exec --> Ground
+        Provider --> Tool
+    end
+
+    subgraph MCP["PDF tool - MCP"]
+        Client["pdf_tool_client.py<br/>MCP client"]
+        Server["pdf_mcp_server.py<br/>Streamable HTTP"]
+        Builder["pdf_builder.py<br/>fpdf2"]
+        Client --> Server --> Builder
+    end
+
+    User --> Upload
+    Upload -->|raw CSV| Detect
+    Mask -->|masked data| Provider
+    Ground -->|insights| Chat
+    Tool -->|approved PDF request| Client
+    Builder -->|PDF bytes| Chat
+
+    classDef sensitive fill:#fce8e6,stroke:#b3261e,color:#5f0000;
+    classDef agent fill:#e8f0fe,stroke:#3b82d4,color:#0b2a5b;
+    classDef tool fill:#f3ecfd,stroke:#7c5cd8,color:#2d1a6b;
+    class Detect,Mask sensitive;
+    class Provider,Tool,Exec,Ground agent;
+    class Client,Server,Builder tool;
+```
+
+### 2. PII / PSI Protection Pipeline
+
+Detection and masking run **before** any data is stored in the session, summarized, or sent to OpenAI. Only the masked dataframe, a compact summary, and privacy metadata flow downstream.
+
+```mermaid
+flowchart LR
+    Raw["Raw CSV\nup to 50,000 rows"] --> Cols{"Column name\nmatches PII / PSI\npatterns?"}
+    Cols -->|Yes| Flag["Flag column\ncategory and reason"]
+    Cols -->|No| Vals{"Sampled values\nmatch email, SSN,\nphone, IP, card?"}
+    Vals -->|Yes| Flag
+    Vals -->|No| Keep["Keep as analytical column"]
+
+    Flag --> Mask["Replace values with\nsession-salted tokens\ne.g. PII-3F9A1C7B2E"]
+    Mask --> Safe[("Privacy-protected dataframe\nsession state only")]
+    Keep --> Safe
+
+    Flag --> Alert["Red sidebar alert\ncolumn names only"]
+    Flag --> Hide["Hide from preview"]
+
+    Prompt["User question"] --> Redact["Redact emails, SSNs,\nIPs, phones in text"]
+
+    Safe --> LLM["OpenAI context\nmasked data only"]
+    Redact --> LLM
+    Safe --> Meta["Privacy metadata for PDF\nno original or masked values"]
+
+    classDef sensitive fill:#fce8e6,stroke:#b3261e,color:#5f0000;
+    classDef safe fill:#e6f4ea,stroke:#1e8e3e,color:#0d3b1a;
+    class Raw,Flag,Mask,Prompt sensitive;
+    class Safe,Keep,LLM,Meta safe;
+```
+
+### 3. Agent Analysis Loop With Tool And MCP Hand-off
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant A as Streamlit app
+    participant O as OpenAI model
+    participant X as Hidden code execution
+    participant M as PDF MCP server
+
+    U->>A: Ask a business question
+    A->>A: Redact question, check request and token limits
+    A->>O: Masked data context, business context, tool schema
+    alt Model chooses the PDF tool
+        O-->>A: tool_call request_pdf_report with title and focus
+        A-->>U: Disclose report contents and ask approval
+        U->>A: Approve
+        A->>M: MCP call_tool build_business_analysis_pdf with sanitized payload
+        M-->>A: PDF bytes
+        A-->>U: Download PDF
+    else Model returns analysis
+        O-->>A: Business answer with hidden Python block
+        A->>X: Run code on masked dataframe
+        X-->>A: Tables, charts, chart metadata
+        A->>O: Second pass with executed evidence only
+        O-->>A: Grounded interpretation and recommendations
+        A-->>U: Insight, capped tables, charts, caveats
+    end
+```
+
+## MVP1 Baseline
+
+**MVP1 is complete** and remains the foundation of the CSV Data Analytics AI Assistant. It delivered a single-user Streamlit workflow for uploading one CSV, asking natural-language questions, receiving stakeholder-friendly business insights/results, viewing requested rows/tables, and viewing generated charts without exposing the Python code used behind the scenes. MVP2 and the MVP3 privacy foundation, described below, build on this baseline.
 
 ## MVP2 Closeout
 
