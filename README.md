@@ -191,12 +191,13 @@ Add screenshots to `docs/showcase/` and replace the image filenames below with t
 +-- pdf_tool_client.py
 +-- privacy.py
 +-- sample_data.csv
++-- secrets.toml.example
 +-- tests/
 |   +-- test_mvp2_controls.py
 |   +-- test_pdf_builder.py
 |   +-- test_privacy.py
 +-- .streamlit/
-|   +-- secrets.toml
+|   +-- secrets.toml   (create from secrets.toml.example; gitignored)
 +-- .gitignore
 +-- README.md
 ```
@@ -240,7 +241,16 @@ Add screenshots to `docs/showcase/` and replace the image filenames below with t
    pip install -r requirements.txt
    ```
 
-4. Add your OpenAI API key to `.streamlit/secrets.toml`:
+4. Create `.streamlit/secrets.toml` from the template and add your OpenAI API key. The `.streamlit/` folder is gitignored, so you must do this on every new machine or fresh clone, and the app and the tests will fail without it.
+
+   ```bash
+   mkdir .streamlit
+   cp secrets.toml.example .streamlit/secrets.toml
+   ```
+
+   On Windows PowerShell, use `New-Item -ItemType Directory -Force .streamlit` and `Copy-Item secrets.toml.example .streamlit\secrets.toml`.
+
+   Then edit `.streamlit/secrets.toml`:
 
    ```toml
    OpenAI_API_Key = "your-api-key-here"
@@ -356,7 +366,7 @@ If your OpenAI project does not have access to the configured model, update `Ope
 
 ## Troubleshooting
 
-- **Missing API key**: Confirm `.streamlit/secrets.toml` exists and contains `OpenAI_API_Key`.
+- **Missing API key or "No secrets files found"**: `.streamlit/secrets.toml` is gitignored, so a fresh clone does not have it. Copy `secrets.toml.example` to `.streamlit/secrets.toml` and set `OpenAI_API_Key`.
 - **CSV upload fails**: Check that the file is a valid CSV and uses a readable encoding.
 - **OpenAI connection fails before reaching OpenAI**: The Streamlit host cannot open outbound HTTPS connections. Stop that server and launch `streamlit run app.py` from a normal network-enabled terminal. An unauthenticated request to `https://api.openai.com/v1/models` should return HTTP `401`; that response confirms DNS, TLS, and routing work without exposing an API key.
 - **OpenAI authentication, permission, or rate-limit error**: Confirm the selected API key, project model access, billing status, credits, and provider limits. These checks apply only after a request reaches OpenAI.
