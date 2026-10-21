@@ -2,7 +2,12 @@ import unittest
 
 import pandas as pd
 
-from privacy import detect_sensitive_columns, mask_sensitive_data, mask_sensitive_text
+from privacy import (
+    apply_column_overrides,
+    detect_sensitive_columns,
+    mask_sensitive_data,
+    mask_sensitive_text,
+)
 
 
 class PrivacyProtectionTest(unittest.TestCase):
@@ -27,6 +32,44 @@ class PrivacyProtectionTest(unittest.TestCase):
         self.assertEqual(findings["Annual Income"]["category"], "PSI")
         self.assertNotIn("Product Name", findings)
         self.assertNotIn("Revenue", findings)
+
+    def test_detects_camel_case_and_run_together_column_names(self):
+        df = pd.DataFrame(
+            {
+                "EmailAddress": ["a@example.com"],
+                "FirstName": ["Ann"],
+                "customerName": ["Ann Lee"],
+                "Surname": ["Lee"],
+                "sur_name": ["Lee"],
+                "Condition": ["asthma"],
+            }
+        )
+        findings = detect_sensitive_columns(df)
+
+        self.assertEqual(set(findings), set(df.columns))
+
+    def test_does_not_flag_business_columns_that_look_sensitive(self):
+        df = pd.DataFrame(
+            {
+                "item_condition": ["new"],
+                "product_name": ["Laptop"],
+                "company_name": ["Acme"],
+                "OrderTotal": [10.0],
+            }
+        )
+
+        self.assertEqual(detect_sensitive_columns(df), {})
+
+    def test_column_overrides_add_and_release_columns(self):
+        findings = detect_sensitive_columns(self.df)
+        adjusted = apply_column_overrides(
+            findings, protect=["Product Name"], keep=["Annual Income"]
+        )
+
+        self.assertEqual(adjusted["Product Name"]["reason"], "user selection")
+        self.assertNotIn("Annual Income", adjusted)
+        self.assertIn("Email", adjusted)
+        self.assertNotIn("Product Name", findings)
 
     def test_masking_is_consistent_and_preserves_non_sensitive_values(self):
         findings = detect_sensitive_columns(self.df)

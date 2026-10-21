@@ -8,7 +8,8 @@ import pandas as pd
 
 
 PII_COLUMN_PATTERNS = (
-    r"^(?:name|full_name|first_name|last_name|surname|contact_name)$",
+    r"^name$",
+    r"(?:^|_)(?:full|first|middle|last|sur|customer|client|user|employee|patient|member|contact)_?name(?:_|$)",
     r"(?:^|_)(?:email|e_mail|phone|telephone|mobile|fax)(?:_|$)",
     r"(?:^|_)(?:address|street_address|home_address|postal_code|zip_code)(?:_|$)",
     r"(?:^|_)(?:ssn|social_security|national_id|passport|driver_license|drivers_license)(?:_|$)",
@@ -20,7 +21,8 @@ PII_COLUMN_PATTERNS = (
 PSI_COLUMN_PATTERNS = (
     r"(?:^|_)(?:dob|date_of_birth|birth_date)(?:_|$)",
     r"(?:^|_)(?:gender|sex|race|ethnicity|religion|disability)(?:_|$)",
-    r"(?:^|_)(?:medical|diagnosis|condition|health|biometric|insurance)(?:_|$)",
+    r"(?:^|_)(?:medical|diagnosis|health|biometric|insurance)(?:_|$)",
+    r"^condition$",
     r"(?:^|_)(?:salary|income|bank_account|account_number|iban|swift)(?:_|$)",
     r"(?:^|_)(?:credit_card|card_number|credit_score|credit_history|tax_id)(?:_|$)",
     r"(?:^|_)(?:password|passcode|pin|cvv|api_key|secret|access_token)(?:_|$)",
@@ -51,7 +53,8 @@ def create_masking_salt():
 
 
 def normalize_column_name(column):
-    return re.sub(r"[^a-z0-9]+", "_", str(column).strip().lower()).strip("_")
+    spaced = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", str(column).strip())
+    return re.sub(r"[^a-z0-9]+", "_", spaced.lower()).strip("_")
 
 
 def _column_category(column):
@@ -100,6 +103,14 @@ def _masked_value(value, category, salt):
         hashlib.sha256,
     ).hexdigest()[:10].upper()
     return f"<{category}-{digest}>"
+
+
+def apply_column_overrides(findings, protect=(), keep=()):
+    """Let the user add protected columns or release flagged ones."""
+    adjusted = {column: details for column, details in findings.items() if column not in keep}
+    for column in protect:
+        adjusted.setdefault(column, {"category": "PII", "reason": "user selection"})
+    return adjusted
 
 
 def mask_sensitive_data(df, findings, salt):

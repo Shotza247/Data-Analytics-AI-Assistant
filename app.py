@@ -15,6 +15,7 @@ import seaborn as sns
 import warnings
 
 from privacy import (
+    apply_column_overrides,
     create_masking_salt,
     detect_sensitive_columns,
     mask_sensitive_data,
@@ -582,6 +583,44 @@ if uploaded_file is not None: # move entire code inside the with block up
                 f"Only the first {MAX_UPLOAD_ROWS:,} rows were loaded."
             )
         privacy_findings = detect_sensitive_columns(raw_df)
+        override_key = f"{uploaded_file.name}_{uploaded_file.size}"
+        with st.sidebar.expander("Adjust privacy detection"):
+            st.caption(
+                "Detection is heuristic. Add columns it missed, or release columns "
+                "that are safe and useful for analysis."
+            )
+            extra_protected = st.multiselect(
+                "Also protect",
+                [str(c) for c in raw_df.columns if str(c) not in privacy_findings],
+                key=f"protect_{override_key}",
+            )
+            released = st.multiselect(
+                "Do not protect",
+                list(privacy_findings),
+                key=f"release_{override_key}",
+                help="Released columns are sent to the AI unmasked.",
+            )
+        privacy_findings = apply_column_overrides(
+            privacy_findings, extra_protected, released
+        )
+        override_signature = (override_key, tuple(sorted(extra_protected)), tuple(sorted(released)))
+        previous_signature = st.session_state.get("privacy_override_signature")
+        if (
+            previous_signature
+            and previous_signature[0] == override_key
+            and previous_signature != override_signature
+            and st.session_state.messages
+        ):
+            st.session_state.privacy_override_changed = True
+        if previous_signature is None or previous_signature[0] != override_key:
+            st.session_state.privacy_override_changed = False
+        st.session_state.privacy_override_signature = override_signature
+        if st.session_state.get("privacy_override_changed"):
+            st.sidebar.warning(
+                "Privacy settings changed after the chat started. Earlier messages are "
+                "still sent to the AI as written, so values from newly protected columns "
+                "may already appear there. Reload the CSV to start a clean session."
+            )
         df = mask_sensitive_data(
             raw_df,
             privacy_findings,
@@ -637,7 +676,7 @@ if uploaded_file is not None: # move entire code inside the with block up
             privacy_alert_placeholder.error("\n\n".join(privacy_message))
         else:
             privacy_alert_placeholder.success(
-                "Privacy scan complete: no likely PII or PSI columns were detected. "
+                "Privacy scan complete: no PII or PSI columns are currently protected. "
                 "All columns remain available for analysis."
             )
 
