@@ -8,6 +8,7 @@ from streamlit.testing.v1 import AppTest
 
 class FakeCompletions:
     last_messages = None
+    cached_tokens = 0
 
     def create(self, **kwargs):
         self.__class__.last_messages = kwargs["messages"]
@@ -23,7 +24,11 @@ class FakeCompletions:
                     )
                 )
             ],
-            usage=SimpleNamespace(prompt_tokens=120, completion_tokens=30),
+            usage=SimpleNamespace(
+                prompt_tokens=120,
+                completion_tokens=30,
+                prompt_tokens_details=SimpleNamespace(cached_tokens=self.cached_tokens),
+            ),
         )
 
 
@@ -63,6 +68,43 @@ class MVP2ControlsSmokeTest(unittest.TestCase):
                 any("Financial Services context" in message.markdown[0].value for message in app.chat_message)
             )
         finally:
+            openai.OpenAI = original_openai
+
+    def _first_system_prompt(self, df, industry, goal):
+        app = AppTest.from_file("app.py", default_timeout=30)
+        app.run()
+        app.session_state["df"] = df
+        app.radio[0].set_value("Use my own key")
+        app.selectbox(key="industry_select").set_value(industry)
+        app.text_area[0].set_value(goal)
+        app.run()
+        app.text_input[0].set_value("test-session-key")
+        app.chat_input[0].set_value("What is the average value?")
+        app.run()
+        self.assertEqual(len(app.exception), 0)
+        return FakeCompletions.last_messages[0]["content"], app
+
+    def test_fixed_prompt_prefix_is_identical_across_datasets_and_contexts(self):
+        original_openai = openai.OpenAI
+        openai.OpenAI = FakeOpenAI
+        FakeCompletions.cached_tokens = 64
+        try:
+            marker = "# SESSION CONTEXT"
+            first, first_app = self._first_system_prompt(
+                pd.read_csv("sample_data.csv"), "Retail / E-commerce", "Explain sales"
+            )
+            second, _ = self._first_system_prompt(
+                pd.DataFrame({"alpha": [1, 2, 3], "beta": ["x", "y", "z"]}),
+                "Healthcare",
+                "Reduce readmissions",
+            )
+
+            self.assertIn(marker, first)
+            self.assertEqual(first.split(marker)[0], second.split(marker)[0])
+            self.assertNotEqual(first, second)
+            self.assertEqual(first_app.session_state["cached_tokens_used"], 64)
+        finally:
+            FakeCompletions.cached_tokens = 0
             openai.OpenAI = original_openai
 
 

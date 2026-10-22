@@ -159,6 +159,9 @@ if "request_count" not in st.session_state:
 if "input_tokens_used" not in st.session_state:
     st.session_state.input_tokens_used = 0
 
+if "cached_tokens_used" not in st.session_state:
+    st.session_state.cached_tokens_used = 0
+
 if "output_tokens_used" not in st.session_state:
     st.session_state.output_tokens_used = 0
 
@@ -221,6 +224,8 @@ def record_response_usage(response):
         return
     st.session_state.input_tokens_used += getattr(usage, "prompt_tokens", 0) or 0
     st.session_state.output_tokens_used += getattr(usage, "completion_tokens", 0) or 0
+    details = getattr(usage, "prompt_tokens_details", None)
+    st.session_state.cached_tokens_used += getattr(details, "cached_tokens", 0) or 0
 
 
 def build_report_payload(
@@ -539,6 +544,11 @@ with st.sidebar: #the 'with' creates a context where everything inside appears i
         f"{st.session_state.output_tokens_used:,} output tokens · "
         f"{total_tokens_used:,} total"
     )
+    if st.session_state.cached_tokens_used:
+        st.caption(
+            f"{st.session_state.cached_tokens_used:,} input tokens served from the "
+            "provider's prompt cache"
+        )
     if estimated_session_cost is not None:
         st.caption(f"Estimated session token cost: ${estimated_session_cost:.6f}")
 
@@ -898,10 +908,8 @@ with insights_tab:
                 dataframe called `df`.
 
                 # CONTEXT
-                Dataset: {data_context}
-                Industry: {industry_context}
-                Business goal / audience: {business_context}
-                Privacy-protected columns: {privacy_context}
+                The dataset, industry, business goal, and privacy-protected columns for
+                this session are listed under SESSION CONTEXT at the end of this message.
 
                 Values in privacy-protected columns have already been replaced with
                 irreversible, session-scoped tokens. Never attempt to identify, reconstruct,
@@ -997,6 +1005,12 @@ with insights_tab:
                 call request_pdf_report with a concise title and business focus. Do not
                 claim the report was generated. The application will ask the user for
                 approval before sending sanitized session outputs to the report service.
+
+                # SESSION CONTEXT
+                Dataset: {data_context}
+                Industry: {industry_context}
+                Business goal / audience: {business_context}
+                Privacy-protected columns: {privacy_context}
                 """
         
             #Generate response from OpenAI
