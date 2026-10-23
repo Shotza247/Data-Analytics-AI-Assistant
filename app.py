@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
 
+from memory import build_session_memory
 from privacy import (
     apply_column_overrides,
     create_masking_salt,
@@ -86,6 +87,7 @@ PYTHON_CODE_BLOCK_RE = re.compile(r"```(?:python|py)\s*\n?(.*?)```", re.DOTALL |
 TABLE_DISPLAY_ROW_LIMIT = 10
 MAX_UPLOAD_ROWS = 50000
 MAX_CONTEXT_ROWS = 100
+MAX_HISTORY_MESSAGES = 8
 MAX_RESPONSE_TOKENS = 500
 MAX_REQUESTS_PER_SESSION = 10
 MAX_CONTEXT_CATEGORICAL_COLUMNS = 8
@@ -1012,6 +1014,17 @@ with insights_tab:
                 Business goal / audience: {business_context}
                 Privacy-protected columns: {privacy_context}
                 """
+            session_memory = build_session_memory(
+                st.session_state.messages, MAX_HISTORY_MESSAGES
+            )
+            if session_memory:
+                system_prompt += f"""
+                # SESSION MEMORY
+                Short notes on earlier questions in this session that are no longer in the
+                visible conversation. Use them only for continuity on follow-ups. They are
+                summaries, so recompute exact figures from `df` instead of quoting them.
+                {session_memory}
+                """
         
             #Generate response from OpenAI
             with st.chat_message("assistant"):
@@ -1036,7 +1049,7 @@ with insights_tab:
                             {"role": msg["role"], "content": msg["content"]}
                             for msg in st.session_state.messages
                             if msg.get("content")
-                        ]
+                        ][-MAX_HISTORY_MESSAGES:]
                         request_messages = [
                             {"role": "system", "content": system_prompt},
                             *chat_history,

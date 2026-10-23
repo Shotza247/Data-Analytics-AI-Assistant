@@ -84,6 +84,36 @@ class MVP2ControlsSmokeTest(unittest.TestCase):
         self.assertEqual(len(app.exception), 0)
         return FakeCompletions.last_messages[0]["content"], app
 
+    def test_only_recent_history_is_sent_to_the_provider(self):
+        original_openai = openai.OpenAI
+        openai.OpenAI = FakeOpenAI
+        try:
+            app = AppTest.from_file("app.py", default_timeout=30)
+            app.run()
+            app.session_state["df"] = pd.read_csv("sample_data.csv")
+            app.session_state["messages"] = [
+                {"role": "user" if i % 2 == 0 else "assistant", "content": f"earlier message {i}"}
+                for i in range(20)
+            ]
+            app.radio[0].set_value("Use my own key")
+            app.run()
+            app.text_input[0].set_value("test-session-key")
+            app.chat_input[0].set_value("latest question")
+            app.run()
+
+            self.assertEqual(len(app.exception), 0)
+            sent = FakeCompletions.last_messages
+            self.assertEqual(sent[0]["role"], "system")
+            self.assertEqual(len(sent), 1 + 8)
+            self.assertEqual(sent[-1]["content"], "latest question")
+            self.assertNotIn("earlier message 0", "".join(m["content"] for m in sent[1:]))
+            self.assertIn("# SESSION MEMORY", sent[0]["content"])
+            self.assertIn("Asked: earlier message 0", sent[0]["content"])
+            self.assertNotIn("earlier message 19", sent[0]["content"])
+            self.assertEqual(len(app.session_state["messages"]), 22)
+        finally:
+            openai.OpenAI = original_openai
+
     def test_fixed_prompt_prefix_is_identical_across_datasets_and_contexts(self):
         original_openai = openai.OpenAI
         openai.OpenAI = FakeOpenAI

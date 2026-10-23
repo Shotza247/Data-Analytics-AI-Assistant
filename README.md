@@ -136,7 +136,7 @@ MVP2 includes business-context guidance, usage controls, two-pass grounded inter
 
 ## MVP3 Foundation
 
-Data masking is the first implemented MVP3 privacy enhancement. The app detects likely personally identifiable information (PII) and sensitive personal information (SPI/PSI), masks values before AI access, alerts the user about protected columns, and hides those columns from the preview. Masked identifiers remain available only for privacy-preserving operations such as anonymous counts, grouping, and duplicate-pattern analysis. Future MVP3 work can add configurable policies, role-based access, audit events, and organization-specific detection rules.
+Data masking is the first implemented MVP3 privacy enhancement. The app detects likely personally identifiable information (PII) and sensitive personal information (SPI/PSI), masks values before AI access, alerts the user about protected columns, and hides those columns from the preview. Masked identifiers remain available only for privacy-preserving operations such as anonymous counts, grouping, and duplicate-pattern analysis. Column-name detection handles camelCase and run-together names (for example `EmailAddress` or `FirstName`) and avoids flagging business columns such as `item_condition`. Because detection is heuristic, an **Adjust privacy detection** control in the sidebar lets the user protect columns the scan missed or release flagged columns that are safe to analyse. Future MVP3 work can add configurable policies, role-based access, audit events, and organization-specific detection rules.
 
 ## What It Does
 
@@ -151,7 +151,8 @@ Data masking is the first implemented MVP3 privacy enhancement. The app detects 
 - Display requested rows, records, filtered results, and table-style answers as Streamlit dataframes instead of prose-only responses, capped to the requested top/last rows with a maximum of 10 displayed rows.
 - Generate charts directly in the Streamlit app without showing the underlying Python code.
 - Retain assistant replies, notes, generated tables, and generated chart images in the session chat history.
-- Control API usage with per-session request limits, response-token caps, CSV/context row limits, and token/cost estimates.
+- Control API usage with per-session request limits, response-token caps, CSV/context row limits, a limit on how much chat history is re-sent to the model, and token/cost estimates.
+- Adjust privacy detection after upload by adding columns to protect or releasing columns that were flagged by mistake.
 - Use the app's OpenAI key or provide a personal OpenAI key that remains in Streamlit session state and is not written to disk.
 - Detect likely PII and sensitive personal information in uploaded CSV columns, mask it before AI analysis, and show a persistent red sidebar alert naming the protected columns.
 - Ask for explicit approval before sending sanitized session outputs to the PDF report service.
@@ -189,10 +190,12 @@ Add screenshots to `docs/showcase/` and replace the image filenames below with t
 +-- pdf_builder.py
 +-- pdf_mcp_server.py
 +-- pdf_tool_client.py
++-- memory.py
 +-- privacy.py
 +-- sample_data.csv
 +-- secrets.toml.example
 +-- tests/
+|   +-- test_memory.py
 |   +-- test_mvp2_controls.py
 |   +-- test_pdf_builder.py
 |   +-- test_privacy.py
@@ -345,6 +348,18 @@ response = client.chat.completions.create(
 ```
 
 The sidebar exposes the active MVP2 usage controls: requests used and remaining from a maximum of 10 successful requests per session, separate input and output token totals, combined tokens, cumulative estimated cost, a response-token cap of 500, a 50,000-row upload cap, a 100-row full-context cap, and a pre-request token/cost estimate. Displayed costs are estimates based on the configured model and may differ from provider billing.
+
+### Token Usage
+
+The OpenAI API keeps no state between calls, so every request resends the system prompt, the dataset context, and the chat history. To keep this cost down:
+
+- The system prompt puts the fixed rules first and a `SESSION CONTEXT` section (dataset, industry, business goal, protected columns) last. Providers that cache prompts reuse an identical start of the prompt, so the fixed part is not affected when the dataset or business context changes.
+- Short-term memory: only the last 8 chat messages (4 question and answer turns) are sent to the model in full. The on-screen conversation still shows everything.
+- Long-term memory: older turns are compressed by `memory.py` into one line each (the question and the first sentence of the answer), capped at the 6 most recent. They are appended to the end of the system prompt as a `SESSION MEMORY` section, so they add roughly 400 tokens at most and never disturb the fixed start of the prompt. The notes are summaries, and the model is told to recompute exact figures from the data instead of quoting them. Memory is built from the already-masked chat and lives only in the session.
+- When the provider reports cached input tokens, the sidebar shows how many were served from its prompt cache. The estimated cost still prices all input tokens at the full rate, so it can overstate spend when caching applies. Check the provider's documentation for the current caching rules and discounts.
+- Datasets of 100 rows or fewer are sent in full, which can be costly for wide files. Larger datasets use a compact summary.
+
+Adjusting privacy detection after the chat has started does not change messages that were already sent. The sidebar warns when this happens, and reloading the CSV starts a clean session.
 
 The exported PDF takes a session usage snapshot at approval time. Request usage reflects user-triggered analysis requests. Input and output token totals include every OpenAI response recorded by the app, including the grounded interpretation pass. The cumulative cost remains an estimate and is shown only when pricing is configured for the selected model.
 
