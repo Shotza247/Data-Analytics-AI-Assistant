@@ -92,7 +92,10 @@ class MVP2ControlsSmokeTest(unittest.TestCase):
             app.run()
             app.session_state["df"] = pd.read_csv("sample_data.csv")
             app.session_state["messages"] = [
-                {"role": "user" if i % 2 == 0 else "assistant", "content": f"earlier message {i}"}
+                {
+                    "role": "user" if i % 2 == 0 else "assistant",
+                    "content": f"earlier message {i} about revenue in the sample data",
+                }
                 for i in range(20)
             ]
             app.radio[0].set_value("Use my own key")

@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
 
-from memory import build_session_memory
+from memory import build_memory_note, build_session_memory
 from privacy import (
     apply_column_overrides,
     create_masking_salt,
@@ -1108,6 +1108,7 @@ with insights_tab:
                                         "images": [],
                                         "notes": [],
                                         "tables": [],
+                                        "memory_note": "",
                                     }
                                 )
                                 st.rerun()
@@ -1116,12 +1117,12 @@ with insights_tab:
                         display_reply = hide_python_code_blocks(reply)
                         message_placeholder.markdown(display_reply)
                         assistant_message = {"role": "assistant", "content": display_reply, "images": [], "notes": [], "tables": []}
+                        chart_metadata = []
                     
                         #We need to execute any code blocks in the reply for visualizations
                         code_blocks = extract_python_code_blocks(reply)
                         if code_blocks:
                             displayed_table_ids = set()
-                            chart_metadata = []
                             generated_st = GeneratedCodeStreamlitProxy(assistant_message, protected_user_input, displayed_table_ids)
                             exec_globals = {
                                 "df": df,
@@ -1238,6 +1239,9 @@ with insights_tab:
                         else:
                             assistant_message["report_interpretation"] = display_reply
                     
+                        assistant_message["memory_note"] = build_memory_note(
+                            assistant_message["content"], chart_metadata
+                        )
                         st.session_state.messages.append(assistant_message)
                         st.rerun()
                     except openai.APIConnectionError as e:
