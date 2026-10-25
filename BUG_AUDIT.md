@@ -318,3 +318,31 @@
   - The renderer test captures request counts, token totals, configured model, estimated USD cost, and the provider-billing disclaimer.
 - Follow-up:
   - PPTX export remains the only excluded MVP2 acceptance criterion.
+
+## 2026-10-25 13:50 - PII/PSI column-name detection gaps
+
+- Status: fixed
+- Symptom: Columns such as `EmailAddress`, `FirstName` and `customerName` were not flagged, while `item_condition` was flagged as sensitive and hidden from analysis.
+- Scope: Column-name scan in the privacy layer and the sidebar privacy alert
+- Suspected cause: Names were only lowercased, so camelCase and run-together names never matched the underscore-based patterns. The `condition` keyword matched anywhere in a name.
+- Changes:
+  - `privacy.py`: split camelCase before matching, widen the person-name pattern, and flag `condition` only when it is the whole column name.
+  - `privacy.py`, `app.py`: add `apply_column_overrides` and an **Adjust privacy detection** sidebar control so users can protect missed columns or release flagged ones.
+  - `app.py`: warn when overrides change after the chat has started, because earlier messages are already sent as written; reword the scan message so it reflects current overrides.
+- Verification:
+  - New privacy tests cover camelCase names, business columns that must not be flagged, and overrides.
+- Follow-up:
+  - Abbreviations such as `cust_ref` and `contact` are still not flagged by name. Users can add them with **Also protect**.
+
+## 2026-10-25 13:55 - Fresh clone fails without secrets file
+
+- Status: fixed
+- Symptom: `streamlit run app.py` and the app smoke test failed with "No secrets files found" on a newly cloned machine.
+- Scope: Setup documentation and test environment
+- Suspected cause: `.streamlit/` is gitignored, so `secrets.toml` is never cloned.
+- Changes:
+  - `secrets.toml.example`: root-level template to copy into `.streamlit/secrets.toml`.
+  - `README.md`: setup step, project tree, troubleshooting, and a Running Tests section describe the requirement.
+- Verification:
+  - The template parses as valid TOML and is not ignored by git.
+- Follow-up: none
