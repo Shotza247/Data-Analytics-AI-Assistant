@@ -1,6 +1,6 @@
 import unittest
 
-from pdf_builder import _add_privacy_summary, _add_usage_summary, build_analysis_pdf
+from tools.pdf_builder import _add_privacy_summary, _add_usage_summary, build_analysis_pdf
 
 
 class RecordingPDF:

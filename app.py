@@ -14,8 +14,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
 
-from memory import build_memory_note, build_session_memory
-from privacy import (
+from core.memory import build_memory_note, build_session_memory
+from core.privacy import (
     apply_column_overrides,
     create_masking_salt,
     detect_sensitive_columns,
@@ -29,7 +29,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-from pdf_tool_client import request_pdf_report
+from tools.pdf_tool_client import request_pdf_report
 
 st.markdown(
     """

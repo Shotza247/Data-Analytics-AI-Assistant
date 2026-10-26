@@ -2,7 +2,7 @@ import unittest
 
 import pandas as pd
 
-from privacy import (
+from core.privacy import (
     apply_column_overrides,
     detect_sensitive_columns,
     mask_sensitive_data,

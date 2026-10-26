@@ -28,7 +28,7 @@ flowchart LR
         Chat ~~~ Controls
     end
 
-    subgraph Privacy["Privacy layer - privacy.py"]
+    subgraph Privacy["Privacy layer - core/privacy.py"]
         Detect["PII / PSI detection"]
         Mask["Salted HMAC masking"]
         Detect --> Mask
@@ -44,9 +44,9 @@ flowchart LR
     end
 
     subgraph MCP["PDF tool - MCP"]
-        Client["pdf_tool_client.py<br/>MCP client"]
-        Server["pdf_mcp_server.py<br/>Streamable HTTP"]
-        Builder["pdf_builder.py<br/>fpdf2"]
+        Client["tools/pdf_tool_client.py<br/>MCP client"]
+        Server["tools/pdf_mcp_server.py<br/>Streamable HTTP"]
+        Builder["tools/pdf_builder.py<br/>fpdf2"]
         Client --> Server --> Builder
     end
 
@@ -170,7 +170,7 @@ Add screenshots to `docs/showcase/` and replace the image filenames below with t
 
 | App UI | Graphs And Insights |
 | --- | --- |
-| <img src="./Sample_UI_Images/Insights_BackedBy_YourData.png" alt="Data Analysis Assistant interface showing CSV upload, sidebar summary, and chat workflow" width="100%"> | <img src="./Sample_UI_Images/DTI_Ratio_Vs_Mortgage_Approval.png" alt="Generated analysis output showing business insights, tables, and charts" width="100%"> |
+| <img src="./docs/images/Insights_BackedBy_YourData.png" alt="Data Analysis Assistant interface showing CSV upload, sidebar summary, and chat workflow" width="100%"> | <img src="./docs/images/DTI_Ratio_Vs_Mortgage_Approval.png" alt="Generated analysis output showing business insights, tables, and charts" width="100%"> |
 | The assistant turns a natural-language mortgage-risk question into a stakeholder-ready response. It explains the key finding, why the result matters, recommended next steps, and caveats, while also showing a capped table of matching applicants so the user can inspect examples without being overwhelmed by the full dataset. | The scatter plot compares debt-to-income ratio against credit score by mortgage approval status. From an analysis perspective, it helps identify approved applicants above the high-DTI threshold and suggests that approval decisions may be influenced by compensating factors such as stronger credit scores, property value, or other borrower characteristics. |
 
 ## Tech Stack
@@ -186,32 +186,36 @@ Add screenshots to `docs/showcase/` and replace the image filenames below with t
 
 ```text
 .
-+-- app.py
-+-- pdf_builder.py
-+-- pdf_mcp_server.py
-+-- pdf_tool_client.py
-+-- memory.py
-+-- privacy.py
-+-- sample_data.csv
++-- app.py                      Streamlit entry point (UI, OpenAI provider, prompts)
++-- requirements.txt
 +-- secrets.toml.example
-+-- BUG_AUDIT.md
++-- core/                       Privacy and memory logic, no UI or network code
+|   +-- privacy.py              PII/PSI detection, overrides, masking
+|   +-- memory.py               Short-term and long-term session memory
++-- tools/                      PDF report tool exposed over MCP
+|   +-- pdf_builder.py          PDF layout (fpdf2)
+|   +-- pdf_mcp_server.py       Streamable HTTP MCP server
+|   +-- pdf_tool_client.py      MCP client used by the app
++-- data/
+|   +-- sample_data.csv         60 example e-commerce orders
 +-- docs/
 |   +-- mvp2-architecture.md
 |   +-- memory-test-script.md
-|   +-- showcase/
+|   +-- BUG_AUDIT.md
+|   +-- images/                 UI screenshots used in this README
+|   +-- showcase/               Architecture banner
 +-- tests/
 |   +-- test_memory.py
 |   +-- test_mvp2_controls.py
 |   +-- test_pdf_builder.py
 |   +-- test_privacy.py
 +-- .streamlit/
-|   +-- secrets.toml   (create from secrets.toml.example; gitignored)
+|   +-- secrets.toml            (create from secrets.toml.example; gitignored)
 +-- .gitignore
 +-- README.md
 ```
 
-`sample_data.csv` contains 60 example e-commerce orders across customer regions, product categories, payment methods, quantities, unit prices, and total order amounts.
-
+[`data/sample_data.csv`](data/sample_data.csv) contains 60 example e-commerce orders across customer regions, product categories, payment methods, quantities, unit prices, and total order amounts.
 ## Getting Started
 
 ### Prerequisites
@@ -269,7 +273,7 @@ Add screenshots to `docs/showcase/` and replace the image filenames below with t
 5. Start the PDF tool service in a separate terminal:
 
    ```bash
-   python pdf_mcp_server.py
+   python -m tools.pdf_mcp_server
    ```
 
    Local development uses `http://localhost:8000/mcp`. For online processing, deploy the service behind HTTPS and set `PDF_MCP_URL` to its `https://.../mcp` endpoint.
@@ -372,7 +376,7 @@ The OpenAI API keeps no state between calls, so every request resends the system
 
 - The system prompt puts the fixed rules first and a `SESSION CONTEXT` section (dataset, industry, business goal, protected columns) last. Providers that cache prompts reuse an identical start of the prompt, so the fixed part is not affected when the dataset or business context changes.
 - Short-term memory: only the last 8 chat messages (4 question and answer turns) are sent to the model in full. The on-screen conversation still shows everything.
-- Long-term memory: each answer gets a one-line note when it is created, built by `memory.py` with no extra API call. The note holds the finding (the sentence with a number, if any), the chart title when a chart was drawn, and one caveat sentence if the answer has one. Replies that are not analysis, such as the PDF approval prompt, get no note. Older turns are shown to the model as these notes, capped at the 6 most recent, in a `SESSION MEMORY` section at the end of the system prompt. This adds a few hundred tokens and never disturbs the fixed start of the prompt. The notes are summaries, and the model is told to recompute exact figures from the data instead of quoting them. Memory is built from the already-masked chat and lives only in the session.
+- Long-term memory: each answer gets a one-line note when it is created, built by `core/memory.py` with no extra API call. The note holds the finding (the sentence with a number, if any), the chart title when a chart was drawn, and one caveat sentence if the answer has one. Replies that are not analysis, such as the PDF approval prompt, get no note. Older turns are shown to the model as these notes, capped at the 6 most recent, in a `SESSION MEMORY` section at the end of the system prompt. This adds a few hundred tokens and never disturbs the fixed start of the prompt. The notes are summaries, and the model is told to recompute exact figures from the data instead of quoting them. Memory is built from the already-masked chat and lives only in the session.
 - When the provider reports cached input tokens, the sidebar shows how many were served from its prompt cache. The estimated cost still prices all input tokens at the full rate, so it can overstate spend when caching applies. Check the provider's documentation for the current caching rules and discounts.
 - Datasets of 100 rows or fewer are sent in full, which can be costly for wide files. Larger datasets use a compact summary.
 
@@ -405,7 +409,7 @@ If your OpenAI project does not have access to the configured model, update `Ope
 - **Generated chart fails**: Rephrase the question with exact column names from the uploaded CSV.
 - **Requested rows or lists do not appear**: Ask for a table, rows, records, or a filtered dataframe and include the relevant column names. The app displays at most 10 rows for generated result tables.
 - **Large file responses are vague**: Ask more specific questions or filter the CSV before uploading.
-- **PDF report service fails**: Start `pdf_mcp_server.py`, confirm `PDF_MCP_URL` ends with `/mcp`, and verify that a deployed HTTPS endpoint is reachable from the Streamlit host.
+- **PDF report service fails**: Start `python -m tools.pdf_mcp_server`, confirm `PDF_MCP_URL` ends with `/mcp`, and verify that a deployed HTTPS endpoint is reachable from the Streamlit host.
 
 ## License
 

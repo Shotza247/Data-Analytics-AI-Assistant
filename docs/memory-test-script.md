@@ -1,11 +1,11 @@
-# Memory test script (sample_data.csv)
+# Memory test script (data/sample_data.csv)
 
 Purpose: check, with the real OpenAI model, that the short-term and long-term memory
 keep follow-ups working after the earliest turns have left the 8-message window.
 
 Setup
 1. Make sure `.streamlit/secrets.toml` has a real `OpenAI_API_Key`.
-2. `streamlit run app.py`, upload `sample_data.csv`.
+2. `streamlit run app.py`, upload `data/sample_data.csv`.
 3. Industry: Retail / E-commerce. Goal: "Help the sales manager decide where to focus."
 4. Ask the questions below one at a time, in order. The session limit is 10 requests,
    so this script uses 9 questions and leaves one spare. Each question can trigger
@@ -31,7 +31,7 @@ What to look for
   is only available as a note. This tests whether a note is enough.
 - Check the sidebar: input tokens per request should grow slowly after turn 5 rather than
   climbing every turn. If your provider reports cached tokens, a cached line appears.
-- Wrong answers: compare with sample_data.csv. Known values: Fitness has 28 of 60 orders;
+- Wrong answers: compare with data/sample_data.csv. Known values: Fitness has 28 of 60 orders;
   the strongest correlation is Unit Price vs Total Amount (0.77).
 
 Record the results

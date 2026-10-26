@@ -1,6 +1,6 @@
 import unittest
 
-from memory import MAX_MEMORY_ENTRIES, build_memory_note, build_session_memory
+from core.memory import MAX_MEMORY_ENTRIES, build_memory_note, build_session_memory
 
 
 def turns(count):

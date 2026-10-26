@@ -2,7 +2,7 @@ import base64
 
 from mcp.server.mcpserver import MCPServer
 
-from pdf_builder import build_analysis_pdf
+from tools.pdf_builder import build_analysis_pdf
 
 
 mcp = MCPServer(

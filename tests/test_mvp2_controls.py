@@ -46,7 +46,7 @@ class MVP2ControlsSmokeTest(unittest.TestCase):
             app.run()
             self.assertEqual(len(app.exception), 0)
 
-            app.session_state["df"] = pd.read_csv("sample_data.csv")
+            app.session_state["df"] = pd.read_csv("data/sample_data.csv")
             app.radio[0].set_value("Use my own key")
             app.selectbox(key="industry_select").set_value("Financial Services")
             app.text_area[0].set_value(
@@ -90,7 +90,7 @@ class MVP2ControlsSmokeTest(unittest.TestCase):
         try:
             app = AppTest.from_file("app.py", default_timeout=30)
             app.run()
-            app.session_state["df"] = pd.read_csv("sample_data.csv")
+            app.session_state["df"] = pd.read_csv("data/sample_data.csv")
             app.session_state["messages"] = [
                 {
                     "role": "user" if i % 2 == 0 else "assistant",
@@ -124,7 +124,7 @@ class MVP2ControlsSmokeTest(unittest.TestCase):
         try:
             marker = "# SESSION CONTEXT"
             first, first_app = self._first_system_prompt(
-                pd.read_csv("sample_data.csv"), "Retail / E-commerce", "Explain sales"
+                pd.read_csv("data/sample_data.csv"), "Retail / E-commerce", "Explain sales"
             )
             second, _ = self._first_system_prompt(
                 pd.DataFrame({"alpha": [1, 2, 3], "beta": ["x", "y", "z"]}),
